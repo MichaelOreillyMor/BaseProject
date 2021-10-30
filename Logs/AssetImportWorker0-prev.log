@@ -1,0 +1,117 @@
+Using pre-set license
+Built from '2020.3/staging' branch; Version is '2020.3.8f1 (507919d4fff5) revision 5273881'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10 Pro; OS build 19043.1288; Version 2009; 64bit' Language: 'es' Physical Memory: 16267 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+ COMMAND LINE ARGUMENTS:
+D:\Program Files\Unity\Editor\2020.3.8f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+D:/Documentos/Projects/BaseProject
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+53517
+Successfully changed project path to: D:/Documentos/Projects/BaseProject
+D:/Documentos/Projects/BaseProject
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 38.29 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.3.8f1 (507919d4fff5)
+[Subsystems] Discovering subsystems at path D:/Program Files/Unity/Editor/2020.3.8f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/Documentos/Projects/BaseProject/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce GTX 1050 (ID=0x1c8d)
+    Vendor:   
+    VRAM:     4019 MB
+    Driver:   30.0.14.7141
+Initialize mono
+Mono path[0] = 'D:/Program Files/Unity/Editor/2020.3.8f1/Editor/Data/Managed'
+Mono path[1] = 'D:/Program Files/Unity/Editor/2020.3.8f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'D:/Program Files/Unity/Editor/2020.3.8f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56528
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: D:/Program Files/Unity/Editor/2020.3.8f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.001492 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 36.23 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.656 seconds
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.005810 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 35.80 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.599 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.07 seconds
+Refreshing native plugins compatible for Editor in 0.38 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1480 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 71.5 MB.
+System memory in use after: 71.5 MB.
+
+Unloading 22 unused Assets to reduce memory usage. Loaded Objects now: 1967.
+Total: 22.255000 ms (FindLiveObjects: 0.166100 ms CreateObjectMapping: 0.061500 ms MarkObjects: 21.900100 ms  DeleteObjects: 0.125800 ms)
+
+========================================================================
+Received Import Request.
+  path: Assets/Plugins/GFFramework/InputActions/InputActions.inputactions
+  artifactKey: Guid(02cf743719549a9408e4b9c022e50d9a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Plugins/GFFramework/InputActions/InputActions.inputactions using Guid(02cf743719549a9408e4b9c022e50d9a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2d1b57d137fe2c319d4dc825f285ba29') in 0.054517 seconds
+  Import took 0.058323 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 27.797016 seconds.
+  path: Assets/Plugins/GFFramework/InputActions/GameActions.inputactions
+  artifactKey: Guid(02cf743719549a9408e4b9c022e50d9a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Plugins/GFFramework/InputActions/GameActions.inputactions using Guid(02cf743719549a9408e4b9c022e50d9a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aa9c670707ff504e74c8e607a2dd6f11') in 0.012569 seconds
+  Import took 0.015756 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 314.359589 seconds.
+  path: Assets/Plugins/GFFramework/InputActions/GameActions.inputactions
+  artifactKey: Guid(02cf743719549a9408e4b9c022e50d9a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Plugins/GFFramework/InputActions/GameActions.inputactions using Guid(02cf743719549a9408e4b9c022e50d9a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c1c00dae9758e9df12305c3ced440caf') in 0.009889 seconds
+  Import took 0.013364 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 22.328709 seconds.
+  path: Assets/Plugins/GFFramework/InputActions/GameControls.inputactions
+  artifactKey: Guid(7bd09484e9fd1394fad6dd577e88dad4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Plugins/GFFramework/InputActions/GameControls.inputactions using Guid(7bd09484e9fd1394fad6dd577e88dad4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bb604cba529ef44bc168ac605e46721e') in 0.014842 seconds
+  Import took 0.018336 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.003223 seconds.
+  path: Assets/Plugins/GFFramework/InputActions/GameControls.inputactions
+  artifactKey: Guid(7bd09484e9fd1394fad6dd577e88dad4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Plugins/GFFramework/InputActions/GameControls.inputactions using Guid(7bd09484e9fd1394fad6dd577e88dad4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bb604cba529ef44bc168ac605e46721e') in 0.008640 seconds
+  Import took 0.012124 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 349.472526 seconds.
+  path: Assets/Plugins/GFFramework/InputActions/GameControls.inputactions
+  artifactKey: Guid(7bd09484e9fd1394fad6dd577e88dad4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Plugins/GFFramework/InputActions/GameControls.inputactions using Guid(7bd09484e9fd1394fad6dd577e88dad4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dd2af49d225bdf0fa5fbaf67fd8ccbd4') in 0.007305 seconds
+  Import took 0.011001 seconds .
+
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file

@@ -1,0 +1,60 @@
+using Sirenix.Serialization;
+using System;
+using UnityEngine;
+
+namespace GFFramework
+{
+    public class GameInitializer : MonoBehaviour
+    {
+        [SerializeReference]
+        public BaseGameManager[] gameManagers;
+
+        public ProvidersRegister reg;
+
+        private void Awake() => Setup();
+
+        private void Setup()
+        {
+            DontDestroyOnLoad(gameObject);
+            reg = new ProvidersRegister();
+
+            if (gameManagers != null && gameManagers.Length > 0)
+            {
+                gameManagers[0].Setup(reg, () => OnSetupComplete(0));
+            }
+        }
+
+        private void OnSetupComplete(int indexManager)
+        {
+            indexManager++;
+
+            if (indexManager < gameManagers.Length)
+            {
+                gameManagers[indexManager].Setup(reg, () => OnSetupComplete(indexManager));
+            }
+            else
+            {
+                OnGameLoaded();
+            }
+        }
+
+        private void OnGameLoaded()
+        {
+            IGameStateProvider gameStateProv = reg.GetGameState();
+            gameStateProv.LoadInitGameState(reg);
+
+            Debug.Log("OnGameLoaded");
+        }
+
+        private void Unsetup()
+        {
+            if (gameManagers != null)
+            {
+                for (int i = 0; i < gameManagers.Length; i++)
+                {
+                    gameManagers[i].Unsetup();
+                }
+            }
+        }
+    }
+}
