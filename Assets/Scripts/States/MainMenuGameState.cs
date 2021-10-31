@@ -1,10 +1,12 @@
 using GFFramework;
 using GFFramework.UI;
+
+using GFFramework.GameStates;
 using Game.UI;
 
 using UnityEngine;
 
-namespace Game
+namespace Game.GameStates
 {
     [CreateAssetMenu(menuName = "GameStates/MainMenuGameState")]
     public class MainMenuGameState : BaseGameState

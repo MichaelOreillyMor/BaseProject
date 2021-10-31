@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace GFFramework
 {
+    /// <summary>
+    /// Basic class to encapsulate the inputs maps and control the input listeners
+    /// </summary>
     public class InputManager : BaseGameManager, IInputProvider
     {
         #region IGameManager

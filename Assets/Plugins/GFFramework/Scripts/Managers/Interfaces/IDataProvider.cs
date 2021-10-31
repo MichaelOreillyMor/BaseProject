@@ -1,4 +1,6 @@
-﻿namespace GFFramework
+﻿using GFFramework.GameDatas;
+
+namespace GFFramework
 {
     public interface IDataProvider
     {

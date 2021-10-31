@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 
-namespace GFFramework
+namespace GFFramework.PlayerControlles
 {
+    /// <summary>
+    /// The GameObject controlled directly by the player
+    /// </summary>
     public abstract class BasePlayerController : MonoBehaviour, IRequireInit
     {
         public bool IsInit { get; private set; }

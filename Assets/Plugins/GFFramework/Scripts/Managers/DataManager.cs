@@ -1,8 +1,12 @@
-﻿using System;
+﻿using GFFramework.GameDatas;
+using System;
 using UnityEngine;
 
 namespace GFFramework
 {
+    /// <summary>
+    ///Handles the game´s datas, the models needed to initialize the controllers (MVC)
+    /// </summary>
     public class DataManager : BaseGameManager, IDataProvider
     {
         [SerializeField]

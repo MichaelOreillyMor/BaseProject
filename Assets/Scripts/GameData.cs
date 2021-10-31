@@ -1,11 +1,13 @@
 ﻿using GFFramework;
+using GFFramework.GameDatas;
 
 using UnityEngine;
 
-namespace Game
+namespace Game.GameDatas
 {
+    // This is an just an example, a mix between a saveGame and game balance parameters list, in a real this could be loaded from a JSON
     /// <summary>
-    /// This is an just an example, a mix between a saveGame, some references to prefabs if needed, and game balance parameters
+    /// The initial state of game variables, e.g: max life amount 
     /// </summary>
     [CreateAssetMenu(menuName = "GameData")]
     public class GameData : BaseGameData

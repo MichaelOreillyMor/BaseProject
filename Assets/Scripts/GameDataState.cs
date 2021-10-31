@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-namespace Game
+namespace Game.GameDatas
 {
     /// <summary>
     /// The current state of game variables, e.g: current life amount 

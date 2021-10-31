@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace GFFramework
 {
+    /// <summary>
+    /// TO-DO
+    /// </summary>
     public class SceneManager : BaseGameManager, ISceneProvider
     {
         #region IGameManager

@@ -1,11 +1,14 @@
+using Game.PlayerControlles;
+
 using GFFramework;
+using GFFramework.GameStates;
 using GFFramework.Input;
 using GFFramework.UI;
 
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Game
+namespace Game.GameStates
 {
     [CreateAssetMenu(menuName = "GameStates/IdleGameState")]
     public class IdleGameState : BaseGameState, GameControls.IIdleStateActions

@@ -5,6 +5,10 @@ using UnityEngine;
 
 namespace GFFramework
 {
+    /// <summary>
+    /// Handles the UIScreens instantiation, and keeps a reference to the HUD the only UIScreens that is persistent for now
+    /// An improvement would be to avoid the constant destruction the rest of screens
+    /// </summary>
     public class UIManager : BaseGameManager, IUIProvider
     {
         [SerializeField]

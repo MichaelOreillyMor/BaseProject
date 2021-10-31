@@ -1,4 +1,6 @@
-﻿namespace GFFramework
+﻿using GFFramework.PlayerControlles;
+
+namespace GFFramework
 {
     public interface IPlayerProvider
     {

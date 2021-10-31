@@ -1,8 +1,13 @@
+using GFFramework.PlayerControlles;
+
 using System;
 using UnityEngine;
 
 namespace GFFramework
 {
+    /// <summary>
+    /// Basic class to keep a reference to the BasePlayerController
+    /// </summary>
     public class PlayerManager : BaseGameManager, IPlayerProvider
     {
         [SerializeField]

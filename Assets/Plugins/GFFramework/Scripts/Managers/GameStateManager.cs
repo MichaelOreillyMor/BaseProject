@@ -1,4 +1,5 @@
 ﻿using GFFramework.Enums;
+using GFFramework.GameStates;
 
 using System;
 using System.Collections.Generic;
@@ -6,9 +7,12 @@ using UnityEngine;
 
 namespace GFFramework
 {
+    /// <summary>
+    /// Handles the different game´s states, it´s a States pattern controlled by this class
+    /// </summary>
     public class GameStateManager : BaseGameManager, IGameStateProvider
     {
-        //Odin cant serialize a ScriptableObjects diccionary so I have to do this
+        //WIP: Odin cant serialize a ScriptableObjects diccionary so I have to do this
         [SerializeField]
         private BaseGameState[] gameStatesToLoad;
         private Dictionary<GameStateKey, BaseGameState> gameStates;

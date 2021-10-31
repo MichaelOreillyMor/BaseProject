@@ -1,8 +1,8 @@
 ﻿using GFFramework;
-
+using GFFramework.PlayerControlles;
 using UnityEngine;
 
-namespace Game
+namespace Game.PlayerControlles
 {
     public class PlayerController : BasePlayerController
     {

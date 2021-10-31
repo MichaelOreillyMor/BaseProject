@@ -1,8 +1,12 @@
 ﻿using GFFramework.Enums;
 using UnityEngine;
 
-namespace GFFramework
+namespace GFFramework.GameStates
 {
+    /// <summary>
+    /// Base state that changes the state of the game, e.g: UI to show, input received, player´s  representation...
+    /// It keeps also a static reference to the diferent providers (Managers)
+    /// </summary>
     public abstract class BaseGameState : ScriptableObject
     {
         protected static IGameStateProvider gameStateProv { get; private set; }

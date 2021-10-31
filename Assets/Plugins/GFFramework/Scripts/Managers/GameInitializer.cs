@@ -4,9 +4,12 @@ using UnityEngine;
 
 namespace GFFramework
 {
+    /// <summary>
+    /// Handles the game´s initialization and keeps a register of the managers
+    /// </summary>
     public class GameInitializer : MonoBehaviour
     {
-        [SerializeReference]
+        [SerializeField]
         public BaseGameManager[] gameManagers;
 
         public ProvidersRegister reg;
