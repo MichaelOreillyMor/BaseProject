@@ -1,10 +1,8 @@
-﻿using GFFramework.Pools;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GFFramework
+namespace GFFramework.Pools
 {
     /// <summary>
     /// Handles the instantiation of objects in-game

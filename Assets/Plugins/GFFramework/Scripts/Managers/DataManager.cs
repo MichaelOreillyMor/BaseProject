@@ -1,8 +1,7 @@
-﻿using GFFramework.GameDatas;
-using System;
+﻿using System;
 using UnityEngine;
 
-namespace GFFramework
+namespace GFFramework.GameDatas
 {
     /// <summary>
     ///Handles the game´s datas, the models needed to initialize the controllers (MVC)

@@ -1,11 +1,10 @@
 ﻿using GFFramework.Enums;
-using GFFramework.GameStates;
 
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GFFramework
+namespace GFFramework.GameStates
 {
     /// <summary>
     /// Handles the different game´s states, it´s a States pattern controlled by this class

@@ -1,9 +1,7 @@
-using GFFramework.PlayerControlles;
-
 using System;
 using UnityEngine;
 
-namespace GFFramework
+namespace GFFramework.PlayerControlles
 {
     /// <summary>
     /// Basic class to keep a reference to the BasePlayerController

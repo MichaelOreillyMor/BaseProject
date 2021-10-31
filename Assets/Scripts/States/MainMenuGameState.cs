@@ -1,6 +1,3 @@
-using GFFramework;
-using GFFramework.UI;
-
 using GFFramework.GameStates;
 using Game.UI;
 

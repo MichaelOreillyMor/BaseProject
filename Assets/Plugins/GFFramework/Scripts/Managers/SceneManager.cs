@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace GFFramework
+namespace GFFramework.Scenes
 {
     /// <summary>
     /// TO-DO

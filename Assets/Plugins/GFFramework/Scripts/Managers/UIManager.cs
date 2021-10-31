@@ -1,9 +1,7 @@
-using GFFramework.UI;
-
 using System;
 using UnityEngine;
 
-namespace GFFramework
+namespace GFFramework.UI
 {
     /// <summary>
     /// Handles the UIScreens instantiation, and keeps a reference to the HUD the only UIScreens that is persistent for now

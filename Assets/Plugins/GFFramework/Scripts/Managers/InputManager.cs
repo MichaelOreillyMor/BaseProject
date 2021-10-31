@@ -1,9 +1,7 @@
-using GFFramework.Input;
-
 using System;
 using UnityEngine;
 
-namespace GFFramework
+namespace GFFramework.Input
 {
     /// <summary>
     /// Basic class to encapsulate the inputs maps and control the input listeners
