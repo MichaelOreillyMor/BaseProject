@@ -1,44 +1,42 @@
-using Game.GameDatas;
 using Game.UI;
-
-using GFFramework;
-using GFFramework.GameStates;
+using GFFramework.GameStates.UI;
+using GFFramework.UI;
 
 using UnityEngine;
 
 namespace Game.GameStates
 {
+    /// <summary>
+    /// This state handles the load of the persistent resources just needed for playing the game (all states different from UIMainMenu)
+    /// An oposite state to unload this resources would be needed in a real game.
+    /// </summary>
     [CreateAssetMenu(menuName = "GameStates/LoadGameState")]
-    public class LoadGameState : BaseGameState
+    public class LoadGameState : BaseUIGameState
     {
-        [SerializeField]
-        private HUDScreen hudPref;
-
-        [SerializeField]
-        private LoadScreen loadScreenPref;
         private LoadScreen loadScreen;
 
-        public override void Setup()
+        protected override void OnPostUILoaded(BaseUIScreen uiScreen)
         {
-            GameData gameData = dataProv.GetGameData<GameData>();
-            loadScreen = uiProv.LoadScreen<LoadScreen>(loadScreenPref);
-            loadScreen.Setup();
+            if (uiScreen is LoadScreen screen)
+            {
+                loadScreen = screen;
+                loadScreen.Setup();
 
-            playerProv.LoadPlayerController();
+                HUDScreen hudScreen = uiProv.LoadHUD<HUDScreen>();
+                hudScreen.Setup();
 
-            HUDScreen hudScreen = uiProv.LoadHUD<HUDScreen>();
-            hudScreen.Setup();
-
-            gameStateProv.LoadGameState(nextGameState);
+                reg.PlayerProv.LoadPlayerController();
+                LoadNextGameState();
+            }
         }
 
-        public override void Unsetup()
+        protected override void OnPreUIUnsetup()
         {
-            loadScreen.Unetup();
-            uiProv.UnloadScreen();
+
         }
 
-        public override void Update()
+
+        protected override void OnUpdate()
         {
       
         }

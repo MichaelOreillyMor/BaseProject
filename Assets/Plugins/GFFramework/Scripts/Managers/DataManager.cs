@@ -16,8 +16,7 @@ namespace GFFramework.GameDatas
 
         public override void Setup(ISetProvidersRegister reg, Action onNextSetup)
         {
-            reg.SetData(this);
-
+            reg.DataProv = this;
             baseGameDataState = baseGameData.GetGameDataState();
 
             Debug.Log("Setup DataManager");

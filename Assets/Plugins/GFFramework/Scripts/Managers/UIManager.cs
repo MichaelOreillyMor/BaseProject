@@ -22,7 +22,8 @@ namespace GFFramework.UI
 
         public override void Setup(ISetProvidersRegister reg, Action onNextSetup)
         {
-            reg.SetUI(this);
+            reg.UIProv = this;
+
             Debug.Log("Setup UIManager");
             onNextSetup?.Invoke();
         }
@@ -36,7 +37,7 @@ namespace GFFramework.UI
 
         #endregion
 
-        public T LoadScreen<T>(BaseUIScreen screenPref) where T : BaseUIScreen
+        public BaseUIScreen LoadScreen(BaseUIScreen screenPref)
         {
             UnloadScreen();
 
@@ -44,7 +45,7 @@ namespace GFFramework.UI
             {
                 currentScreen = Instantiate(screenPref, transform);
                 currentScreen.transform.SetAsLastSibling();
-                return (T)currentScreen;
+                return currentScreen;
             }
 
             return null;
@@ -54,7 +55,7 @@ namespace GFFramework.UI
         {
             if (currentScreen != null)
             {
-                currentScreen.Unetup();
+                currentScreen.Unsetup();
                 Destroy(currentScreen.gameObject);
                 currentScreen = null;
             }
@@ -66,7 +67,7 @@ namespace GFFramework.UI
             { 
                 if (hudScreen != null)
                 {
-                    hudScreen.Unetup();
+                    hudScreen.Unsetup();
                     UnloadHUD();
                 }
 
@@ -81,7 +82,7 @@ namespace GFFramework.UI
         {
             if (hudScreen != null)
             {
-                hudScreen.Unetup();
+                hudScreen.Unsetup();
                 Destroy(hudScreen);
             }
         }

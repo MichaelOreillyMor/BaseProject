@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc96df4065dcc134aabcc47ea87c17b1, type: 3}
-  m_Name: LoadGameState
+  m_Name: Load
   m_EditorClassIdentifier: 
   key: 3
   nextGameState: 2
-  hudPref: {fileID: 5322689829067601021, guid: 644df990f4ae4164fa48eaaa439316c5, type: 3}
-  loadScreenPref: {fileID: 6358446574544483029, guid: 28a2803dbd198df42a1ac4f3019465af, type: 3}
+  uiScreenPref: {fileID: 6358446574544483029, guid: 28a2803dbd198df42a1ac4f3019465af, type: 3}
+  isInputListener: 0
+  canReturnPrevState: 0

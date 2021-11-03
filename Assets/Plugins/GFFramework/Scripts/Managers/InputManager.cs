@@ -14,7 +14,7 @@ namespace GFFramework.Input
 
         public override void Setup(ISetProvidersRegister reg, Action onNextSetup)
         {
-            reg.SetInput(this);
+            reg.InputProv = this;
 
             gameControls = new GameControls();
             gameControls.Enable();
@@ -28,22 +28,22 @@ namespace GFFramework.Input
             Debug.Log("Unsetup InputManager");
         }
 
-        public void SetIdlebacks(GameControls.IIdleStateActions idleStateActions)
+        public void SetIdleCallbacks(GameControls.IIdleStateActions idleStateActions)
         {
             gameControls.IdleState.SetCallbacks(idleStateActions);
         }
 
-        public void RemoveIdlebacks()
+        public void RemoveIdleCallbacks()
         {
             gameControls.IdleState.SetCallbacks(null);
         }
 
-        public void SetUIbacks(GameControls.IUIStateActions uiStateActions)
+        public void SetUICallbacks(GameControls.IUIStateActions uiStateActions)
         {
             gameControls.UIState.SetCallbacks(uiStateActions);
         }
 
-        public void RemoveUIbacks()
+        public void RemoveUICallbacks()
         {
             gameControls.UIState.SetCallbacks(null);
         }

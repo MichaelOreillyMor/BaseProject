@@ -15,21 +15,28 @@ namespace Game.GameStates
     {
         PlayerController playerController;
 
-        public override void Setup()
+        protected IUIProvider uiProv;
+        protected IInputProvider inputProv;
+        protected IPlayerProvider playerProv;
+
+        protected override void OnSetup()
         {
+            uiProv = reg.UIProv;
+            inputProv = reg.InputProv;
+            playerProv = reg.PlayerProv;
+
             uiProv.ShowHUD(true);
             playerController = (PlayerController)playerProv.GetPlayerController();
-
-            inputProv.SetIdlebacks(this);
+            inputProv.SetIdleCallbacks(this);
         }
 
-        public override void Unsetup()
+        protected override void OnUnsetup()
         {
-            inputProv.RemoveIdlebacks();
+            inputProv.RemoveIdleCallbacks();
             uiProv.ShowHUD(false);
         }
 
-        public override void Update()
+        protected override void OnUpdate()
         {
   
         }

@@ -299,15 +299,15 @@ PrefabInstance:
     - target: {fileID: 2364495981859572166, guid: 03309a02049d7fe4bb197a5a7336cc23, type: 3}
       propertyPath: gameStatesToLoad.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 122d3d7406246dd42b0308c747bab7c5, type: 2}
+      objectReference: {fileID: 11400000, guid: bac1f1c490c980a48bd5bc360e47d39a, type: 2}
     - target: {fileID: 2364495981859572166, guid: 03309a02049d7fe4bb197a5a7336cc23, type: 3}
       propertyPath: gameStatesToLoad.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 23dcbdc5a45334d45bd91075850d85a9, type: 2}
+      objectReference: {fileID: 11400000, guid: b17a50128b759e747b179e75460d6d8a, type: 2}
     - target: {fileID: 2364495981859572166, guid: 03309a02049d7fe4bb197a5a7336cc23, type: 3}
       propertyPath: gameStatesToLoad.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: 743e335c97baf004bbc0f5e25f00941e, type: 2}
+      objectReference: {fileID: 11400000, guid: 0e172062e69e0ca4cb448416519d352b, type: 2}
     - target: {fileID: 7709129125684062144, guid: 03309a02049d7fe4bb197a5a7336cc23, type: 3}
       propertyPath: m_RootOrder
       value: 2

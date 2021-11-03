@@ -16,7 +16,8 @@ namespace GFFramework.PlayerControlles
 
         public override void Setup(ISetProvidersRegister reg, Action onNextSetup)
         {
-            reg.SetPlayer(this);
+            reg.PlayerProv = this;
+
             Debug.Log("Setup PlayerManager");
             onNextSetup?.Invoke();
         }
@@ -52,7 +53,7 @@ namespace GFFramework.PlayerControlles
         {
             if (playerController)
             {
-                playerController.Unetup();
+                playerController.Unsetup();
                 Destroy(playerController.gameObject);
             }
         }

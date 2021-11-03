@@ -2,12 +2,12 @@ namespace GFFramework
 {
     public interface ISetProvidersRegister
     {
-        public void SetGameState(IGameStateProvider provider);
-        public void SetScene(ISceneProvider provider);
-        public void SetData(IDataProvider provider);
-        public void SetUI(IUIProvider provider);
-        public void SetInput(IInputProvider provider);
-        public void SetPlayer(IPlayerProvider provider);
-        public void SetPool(IPoolProvider provider);
+        public IGameStateProvider GameStateProv { set; }
+        public ISceneProvider SceneProv { set; }
+        public IDataProvider DataProv { set; }
+        public IUIProvider UIProv { set; }
+        public IInputProvider InputProv { set; }
+        public IPlayerProvider PlayerProv { set; }
+        public IPoolProvider PoolProv { set; }
     }
 }

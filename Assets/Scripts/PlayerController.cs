@@ -7,22 +7,19 @@ namespace Game.PlayerControlles
 {
     public class PlayerController : BasePlayerController
     {
-        public override void Setup()
+        protected override void OnSetup()
         {
-            if (!IsInit)
-            {
-                //TO_DO
-                base.Setup();
-            }
+
         }
 
-        public override void Unetup()
+        protected override void OnUnsetup()
         {
-            if (IsInit)
-            {
-                //TO_DO
-                base.Unetup();
-            }
+
+        }
+
+        protected override void OnUpdate()
+        {
+
         }
     }
 }

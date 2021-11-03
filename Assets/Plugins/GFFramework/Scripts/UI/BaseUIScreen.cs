@@ -1,28 +1,29 @@
-using GFFramework.Input;
-
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 namespace GFFramework.UI
 {
-    public abstract class BaseUIScreen : MonoBehaviour, IRequireInit, GameControls.IUIStateActions
+    /// <summary>
+    /// Base class for UIScreens (Canvas + UI objects) that need an initialization (setup()) and an deinitialization (Unsetup()) of resources.
+    /// It´s a variation of the BaseInitMonoObj class
+    /// </summary>
+    public abstract class BaseUIScreen : MonoBehaviour
     {
         public bool IsInit { get; private set; }
 
-        public virtual void Setup()
+        protected void OnSetup()
         {
             IsInit = true;
         }
 
-        public virtual void Unetup()
+        public void Unsetup()
         {
-            IsInit = false;
+            if (IsInit)
+            {
+                OnUnsetup();
+            }
         }
 
-        public virtual void OnBack(UnityEngine.InputSystem.InputAction.CallbackContext context)
-        {
-            Debug.Log("OnBack");
-        }
+        protected abstract void OnUnsetup();
     }
 }

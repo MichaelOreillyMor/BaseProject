@@ -42,7 +42,7 @@ namespace GFFramework
 
         private void OnGameLoaded()
         {
-            IGameStateProvider gameStateProv = reg.GetGameState();
+            IGameStateProvider gameStateProv = reg.GameStateProv;
             gameStateProv.LoadInitGameState(reg);
 
             Debug.Log("OnGameLoaded");

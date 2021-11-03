@@ -5,6 +5,6 @@
         bool IsInit { get; }
 
         void Setup();
-        void Unetup();
+        void Unsetup();
     }
 }

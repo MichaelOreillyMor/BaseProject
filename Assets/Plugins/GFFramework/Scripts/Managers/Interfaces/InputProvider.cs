@@ -4,9 +4,9 @@ namespace GFFramework
 {
     public interface IInputProvider
     {
-        public void SetIdlebacks(GameControls.IIdleStateActions idleStateActions);
-        public void RemoveIdlebacks();
-        public void SetUIbacks(GameControls.IUIStateActions uiStateActions);
-        public void RemoveUIbacks();
+        public void SetIdleCallbacks(GameControls.IIdleStateActions idleStateActions);
+        public void RemoveIdleCallbacks();
+        public void SetUICallbacks(GameControls.IUIStateActions uiStateActions);
+        public void RemoveUICallbacks();
     }
 }

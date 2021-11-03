@@ -24,7 +24,8 @@ namespace GFFramework.Pools
 
         public override void Setup(ISetProvidersRegister reg, Action onNextSetup)
         {
-            reg.SetPool(this);
+            reg.PoolProv = this;
+
             Debug.Log("Setup PoolManager");
             onNextSetup?.Invoke();
         }

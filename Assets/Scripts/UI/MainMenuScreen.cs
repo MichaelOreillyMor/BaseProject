@@ -19,17 +19,13 @@ namespace Game.UI
             {
                 startGameButton.onClick.RemoveAllListeners();
                 startGameButton.onClick.AddListener(() => onClickStart());
-                base.Setup();
+                OnSetup();
             }
         }
 
-        public override void Unetup()
+        protected override void OnUnsetup()
         {
-            if (IsInit)
-            {
-                //TO_DO
-                base.Unetup();
-            }
+            //TO_DO
         }
     }
 }

@@ -12,7 +12,8 @@ namespace GFFramework.Scenes
 
         public override void Setup(ISetProvidersRegister reg, Action onNextSetup)
         {
-            reg.SetScene(this);
+            reg.SceneProv = this;
+
             Debug.Log("Setup SceneManager");
             onNextSetup?.Invoke();
         }

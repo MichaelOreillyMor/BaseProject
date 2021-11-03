@@ -1,34 +1,44 @@
-using GFFramework.GameStates;
+using GFFramework.GameStates.UI;
 using Game.UI;
 
 using UnityEngine;
+using GFFramework.UI;
+using UnityEngine.InputSystem;
 
 namespace Game.GameStates
 {
     [CreateAssetMenu(menuName = "GameStates/MainMenuGameState")]
-    public class MainMenuGameState : BaseGameState
+    public class MainMenuGameState : BaseUIGameState
     {
-        [SerializeField]
-        MainMenuScreen mainMenuScreenPref;
         MainMenuScreen mainMenuScreen;
 
-        public override void Setup()
+        protected override void OnPostUILoaded(BaseUIScreen uiScreen)
         {
-            mainMenuScreen = uiProv.LoadScreen<MainMenuScreen>(mainMenuScreenPref);
-            mainMenuScreen.Setup(LoadNextState);
-            inputProv.SetUIbacks(mainMenuScreen);
+            if (uiScreen is MainMenuScreen screen)
+            {
+                mainMenuScreen = screen;
+                mainMenuScreen.Setup(LoadNextGameState);
+            }
+            else
+            {
+                Debug.LogError(name + ": No valid UISreen to load", this);
+            }
         }
 
-        public override void Unsetup()
+        protected override void OnPreUIUnsetup()
         {
-            inputProv.RemoveUIbacks();
-            mainMenuScreen.Unetup();
-            uiProv.UnloadScreen();
+
         }
 
-        public override void Update()
+        protected override void OnUpdate()
         {
 
+        }
+
+        public override void OnBack(InputAction.CallbackContext context)
+        {
+            Debug.Log("Application.Quit()");
+            Application.Quit();
         }
     }
 }

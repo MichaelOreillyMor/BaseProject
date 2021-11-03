@@ -2,12 +2,12 @@ namespace GFFramework
 {
     public interface IGetProvidersRegister
     {
-        public IGameStateProvider GetGameState();
-        public ISceneProvider GetScene();
-        public IDataProvider GetData();
-        public IUIProvider GetUI();
-        public IInputProvider GetInput();
-        public IPlayerProvider GetPlayer();
-        public IPoolProvider GetPool();
+        public IGameStateProvider GameStateProv { get; }
+        public ISceneProvider SceneProv { get; }
+        public IDataProvider DataProv { get; }
+        public IUIProvider UIProv { get; }
+        public IInputProvider InputProv { get; }
+        public IPlayerProvider PlayerProv { get; }
+        public IPoolProvider PoolProv { get; }
     }
 }

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 244470aabe6c3a8429f720a56a3f210e, type: 3}
-  m_Name: IdleState
+  m_Name: Idle
   m_EditorClassIdentifier: 
   key: 2
   nextGameState: 0

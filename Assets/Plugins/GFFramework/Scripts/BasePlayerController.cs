@@ -5,18 +5,8 @@ namespace GFFramework.PlayerControlles
     /// <summary>
     /// The GameObject controlled directly by the player
     /// </summary>
-    public abstract class BasePlayerController : MonoBehaviour, IRequireInit
+    public abstract class BasePlayerController : BaseInitMonoObj
     {
-        public bool IsInit { get; private set; }
 
-        public virtual void Setup()
-        {
-            IsInit = true;
-        }
-
-        public virtual void Unetup()
-        {
-            IsInit = false;
-        }
     }
 }

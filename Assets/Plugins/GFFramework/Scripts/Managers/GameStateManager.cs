@@ -26,9 +26,8 @@ namespace GFFramework.GameStates
 
         public override void Setup(ISetProvidersRegister reg, Action onNextSetup)
         {
-            reg.SetGameState(this);
-
-            LoadGameState();
+            reg.GameStateProv = this;
+            LoadGameStates();
 
             Debug.Log("Setup GameStateManager");
             onNextSetup?.Invoke();
@@ -41,7 +40,7 @@ namespace GFFramework.GameStates
 
         #endregion
 
-        private void LoadGameState()
+        private void LoadGameStates()
         {
             if (gameStatesToLoad != null)
             {
@@ -77,7 +76,7 @@ namespace GFFramework.GameStates
             }
          }
 
-        public void ReturnPrevGameState()
+        public void LoadPrevGameState()
         {
             if (prevGameState)
             {

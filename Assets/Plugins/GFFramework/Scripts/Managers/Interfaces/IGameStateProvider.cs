@@ -6,5 +6,6 @@ namespace GFFramework
     {
         public void LoadInitGameState(IGetProvidersRegister reg);
         public void LoadGameState(GameStateKey gameStateKey);
+        public void LoadPrevGameState();
     }
 }
