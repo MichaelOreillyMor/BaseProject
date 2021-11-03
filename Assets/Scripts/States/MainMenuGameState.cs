@@ -35,10 +35,12 @@ namespace Game.GameStates
 
         }
 
-        public override void OnBack(InputAction.CallbackContext context)
+        public override bool OnBack()
         {
-            Debug.Log("Application.Quit()");
+            Debug.Log("Quit game");
             Application.Quit();
+
+            return true;
         }
     }
 }

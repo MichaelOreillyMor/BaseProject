@@ -167,7 +167,7 @@ namespace GFFramework.Input
             ""actions"": [
                 {
                     ""name"": ""Back"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Button"",
                     ""id"": ""79176f1e-30dd-4eb0-a066-dc5b44eaa458"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
@@ -189,7 +189,19 @@ namespace GFFramework.Input
             ]
         }
     ],
-    ""controlSchemes"": []
+    ""controlSchemes"": [
+        {
+            ""name"": ""New control scheme"",
+            ""bindingGroup"": ""New control scheme"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Keyboard>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
+        }
+    ]
 }");
             // IdleState
             m_IdleState = asset.FindActionMap("IdleState", throwIfNotFound: true);
@@ -317,6 +329,15 @@ namespace GFFramework.Input
             }
         }
         public UIStateActions @UIState => new UIStateActions(this);
+        private int m_NewcontrolschemeSchemeIndex = -1;
+        public InputControlScheme NewcontrolschemeScheme
+        {
+            get
+            {
+                if (m_NewcontrolschemeSchemeIndex == -1) m_NewcontrolschemeSchemeIndex = asset.FindControlSchemeIndex("New control scheme");
+                return asset.controlSchemes[m_NewcontrolschemeSchemeIndex];
+            }
+        }
         public interface IIdleStateActions
         {
             void OnMainAction(InputAction.CallbackContext context);

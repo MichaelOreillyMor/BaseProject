@@ -18,11 +18,8 @@ namespace GFFramework
 
         public void Setup()
         {
-            if (!isInit)
-            {
-                OnSetup();
-                isInit = true;
-            }
+            OnSetup();
+            isInit = true;
         }
 
         public void Unsetup()

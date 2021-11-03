@@ -59,14 +59,31 @@ namespace GFFramework.GameStates.UI
             }
         }
 
+        /// <summary>
+        /// The UIScreen should be setup here
+        /// </summary>
         protected abstract void OnPostUILoaded(BaseUIScreen uiScreen);
+
+        /// <summary>
+        /// Unsetup what you need here before UIScreen unloading
+        /// </summary>
         protected abstract void OnPreUIUnsetup();
 
-        public virtual void OnBack(InputAction.CallbackContext context)
+        /// <summary>
+        /// Returns true if back was captured by the screen (e.g: a UI panel was closed)
+        /// </summary>
+        public virtual bool OnBack() => false;
+
+        public void OnBack(InputAction.CallbackContext context)
         {
-            if (canReturnPrevState)
+            if (context.performed)
             {
-                LoadPrevGameState();
+                bool backInputCaptured = OnBack();
+
+                if (backInputCaptured && canReturnPrevState)
+                {
+                    LoadPrevGameState();
+                }
             }
         }
     }

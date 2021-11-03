@@ -4,10 +4,9 @@ using UnityEngine;
 namespace GFFramework.UI
 {
     /// <summary>
-    /// Handles the UIScreens instantiation, and keeps a reference to the HUD the only UIScreens that is persistent for now
+    /// Handles the UIScreens instantiation, and keeps a reference to the HUD, the only UIScreen that is persistent for now
     /// An improvement is going be to avoid the constant destruction rest of screens that are not the HUD.
     /// Some are going to be persistent and others temporary, depending on a flag in the BaseScreen.
-    /// Some of the persistent screens would keep their state during the whole game.
     /// The direct reference to the HUD would be removed.
     /// </summary>
     public class UIManager : BaseGameManager, IUIProvider
