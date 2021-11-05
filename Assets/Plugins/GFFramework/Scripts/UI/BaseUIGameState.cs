@@ -19,9 +19,9 @@ namespace GFFramework.GameStates.UI
         protected bool canReturnPrevState;
 
         protected IUIProvider uiProv;
-        protected IInputProvider inputProv;
+        private IInputProvider inputProv;
 
-        protected sealed override void OnSetup()
+        public sealed override void Setup()
         {
             if (uiScreenPref)
             {
@@ -43,7 +43,7 @@ namespace GFFramework.GameStates.UI
             }
         }
 
-        protected sealed override void OnUnsetup()
+        public sealed override void Unsetup()
         {
             OnPreUIUnsetup();
 

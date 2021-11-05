@@ -35,8 +35,7 @@ namespace Game.GameStates
 
         }
 
-
-        protected override void OnUpdate()
+        public override void Update()
         {
       
         }

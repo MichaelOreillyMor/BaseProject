@@ -8,17 +8,12 @@ namespace Game.UI
 {
     public class LoadScreen : BaseUIScreen
     {
-        //TO-DO : shows a progress bar
-        public void Setup()
+        public void Setup(/* some params */)
         {
-            if (!IsInit)
-            {
-                //TO_DO
-                OnSetup();
-            }
+            //TO-DO : shows a progress bar
         }
 
-        protected override void OnUnsetup()
+        public override void Unsetup()
         {
             //TO_DO
         }

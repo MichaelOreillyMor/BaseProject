@@ -19,7 +19,7 @@ namespace Game.GameStates
         protected IInputProvider inputProv;
         protected IPlayerProvider playerProv;
 
-        protected override void OnSetup()
+        public override void Setup()
         {
             uiProv = reg.UIProv;
             inputProv = reg.InputProv;
@@ -30,25 +30,26 @@ namespace Game.GameStates
             inputProv.SetIdleCallbacks(this);
         }
 
-        protected override void OnUnsetup()
+        public override void Unsetup()
         {
             inputProv.RemoveIdleCallbacks();
             uiProv.ShowHUD(false);
         }
 
-        protected override void OnUpdate()
+        public override void Update()
         {
   
         }
 
         public void OnMainAction(InputAction.CallbackContext context)
         {
-            Debug.Log("OnMainShot " + context.ReadValue<float>());
+            Debug.Log("OnMainAction " + context.ReadValue<float>());
         }
 
         public void OnMove(InputAction.CallbackContext context)
         {
-            Debug.Log("OnMove " + context.ReadValue<Vector2>());
+            Vector2 input = context.ReadValue<Vector2>();
+            playerController.SetDirection(input);
         }
     }
 }

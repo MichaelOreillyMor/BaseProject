@@ -41,6 +41,7 @@ namespace GFFramework.PlayerControlles
                 }
 
                 this.playerController = Instantiate(playerControllerPref, Vector3.zero, Quaternion.identity);
+                playerController.Setup();
             }
         }
 

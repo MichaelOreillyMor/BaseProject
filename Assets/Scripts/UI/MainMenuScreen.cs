@@ -15,15 +15,11 @@ namespace Game.UI
 
         public void Setup(Action onClickStart)
         {
-            if (!IsInit)
-            {
-                startGameButton.onClick.RemoveAllListeners();
-                startGameButton.onClick.AddListener(() => onClickStart());
-                OnSetup();
-            }
+            startGameButton.onClick.RemoveAllListeners();
+            startGameButton.onClick.AddListener(() => onClickStart());
         }
 
-        protected override void OnUnsetup()
+        public override void Unsetup()
         {
             //TO_DO
         }

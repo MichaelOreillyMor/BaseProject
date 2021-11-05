@@ -6,8 +6,22 @@ namespace GFFramework.UI
     /// <summary>
     /// Handles the UIScreens instantiation, and keeps a reference to the HUD, the only UIScreen that is persistent for now
     /// An improvement is going be to avoid the constant destruction rest of screens that are not the HUD.
-    /// Some are going to be persistent and others temporary, depending on a flag in the BaseScreen.
-    /// The direct reference to the HUD would be removed.
+    /// 
+    /// TO-DO:
+    /// Each scene will have a script SceneController : Mono
+    /// The sceneInfo will have a ScreensRefs.cs (serialize class)
+    /// When the scene is loaded callback to the LoadGameState
+    /// In the State uiMan.Set(sceneController.ScreenProv)
+    /// 
+    /// Each UIScreen will have the same Enum that its state
+    /// UIManager will load a dictionary of Enums + Scenes using ScreensRefs
+    /// Hud refs here will be removed
+    /// 
+    /// When a new scene is loaded
+    /// we have to clean the GameStateMan, prevState null
+    /// we have to clean the UIMan, currentScreen null
+    /// IdleState will be a UIState, HUD will be loaded in the Setup
+    /// sceneController has to be a prefab viarian in each scene
     /// </summary>
     public class UIManager : BaseGameManager, IUIProvider
     {
@@ -55,7 +69,7 @@ namespace GFFramework.UI
             if (currentScreen != null)
             {
                 currentScreen.Unsetup();
-                Destroy(currentScreen.gameObject);
+                Destroy(currentScreen.gameObject);//Destroy is bad is a WIP
                 currentScreen = null;
             }
         }
@@ -70,7 +84,7 @@ namespace GFFramework.UI
                     UnloadHUD();
                 }
 
-                hudScreen = Instantiate(hudScreenPref, transform);
+                hudScreen = Instantiate(hudScreenPref, transform);//Instantiate one by one is bad is a WIP
                 hudScreen.transform.SetAsFirstSibling();
             }
 

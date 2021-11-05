@@ -11,9 +11,12 @@ namespace GFFramework.GameStates
     /// </summary>
     public class GameStateManager : BaseGameManager, IGameStateProvider
     {
-        //WIP: Odin cant serialize a ScriptableObjects diccionary so I have to do this
+        //WIP: Unity cant serialize a Assets diccionary so I have to do this
         [SerializeField]
         private BaseGameState[] gameStatesToLoad;
+
+        //In C# since Enums do not implement IEquatable, they'll be casted to object (boxing) in order to compare the keys Object.Equals().
+        //Thanks to il2cpp this is not happening 
         private Dictionary<GameStateKey, BaseGameState> gameStates;
 
         [SerializeField]
@@ -68,10 +71,14 @@ namespace GFFramework.GameStates
                 if (currentGameState)
                 {
                     prevGameState = currentGameState;
+
+                    Debug.Log("Unsetup " + name);
                     prevGameState.Unsetup();
                 }
 
                 currentGameState = gameState;
+
+                Debug.Log("Setup " + name);
                 gameState.Setup();
             }
          }
@@ -80,16 +87,7 @@ namespace GFFramework.GameStates
         {
             if (prevGameState)
             {
-                if (currentGameState)
-                {
-                    currentGameState.Unsetup();
-                }
-
-                BaseGameState auxGameState = currentGameState;
-                currentGameState = prevGameState;
-                prevGameState = auxGameState;
-
-                currentGameState.Setup();
+                LoadGameState(prevGameState.Key);
             }
         }
 

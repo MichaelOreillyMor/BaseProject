@@ -424,6 +424,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5937889120859654979, guid: 0e7955569a0db5541af13517e82309a9, type: 3}
+      propertyPath: scenes.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5937889120859654979, guid: 0e7955569a0db5541af13517e82309a9, type: 3}
+      propertyPath: scenesToLoad.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5937889120859654979, guid: 0e7955569a0db5541af13517e82309a9, type: 3}
+      propertyPath: serializableObject.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5937889120859654979, guid: 0e7955569a0db5541af13517e82309a9, type: 3}
+      propertyPath: scenesToLoad.Array.data[0].key
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5937889120859654979, guid: 0e7955569a0db5541af13517e82309a9, type: 3}
+      propertyPath: scenesToLoad.Array.data[0].path
+      value: Assets/MyScenes/Game.unity
+      objectReference: {fileID: 0}
+    - target: {fileID: 5937889120859654979, guid: 0e7955569a0db5541af13517e82309a9, type: 3}
+      propertyPath: scenesToLoad.Array.data[0].sceneKey
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5937889120859654979, guid: 0e7955569a0db5541af13517e82309a9, type: 3}
+      propertyPath: scenesToLoad.Array.data[0].scenePath
+      value: Assets/MyScenes/Game.unity
+      objectReference: {fileID: 0}
     - target: {fileID: 6769102022474231789, guid: 0e7955569a0db5541af13517e82309a9, type: 3}
       propertyPath: m_Name
       value: GameInitializer

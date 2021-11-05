@@ -8,16 +8,12 @@ namespace Game.UI
 {
     public class HUDScreen : BaseUIScreen
     {
-        public void Setup()
+        public void Setup(/* some params */)
         {
-            if (!IsInit)
-            {
-                //TO_DO
-                OnSetup();
-            }
+            //TO_DO
         }
 
-        protected override void OnUnsetup()
+        public override void Unsetup()
         {
             //TO_DO
         }
