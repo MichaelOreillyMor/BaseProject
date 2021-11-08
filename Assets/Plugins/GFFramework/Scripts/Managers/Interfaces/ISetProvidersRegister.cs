@@ -9,5 +9,6 @@ namespace GFFramework
         public IInputProvider InputProv { set; }
         public IPlayerProvider PlayerProv { set; }
         public IPoolProvider PoolProv { set; }
+        public ICameraProvider CameraProv { set; }
     }
 }

@@ -1,4 +1,7 @@
-using System;
+using GFFramework.PlayerControllers;
+using GFFramework.Scenes;
+using GFFramework.UI;
+
 using UnityEngine;
 
 namespace GFFramework
@@ -9,11 +12,12 @@ namespace GFFramework
     public class GameInitializer : MonoBehaviour
     {
         [SerializeField]
-        public BaseGameManager[] gameManagers;
+        private BaseGameManager[] gameManagers;
 
-        public ProvidersRegister reg;
+        private ProvidersRegister reg;
 
-        private void Awake() => Setup();
+        //Use Start for init the game, Awake() for scene GameObjects
+        private void Start() => Setup();
 
         private void Setup()
         {
@@ -42,9 +46,13 @@ namespace GFFramework
 
         private void OnGameLoaded()
         {
+            LoadInitGameState();
+        }
+
+        private void LoadInitGameState()
+        {
             IGameStateProvider gameStateProv = reg.GameStateProv;
             gameStateProv.LoadInitGameState(reg);
-
             Debug.Log("OnGameLoaded");
         }
 

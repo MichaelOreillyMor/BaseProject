@@ -4,10 +4,10 @@ namespace GFFramework
 {
     public interface IUIProvider
     {
-        public BaseUIScreen LoadScreen(BaseUIScreen screenPref);
-        public void UnloadScreen();
-        public T LoadHUD<T>() where T : BaseUIScreen;
-        public void UnloadHUD();
-        public BaseUIScreen ShowHUD(bool b);
+        public BaseUIScreen LoadUIScreen(BaseUIScreen screenPref);
+        public void UnloadUIScreen();
+        public void RegisterSceneScreens(BaseUIScreen[] UIScreens);
+        public void CleanSceneScreens();
+        public LoadScreen ShowLoadScreen(bool show);
     }
 }

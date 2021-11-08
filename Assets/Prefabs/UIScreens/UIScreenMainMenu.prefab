@@ -267,6 +267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 930e9c719625d7b44be3814639d753dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  owner: 1
   startGameButton: {fileID: 4008233200037087248}
 --- !u!1 &5936449430603731914
 GameObject:
@@ -440,7 +441,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6367085804619870519, guid: 63ba650457b6fe8429d440f1a5b0108a, type: 3}
       propertyPath: m_Name
-      value: MainMenuScreen
+      value: UIScreenMainMenu
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63ba650457b6fe8429d440f1a5b0108a, type: 3}

@@ -63,6 +63,26 @@ namespace GFFramework.Pools
             active = new List<PoolMember>(initialQty);
         }
 
+        public void DestroyPoolMembers() 
+        {
+            nextId = 0;
+            for (int i = 0; i < inactive.Count; i++)
+            {
+                PoolMember poolMember = inactive.Pop();
+                GameObject.Destroy(poolMember.gameObject);
+            }
+
+            inactive.Clear();
+
+            for (int i = 0; i < active.Count; i++)
+            {
+                PoolMember poolMember = active[i];
+                GameObject.Destroy(poolMember.gameObject);
+            }
+
+            active.Clear();
+        }
+
         public List<PoolMember> GetActiveInstances()
         {
             return active;

@@ -12,7 +12,7 @@ namespace GFFramework.GameDatas
         private BaseGameData baseGameData;
         private BaseGameDataState baseGameDataState;
 
-        #region IGameManager
+        #region Setup/Unsetup methods
 
         public override void Setup(ISetProvidersRegister reg, Action onNextSetup)
         {

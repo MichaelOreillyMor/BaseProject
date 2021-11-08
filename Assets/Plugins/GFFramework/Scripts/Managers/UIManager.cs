@@ -1,41 +1,35 @@
+using GFFramework.Enums;
+
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GFFramework.UI
 {
     /// <summary>
-    /// Handles the UIScreens instantiation, and keeps a reference to the HUD, the only UIScreen that is persistent for now
-    /// An improvement is going be to avoid the constant destruction rest of screens that are not the HUD.
+    /// Handles the UIScreens instantiation, and keeps a reference to the LoadScreen, the only UIScreen that is persistent
+    /// It contains a dictionary of the UIScreens that are part of the scene and don´t need to be instantiated on run-time
     /// 
-    /// TO-DO:
-    /// Each scene will have a script SceneController : Mono
-    /// The sceneInfo will have a ScreensRefs.cs (serialize class)
-    /// When the scene is loaded callback to the LoadGameState
-    /// In the State uiMan.Set(sceneController.ScreenProv)
-    /// 
-    /// Each UIScreen will have the same Enum that its state
-    /// UIManager will load a dictionary of Enums + Scenes using ScreensRefs
-    /// Hud refs here will be removed
-    /// 
-    /// When a new scene is loaded
-    /// we have to clean the GameStateMan, prevState null
-    /// we have to clean the UIMan, currentScreen null
-    /// IdleState will be a UIState, HUD will be loaded in the Setup
-    /// sceneController has to be a prefab viarian in each scene
+    /// If you want a persistent UIScreen: add it to this prefab (right now is just LoadScreen WIP)
+    /// If you want a persistent UIScreen during the life time of a scene: add it to SceneInfo prefab
+    /// If you want a UIScreen loaded in run-time that will be destroyed: just add the reference to the GameState
     /// </summary>
     public class UIManager : BaseGameManager, IUIProvider
     {
         [SerializeField]
-        private BaseUIScreen hudScreenPref;
-        private BaseUIScreen hudScreen;
+        private LoadScreen loadScreen;
 
+        private Dictionary<GameStateKey, BaseUIScreen> sceneScreens;
         private BaseUIScreen currentScreen;
 
-        #region IGameManager
+        #region Setup/Unsetup methods
 
         public override void Setup(ISetProvidersRegister reg, Action onNextSetup)
         {
             reg.UIProv = this;
+
+            sceneScreens = new Dictionary<GameStateKey, BaseUIScreen>();
+            ShowLoadScreen(true);
 
             Debug.Log("Setup UIManager");
             onNextSetup?.Invoke();
@@ -43,71 +37,123 @@ namespace GFFramework.UI
 
         public override void Unsetup()
         {
-            UnloadScreen();
-            UnloadHUD();
+            UnloadUIScreen();
+            sceneScreens.Clear();
+
             Debug.Log("Unsetup UIManager");
         }
 
         #endregion
 
-        public BaseUIScreen LoadScreen(BaseUIScreen screenPref)
+        #region UIScreens control methods
+
+        public BaseUIScreen LoadUIScreen(BaseUIScreen screenPref)
         {
-            UnloadScreen();
+            UnloadUIScreen();
 
             if (screenPref)
             {
-                currentScreen = Instantiate(screenPref, transform);
-                currentScreen.transform.SetAsLastSibling();
+                BaseUIScreen screenInstance = GetScreenInstance(screenPref.Owner);
+
+                if (screenInstance != null)
+                {
+                    screenInstance.Show(true);
+                }
+                else 
+                {
+                    screenInstance = CreateScreenInstance(screenPref);
+                }
+
+                currentScreen = screenInstance;
                 return currentScreen;
             }
 
             return null;
         }
 
-        public void UnloadScreen()
+        private BaseUIScreen CreateScreenInstance(BaseUIScreen screenPref)
+        {
+            Debug.Log("You are creating a UIScreen instance on run-time, consider the creation of one instance inside the Ref SceneScreens");
+            BaseUIScreen screenInstance = Instantiate(screenPref, transform);
+            screenInstance.transform.SetAsLastSibling();
+            return screenInstance;
+        }
+
+        public BaseUIScreen GetScreenInstance(GameStateKey owner)
+        {
+            BaseUIScreen screenInstance;
+            sceneScreens.TryGetValue(owner, out screenInstance);
+
+            return screenInstance;
+        }
+
+        public void UnloadUIScreen()
         {
             if (currentScreen != null)
             {
                 currentScreen.Unsetup();
-                Destroy(currentScreen.gameObject);//Destroy is bad is a WIP
+
+                if (HasScreenInstance(currentScreen.Owner))
+                {
+                    currentScreen.Show(false);
+                }
+                else
+                {
+                    Destroy(currentScreen.gameObject);
+                }
+
                 currentScreen = null;
             }
         }
 
-        public T LoadHUD<T>() where T : BaseUIScreen
+        #endregion
+
+        public LoadScreen ShowLoadScreen(bool show)
         {
-            if (hudScreenPref)
-            { 
-                if (hudScreen != null)
+            if (loadScreen)
+            {
+                loadScreen.Show(show);
+            }
+
+            return loadScreen;
+        }
+
+        public bool HasScreenInstance(GameStateKey owner)
+        {
+            return sceneScreens.ContainsKey(owner);
+        }
+
+        public void RegisterSceneScreens(BaseUIScreen[] UIScreens)
+        {
+            CleanSceneScreens();
+
+            if (UIScreens != null)
+            {
+                for (int i = 0; i < UIScreens.Length; i++)
                 {
-                    hudScreen.Unsetup();
-                    UnloadHUD();
+                    BaseUIScreen UIScreen = UIScreens[i];
+                    GameStateKey owner;
+
+                    if (UIScreen != null)
+                    {
+                        owner = UIScreen.Owner;
+
+                        if (owner != GameStateKey.None)
+                        {
+                            sceneScreens.Add(owner, UIScreen);
+                        }
+                        else
+                        {
+                            Debug.LogError(UIScreen.name + " doesn't have a Gamestate owner", UIScreen);
+                        }
+                    }
                 }
-
-                hudScreen = Instantiate(hudScreenPref, transform);//Instantiate one by one is bad is a WIP
-                hudScreen.transform.SetAsFirstSibling();
-            }
-
-            return (T)hudScreen;
-        }
-
-        public void UnloadHUD()
-        {
-            if (hudScreen != null)
-            {
-                hudScreen.Unsetup();
-                Destroy(hudScreen);
             }
         }
 
-        public BaseUIScreen ShowHUD(bool active)
+        public void CleanSceneScreens() 
         {
-            if (hudScreen != null)
-            {
-                hudScreen.gameObject.SetActive(active);
-            }
-
-            return hudScreen;
+            sceneScreens.Clear();
         }
     }
 }

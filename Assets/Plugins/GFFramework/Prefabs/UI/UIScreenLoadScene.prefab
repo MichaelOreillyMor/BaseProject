@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1488234753409702728}
   - component: {fileID: 6358446574544483029}
   m_Layer: 5
-  m_Name: LoadScreen
+  m_Name: UIScreenLoadScene
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -113,6 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5be7b617709de14e81c6d1b87cd45f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  owner: 3
 --- !u!1 &6025298460883649062
 GameObject:
   m_ObjectHideFlags: 0

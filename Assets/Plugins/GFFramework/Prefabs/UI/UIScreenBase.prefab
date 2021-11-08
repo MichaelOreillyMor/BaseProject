@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2389693612694422714}
   - component: {fileID: 1409454000912568610}
   m_Layer: 5
-  m_Name: BaseScreen
+  m_Name: UIScreenBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

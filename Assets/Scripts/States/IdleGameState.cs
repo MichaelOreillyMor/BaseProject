@@ -1,7 +1,8 @@
 using Game.PlayerControlles;
+using Game.UI;
 
 using GFFramework;
-using GFFramework.GameStates;
+using GFFramework.GameStates.UI;
 using GFFramework.Input;
 using GFFramework.UI;
 
@@ -11,34 +12,54 @@ using UnityEngine.InputSystem;
 namespace Game.GameStates
 {
     [CreateAssetMenu(menuName = "GameStates/IdleGameState")]
-    public class IdleGameState : BaseGameState, GameControls.IIdleStateActions
+    public class IdleGameState : BaseUIGameState, GameControls.IIdleStateActions
     {
-        PlayerController playerController;
+        PlayerCharacter playerCharacter;
+        HUDScreen HUDScreen;
 
-        protected IUIProvider uiProv;
         protected IInputProvider inputProv;
         protected IPlayerProvider playerProv;
 
-        public override void Setup()
-        {
-            uiProv = reg.UIProv;
-            inputProv = reg.InputProv;
-            playerProv = reg.PlayerProv;
+        #region Setup/Unsetup methods
 
-            uiProv.ShowHUD(true);
-            playerController = (PlayerController)playerProv.GetPlayerController();
-            inputProv.SetIdleCallbacks(this);
+        protected override void OnPostUILoaded(BaseUIScreen uiScreen)
+        {
+            if (uiScreen is HUDScreen screen)
+            {
+                uiProv = reg.UIProv;
+                inputProv = reg.InputProv;
+                playerProv = reg.PlayerProv;
+
+                playerCharacter = (PlayerCharacter)playerProv.GetPlayerCharacter();
+                playerCharacter.Setup();
+
+                inputProv.SetIdleCallbacks(this);
+
+                HUDScreen = screen;
+                HUDScreen.Setup();
+            }
+            else
+            {
+                Debug.LogError(name + ": No valid UISreen to load", this);
+            }
         }
 
-        public override void Unsetup()
+        protected override void OnPreUIUnsetup()
         {
             inputProv.RemoveIdleCallbacks();
-            uiProv.ShowHUD(false);
+            playerCharacter.Unsetup();
         }
+
+        #endregion
 
         public override void Update()
         {
-  
+
+        }
+
+        public override bool OnBack()
+        {
+            return true;
         }
 
         public void OnMainAction(InputAction.CallbackContext context)
@@ -49,7 +70,7 @@ namespace Game.GameStates
         public void OnMove(InputAction.CallbackContext context)
         {
             Vector2 input = context.ReadValue<Vector2>();
-            playerController.SetDirection(input);
+            playerCharacter.SetDirection(input);
         }
     }
 }

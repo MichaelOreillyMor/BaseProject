@@ -4,6 +4,13 @@ using UnityEngine;
 
 namespace GFFramework.Pools
 {
+    [Serializable]
+    public struct PreloadPoolMember
+    {
+        public int amount;
+        public PoolMember prefab;
+    }
+
     /// <summary>
     /// Handles the instantiation of objects in-game
     /// </summary>
@@ -20,7 +27,7 @@ namespace GFFramework.Pools
         // All of our pools
         private Dictionary<PoolMember, Pool> pools;
 
-        #region IGameManager
+        #region Setup/Unsetup methods
 
         public override void Setup(ISetProvidersRegister reg, Action onNextSetup)
         {
@@ -50,6 +57,22 @@ namespace GFFramework.Pools
             if (prefab != null && !pools.ContainsKey(prefab))
             {
                 pools.Add(prefab, new Pool(prefab, qty));
+            }
+        }
+
+        public void PreloadPools(PreloadPoolMember[] preloadPoolMembers) 
+        {
+            if (preloadPoolMembers != null) 
+            {
+                for (int i = 0; i < preloadPoolMembers.Length; i++)
+                {
+                    PreloadPoolMember pm = preloadPoolMembers[i];
+
+                    if (pm.prefab != null && pm.amount > 0)
+                    {
+                        Preload(pm.prefab, pm.amount);
+                    }
+                }
             }
         }
 
@@ -110,6 +133,19 @@ namespace GFFramework.Pools
             else
             {
                 poolMember.Pool.Despawn(poolMember);
+            }
+        }
+
+        public void DestroyPoolsMembers() 
+        {
+            if (pools != null)
+            {
+                foreach (Pool pool in pools.Values)
+                {
+                    pool.DestroyPoolMembers();
+                }
+
+                pools.Clear();
             }
         }
     }

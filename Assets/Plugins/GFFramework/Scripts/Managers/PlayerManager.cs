@@ -1,18 +1,16 @@
 using System;
 using UnityEngine;
 
-namespace GFFramework.PlayerControlles
+namespace GFFramework.PlayerControllers
 {
     /// <summary>
     /// Basic class to keep a reference to the BasePlayerController
     /// </summary>
     public class PlayerManager : BaseGameManager, IPlayerProvider
     {
-        [SerializeField]
-        private BasePlayerController playerControllerPref;
-        private BasePlayerController playerController;
+        private BasePlayerCharacter scenePlayerCharacter;
 
-        #region IGameManager
+        #region Setup/Unsetup methods
 
         public override void Setup(ISetProvidersRegister reg, Action onNextSetup)
         {
@@ -24,39 +22,15 @@ namespace GFFramework.PlayerControlles
 
         public override void Unsetup()
         {
-            UnloadPlayerController();
             Debug.Log("Unsetup PlayerManager");
         }
 
 
         #endregion
 
-        public void LoadPlayerController()
-        {
-            if (playerControllerPref)
-            {
-                if (this.playerController)
-                {
-                    UnloadPlayerController();
-                }
+        public void RegisterScenePlayerCharacter(BasePlayerCharacter playerCharacter) => scenePlayerCharacter = playerCharacter;
+        public void CleanPlayerCharacter() => scenePlayerCharacter = null;
 
-                this.playerController = Instantiate(playerControllerPref, Vector3.zero, Quaternion.identity);
-                playerController.Setup();
-            }
-        }
-
-        public BasePlayerController GetPlayerController()
-        {
-            return playerController;
-        }
-
-        public void UnloadPlayerController()
-        {
-            if (playerController)
-            {
-                playerController.Unsetup();
-                Destroy(playerController.gameObject);
-            }
-        }
+        public BasePlayerCharacter GetPlayerCharacter() => scenePlayerCharacter;
     }
 }

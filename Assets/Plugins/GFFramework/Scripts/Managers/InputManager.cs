@@ -8,9 +8,9 @@ namespace GFFramework.Input
     /// </summary>
     public class InputManager : BaseGameManager, IInputProvider
     {
-        #region IGameManager
-
         private GameControls gameControls;
+
+        #region Setup/Unsetup methods
 
         public override void Setup(ISetProvidersRegister reg, Action onNextSetup)
         {
@@ -27,6 +27,8 @@ namespace GFFramework.Input
         {
             Debug.Log("Unsetup InputManager");
         }
+
+        #endregion
 
         public void SetIdleCallbacks(GameControls.IIdleStateActions idleStateActions)
         {
@@ -47,7 +49,5 @@ namespace GFFramework.Input
         {
             gameControls.UIState.SetCallbacks(null);
         }
-
-        #endregion
     }
 }

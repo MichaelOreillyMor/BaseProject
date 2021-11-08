@@ -13,13 +13,15 @@ namespace GFFramework.GameStates.UI
         private BaseUIScreen uiScreen;
 
         [SerializeField]
-        private bool isInputListener;
+        private bool isMenuInputListener;
 
         [SerializeField]
         protected bool canReturnPrevState;
 
         protected IUIProvider uiProv;
         private IInputProvider inputProv;
+
+        #region Setup/Unsetup methods
 
         public sealed override void Setup()
         {
@@ -28,9 +30,9 @@ namespace GFFramework.GameStates.UI
                 uiProv = reg.UIProv;
                 inputProv = reg.InputProv;
 
-                uiScreen = uiProv.LoadScreen(uiScreenPref);
+                uiScreen = uiProv.LoadUIScreen(uiScreenPref);
 
-                if (isInputListener)
+                if (isMenuInputListener)
                 {
                     inputProv.SetUICallbacks(this);
                 }
@@ -49,13 +51,13 @@ namespace GFFramework.GameStates.UI
 
             if (uiScreen)
             {
-                if (isInputListener)
+                if (isMenuInputListener)
                 {
                     inputProv.RemoveUICallbacks();
                 }
 
                 uiScreen.Unsetup();
-                uiProv.UnloadScreen();
+                uiProv.UnloadUIScreen();
             }
         }
 
@@ -68,6 +70,10 @@ namespace GFFramework.GameStates.UI
         /// Unsetup what you need here before UIScreen unloading
         /// </summary>
         protected abstract void OnPreUIUnsetup();
+
+        #endregion
+
+        #region navigation methods
 
         /// <summary>
         /// Returns true if back was captured by the screen (e.g: a UI panel was closed)
@@ -86,5 +92,37 @@ namespace GFFramework.GameStates.UI
                 }
             }
         }
+
+        #endregion
+
+        #region editor methods
+
+        private void OnValidate()
+        {
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+            {
+                SetKeyToUIScreen();
+            }
+#endif
+        }
+
+        /// <summary>
+        /// Adds its key to the UIScreen as a link between them
+        /// </summary>
+        private void SetKeyToUIScreen()
+        {
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+            {
+                if (uiScreenPref)
+                {
+                    uiScreenPref.SetOwner(Key);
+                }
+            }
+#endif
+        }
+
+        #endregion
     }
 }

@@ -1,6 +1,7 @@
 ﻿using GFFramework.Enums;
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,7 +16,7 @@ namespace GFFramework.GameStates
         [SerializeField]
         private BaseGameState[] gameStatesToLoad;
 
-        //In C# since Enums do not implement IEquatable, they'll be casted to object (boxing) in order to compare the keys Object.Equals().
+        //In C# since Enums do not implement IEquatable, they'll be casted to object (boxing) in order to compare the keys Object.Equals()
         //Thanks to il2cpp this is not happening 
         private Dictionary<GameStateKey, BaseGameState> gameStates;
 
@@ -25,7 +26,7 @@ namespace GFFramework.GameStates
         private BaseGameState currentGameState;
         private BaseGameState prevGameState;
 
-        #region IGameManager
+        #region Setup/Unsetup methods
 
         public override void Setup(ISetProvidersRegister reg, Action onNextSetup)
         {
@@ -41,8 +42,6 @@ namespace GFFramework.GameStates
             Debug.Log("Unsetup GameStateManager");
         }
 
-        #endregion
-
         private void LoadGameStates()
         {
             if (gameStatesToLoad != null)
@@ -55,6 +54,10 @@ namespace GFFramework.GameStates
                 }
             }
         }
+
+        #endregion
+
+        #region Load GameStates methods
 
         public void LoadInitGameState(IGetProvidersRegister reg)
         {
@@ -95,7 +98,20 @@ namespace GFFramework.GameStates
         {
             BaseGameState gameState;
             gameStates.TryGetValue(gameStateKey, out gameState);
+
+            if (gameState == null)
+            {
+                Debug.Log(gameStateKey.ToString() + " not found");
+            }
+
             return gameState;
+        }
+
+        #endregion
+
+        public void StartStateCoroutine(IEnumerator coroutine) 
+        {
+            StartCoroutine(coroutine);
         }
 
         private void Update()

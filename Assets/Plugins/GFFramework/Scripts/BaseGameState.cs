@@ -13,14 +13,13 @@ namespace GFFramework.GameStates
         protected static IGetProvidersRegister reg { get; private set; }
         static public void SetProvidersRegister(IGetProvidersRegister register) => reg = register;
 
-        [SerializeField]
-        private GameStateKey key;
         public GameStateKey Key => key;
 
         [SerializeField]
-        protected GameStateKey nextGameState;
+        private GameStateKey key;
 
-        protected IGameStateProvider gameStateProv;
+        [SerializeField]
+        private GameStateKey nextGameState;
 
         public abstract void Setup();
         public abstract void Unsetup();

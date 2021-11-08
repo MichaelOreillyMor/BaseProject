@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
-namespace GFFramework.PlayerControlles
+namespace GFFramework.PlayerControllers
 {
     /// <summary>
-    /// The GameObject controlled directly by the player
+    /// The GameObject controlled directly by player´s input
     /// </summary>
-    public abstract class BasePlayerController : MonoBehaviour
+    public abstract class BasePlayerCharacter : MonoBehaviour
     {
         [SerializeField]
         protected Rigidbody rBody;

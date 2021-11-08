@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: 2
   nextGameState: 0
+  uiScreenPref: {fileID: 5322689829067601021, guid: 644df990f4ae4164fa48eaaa439316c5, type: 3}
+  isMenuInputListener: 0
+  canReturnPrevState: 0
