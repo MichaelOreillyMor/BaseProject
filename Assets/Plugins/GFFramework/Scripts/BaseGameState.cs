@@ -10,8 +10,8 @@ namespace GFFramework.GameStates
     /// </summary>
     public abstract class BaseGameState : ScriptableObject
     {
-        protected static IGetProvidersRegister reg { get; private set; }
-        static public void SetProvidersRegister(IGetProvidersRegister register) => reg = register;
+        protected static IGetProvidersRegister Reg { get; private set; }
+        static public void SetProvidersRegister(IGetProvidersRegister register) => Reg = register;
 
         public GameStateKey Key => key;
 
@@ -21,21 +21,31 @@ namespace GFFramework.GameStates
         [SerializeField]
         private GameStateKey nextGameState;
 
+        /// <summary>
+        /// Entry method where the dependencies of the GameState components are resolved (Dependency Injection Composition root)
+        ///the components can also start to listen to the events that they need here.
+        /// </summary>
         public abstract void Setup();
+
+        /// <summary>
+        /// Exit method where any resource taken by the game state is disposed (e.g: PoolMember)
+        /// and the components of the GameState stop listening to events
+        /// </summary>
         public abstract void Unsetup();
+
         public abstract void Update();
 
         protected void LoadNextGameState() 
         {
             if (nextGameState != GameStateKey.None)
             {
-                reg.GameStateProv.LoadGameState(nextGameState);
+                Reg.GameStateProv.LoadGameState(nextGameState);
             }
         }
 
         protected void LoadPrevGameState()
         {
-            reg.GameStateProv.LoadPrevGameState();
+            Reg.GameStateProv.LoadPrevGameState();
         }
     }
 }

@@ -2,6 +2,7 @@ using Game.PlayerControlles;
 using Game.UI;
 
 using GFFramework;
+using GFFramework.Enums;
 using GFFramework.GameStates.UI;
 using GFFramework.Input;
 using GFFramework.UI;
@@ -14,11 +15,12 @@ namespace Game.GameStates
     [CreateAssetMenu(menuName = "GameStates/IdleGameState")]
     public class IdleGameState : BaseUIGameState, GameControls.IIdleStateActions
     {
-        PlayerCharacter playerCharacter;
-        HUDScreen HUDScreen;
+        private PlayerCharacter playerCharacter;
+        private HUDScreen HUDScreen;
 
-        protected IInputProvider inputProv;
-        protected IPlayerProvider playerProv;
+        private IInputProvider inputProv;
+        private  IPlayerProvider playerProv;
+        private IGameStateProvider GameStateProv;
 
         #region Setup/Unsetup methods
 
@@ -26,9 +28,10 @@ namespace Game.GameStates
         {
             if (uiScreen is HUDScreen screen)
             {
-                uiProv = reg.UIProv;
-                inputProv = reg.InputProv;
-                playerProv = reg.PlayerProv;
+                uiProv = Reg.UIProv;
+                inputProv = Reg.InputProv;
+                playerProv = Reg.PlayerProv;
+                GameStateProv = Reg.GameStateProv;
 
                 playerCharacter = (PlayerCharacter)playerProv.GetPlayerCharacter();
                 playerCharacter.Setup();
@@ -59,6 +62,7 @@ namespace Game.GameStates
 
         public override bool OnBack()
         {
+            GameStateProv.LoadGameState(GameStateKey.LoadMainMenuScene);
             return true;
         }
 

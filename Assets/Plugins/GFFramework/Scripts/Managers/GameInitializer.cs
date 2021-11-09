@@ -1,7 +1,7 @@
 using GFFramework.PlayerControllers;
 using GFFramework.Scenes;
 using GFFramework.UI;
-
+using System;
 using UnityEngine;
 
 namespace GFFramework
@@ -11,13 +11,31 @@ namespace GFFramework
     /// </summary>
     public class GameInitializer : MonoBehaviour
     {
+        private static GameInitializer instance;
+
         [SerializeField]
         private BaseGameManager[] gameManagers;
 
         private ProvidersRegister reg;
 
-        //Use Start for init the game, Awake() for scene GameObjects
+        private void Awake() => CheckSingleInstance();
+
         private void Start() => Setup();
+
+        /// <summary>
+        /// Just to be able to test scenes alone in the Unity Editor
+        /// </summary>
+        private void CheckSingleInstance()
+        {
+            if (instance != null)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                instance = this;
+            }
+        }
 
         private void Setup()
         {

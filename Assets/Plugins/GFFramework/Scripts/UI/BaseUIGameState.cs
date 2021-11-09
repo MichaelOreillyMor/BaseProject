@@ -27,8 +27,8 @@ namespace GFFramework.GameStates.UI
         {
             if (uiScreenPref)
             {
-                uiProv = reg.UIProv;
-                inputProv = reg.InputProv;
+                uiProv = Reg.UIProv;
+                inputProv = Reg.InputProv;
 
                 uiScreen = uiProv.LoadUIScreen(uiScreenPref);
 

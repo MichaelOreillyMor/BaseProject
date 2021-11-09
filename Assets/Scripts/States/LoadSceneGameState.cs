@@ -31,11 +31,11 @@ namespace Game.GameStates
 
         public override void Setup()
         {
-            gameStateProv = reg.GameStateProv;
-            playerProv = reg.PlayerProv;
-            SceneProv = reg.SceneProv;
-            poolProv = reg.PoolProv;
-            UIProv = reg.UIProv;
+            gameStateProv = Reg.GameStateProv;
+            playerProv = Reg.PlayerProv;
+            SceneProv = Reg.SceneProv;
+            poolProv = Reg.PoolProv;
+            UIProv = Reg.UIProv;
 
             loadScreen = UIProv.ShowLoadScreen(true);
             loadScreen.Setup();
