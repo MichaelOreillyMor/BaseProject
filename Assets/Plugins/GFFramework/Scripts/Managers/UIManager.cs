@@ -38,7 +38,11 @@ namespace GFFramework.UI
         public override void Unsetup()
         {
             UnloadUIScreen();
-            sceneScreens.Clear();
+
+            if (sceneScreens != null)
+            {
+                sceneScreens.Clear();
+            }
 
             Debug.Log("Unsetup UIManager");
         }

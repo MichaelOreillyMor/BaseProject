@@ -22,6 +22,8 @@ namespace GFFramework
 
         private void Start() => Setup();
 
+        private void OnDestroy() => Unsetup();
+
         /// <summary>
         /// Just to be able to test scenes alone in the Unity Editor
         /// </summary>
@@ -80,7 +82,12 @@ namespace GFFramework
             {
                 for (int i = 0; i < gameManagers.Length; i++)
                 {
-                    gameManagers[i].Unsetup();
+                    BaseGameManager man = gameManagers[i];
+
+                    if (man != null)
+                    {
+                        man.Unsetup();
+                    }
                 }
             }
         }
