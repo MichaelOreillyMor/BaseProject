@@ -20,19 +20,20 @@ namespace Game.GameStates
 
         private IInputProvider inputProv;
         private  IPlayerProvider playerProv;
-        private IGameStateProvider GameStateProv;
 
         #region Setup/Unsetup methods
+
+        protected override void SetUIProviders(IGetProvidersRegister reg)
+        {
+            uiProv = reg.UIProv;
+            inputProv = reg.InputProv;
+            playerProv = reg.PlayerProv;
+        }
 
         protected override void OnPostUILoaded(BaseUIScreen uiScreen)
         {
             if (uiScreen is HUDScreen screen)
             {
-                uiProv = Reg.UIProv;
-                inputProv = Reg.InputProv;
-                playerProv = Reg.PlayerProv;
-                GameStateProv = Reg.GameStateProv;
-
                 playerCharacter = (PlayerCharacter)playerProv.GetPlayerCharacter();
                 playerCharacter.Setup();
 
@@ -62,7 +63,7 @@ namespace Game.GameStates
 
         public override bool OnBack()
         {
-            GameStateProv.LoadGameState(GameStateKey.LoadMainMenuScene);
+            gameStateProv.LoadGameState(GameStateKey.LoadMainMenuScene);
             return true;
         }
 

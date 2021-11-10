@@ -49,7 +49,8 @@ namespace GFFramework.PlayerControllers
         {
             if (velocity != Vector3.zero)
             {
-                rBody.MovePosition(transform.position + velocity * Time.deltaTime);//Time.deltaTime not necesary, but then speed needs to be like 0.001f
+                //Time.deltaTime not necesary, but then speed would need to be like 0.001f
+                rBody.MovePosition(transform.position + velocity * Time.deltaTime);
             }
         }
 

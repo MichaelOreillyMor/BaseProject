@@ -1,7 +1,3 @@
-using GFFramework.PlayerControllers;
-using GFFramework.Scenes;
-using GFFramework.UI;
-using System;
 using UnityEngine;
 
 namespace GFFramework
@@ -17,6 +13,7 @@ namespace GFFramework
         private BaseGameManager[] gameManagers;
 
         private ProvidersRegister reg;
+        private int indexLoaded;
 
         private void Awake() => CheckSingleInstance();
 
@@ -43,20 +40,21 @@ namespace GFFramework
         {
             DontDestroyOnLoad(gameObject);
             reg = new ProvidersRegister();
+            indexLoaded = 0;
 
             if (gameManagers != null && gameManagers.Length > 0)
             {
-                gameManagers[0].Setup(reg, () => OnSetupComplete(0));
+                gameManagers[indexLoaded].Setup(reg, OnSetupComplete);
             }
         }
 
-        private void OnSetupComplete(int indexManager)
+        private void OnSetupComplete()
         {
-            indexManager++;
+            indexLoaded++;
 
-            if (indexManager < gameManagers.Length)
+            if (indexLoaded < gameManagers.Length)
             {
-                gameManagers[indexManager].Setup(reg, () => OnSetupComplete(indexManager));
+                gameManagers[indexLoaded].Setup(reg, OnSetupComplete);
             }
             else
             {

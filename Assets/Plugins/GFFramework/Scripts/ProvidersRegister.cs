@@ -10,5 +10,6 @@ namespace GFFramework
         public IPlayerProvider PlayerProv { get; set; }
         public IPoolProvider PoolProv { get; set; }
         public ICameraProvider CameraProv { get; set; }
+        public ICoroutinesProvider CoroutinesProv { get; set; }
     }
 }

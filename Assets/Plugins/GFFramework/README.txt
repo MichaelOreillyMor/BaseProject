@@ -4,8 +4,9 @@ that works as a layer over the engine to speed up the games development process,
 Is designed to load in the GameInitializer only the managers needed in a similar way to Unreal modules.
 Only the GameStateManager or other implementation of IGameStateProvider is required by the GameInitializer.
 
-All the parts of the framework are highly decouple, you don´t have to use the whole  framework. 
+All the parts of the framework are decouple, you don´t have to use the whole  framework. 
 The GameStates are the glue that makes all the systems work, but no system (UIScreens,GameStates,Input...) is required by others.
+Only some 
 
 1.---Definitions---
 
@@ -31,6 +32,12 @@ Why didn´t you use and IOC like Zenjet?
 
 - I would like to implement it, but I didn't have time yet, I designed the framework over the idea of injecting dependencies in 
   initialization methods or constructors.
+
+You repeat the Setup() and Unsetup() methods in a lot of classes, why don´t you use an interface?
+
+-The framework is a WIP I'm not sure of the parameters that those methods will need yet.
+ In the GameStates the Setup() is the composition root where I inject the dependencies of the classes needed for that state
+ In the rest of classes the Setup(/* some params */) is where that dependencies are injected.
 
 3.---GameStates and GameManagers---
 

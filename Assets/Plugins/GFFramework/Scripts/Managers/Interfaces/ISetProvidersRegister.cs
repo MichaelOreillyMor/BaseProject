@@ -1,3 +1,5 @@
+using GFFramework.GameStates;
+
 namespace GFFramework
 {
     public interface ISetProvidersRegister
@@ -10,5 +12,6 @@ namespace GFFramework
         public IPlayerProvider PlayerProv { set; }
         public IPoolProvider PoolProv { set; }
         public ICameraProvider CameraProv { set; }
+        public ICoroutinesProvider CoroutinesProv { set; }
     }
 }

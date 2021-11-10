@@ -64,7 +64,7 @@ namespace GFFramework.Scenes
 
             if (sceneName == null)
             {
-                Debug.Log(sceneKey.ToString() + " not found");
+                Debug.Log(sceneKey.ToString() + " not found, please add the scene to the build settings");
             }
 
             return sceneName;

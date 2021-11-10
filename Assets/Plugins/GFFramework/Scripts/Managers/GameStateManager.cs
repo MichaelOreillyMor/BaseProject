@@ -109,11 +109,6 @@ namespace GFFramework.GameStates
 
         #endregion
 
-        public void StartStateCoroutine(IEnumerator coroutine) 
-        {
-            StartCoroutine(coroutine);
-        }
-
         private void Update()
         {
             if (currentGameState)

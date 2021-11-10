@@ -8,6 +8,7 @@ namespace GFFramework.GameStates.UI
 {
     public abstract class BaseUIGameState : BaseGameState, GameControls.IUIStateActions
     {
+        //WIP I don't like to have three references to the same UIScreen (2 + upcasted one in the derived class)
         [SerializeField]
         private BaseUIScreen uiScreenPref;
         private BaseUIScreen uiScreen;
@@ -23,13 +24,24 @@ namespace GFFramework.GameStates.UI
 
         #region Setup/Unsetup methods
 
-        public sealed override void Setup()
+        protected sealed override void SetProviders(IGetProvidersRegister reg)
+        {
+            uiProv = reg.UIProv;
+            inputProv = reg.InputProv;
+
+            SetUIProviders(reg);
+        }
+
+        /// <summary>
+        /// Method executed before Setup(), here any derived UIGameState gets the references to the providers that needs.
+        /// </summary>
+        /// 
+        protected abstract void SetUIProviders(IGetProvidersRegister reg);
+
+        protected sealed override void OnPostSetup()
         {
             if (uiScreenPref)
             {
-                uiProv = Reg.UIProv;
-                inputProv = Reg.InputProv;
-
                 uiScreen = uiProv.LoadUIScreen(uiScreenPref);
 
                 if (isMenuInputListener)
@@ -45,7 +57,7 @@ namespace GFFramework.GameStates.UI
             }
         }
 
-        public sealed override void Unsetup()
+        protected sealed override void OnPreUnsetup()
         {
             OnPreUIUnsetup();
 

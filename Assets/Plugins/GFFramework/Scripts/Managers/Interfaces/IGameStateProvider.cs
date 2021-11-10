@@ -1,5 +1,6 @@
 ﻿using GFFramework.Enums;
 
+using System;
 using System.Collections;
 
 namespace GFFramework
@@ -9,7 +10,5 @@ namespace GFFramework
         public void LoadInitGameState(IGetProvidersRegister reg);
         public void LoadGameState(GameStateKey gameStateKey);
         public void LoadPrevGameState();
-
-        public void StartStateCoroutine(IEnumerator coroutine);
     }
 }

@@ -3,7 +3,7 @@ using Game.UI;
 
 using UnityEngine;
 using GFFramework.UI;
-using UnityEngine.InputSystem;
+using GFFramework;
 
 namespace Game.GameStates
 {
@@ -11,6 +11,11 @@ namespace Game.GameStates
     public class MainMenuGameState : BaseUIGameState
     {
         MainMenuScreen mainMenuScreen;
+
+        protected override void SetUIProviders(IGetProvidersRegister reg)
+        {
+
+        }
 
         protected override void OnPostUILoaded(BaseUIScreen uiScreen)
         {

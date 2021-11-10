@@ -136,6 +136,9 @@ namespace GFFramework.Pools
             }
         }
 
+        /// <summary>
+        /// Destroys all the pools
+        /// </summary>
         public void DestroyPoolsMembers() 
         {
             if (pools != null)
