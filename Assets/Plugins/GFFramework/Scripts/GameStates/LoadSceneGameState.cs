@@ -9,8 +9,7 @@ using UnityEngine;
 namespace GameStates.GameStates
 {
     /// <summary>
-    /// This the base state that handles the load of a new scene and the dispose of the previous one.
-    /// It's a WIP, it doesn't allow any inheritance yet.
+    /// This the state that handles the load of a new scene and the dispose of the previous one.
     /// </summary>
     [CreateAssetMenu(menuName = "GameStates/LoadSceneState")]
     public class LoadSceneGameState : BaseGameState
@@ -18,7 +17,6 @@ namespace GameStates.GameStates
         [SerializeField]
         private SceneKey scene;
 
-        private IPlayerProvider playerProv;
         private ISceneProvider SceneProv;
         private IPoolProvider poolProv;
         private IUIProvider UIProv;
@@ -29,7 +27,6 @@ namespace GameStates.GameStates
 
         protected override void SetProviders(IGetProvidersRegister reg)
         {
-            playerProv = reg.PlayerProv;
             SceneProv = reg.SceneProv;
             poolProv = reg.PoolProv;
             UIProv = reg.UIProv;
@@ -47,7 +44,7 @@ namespace GameStates.GameStates
         protected override void OnPreUnsetup()
         {
             loadScreen.Unsetup();
-            loadScreen = UIProv.ShowLoadScreen(false);
+            UIProv.ShowLoadScreen(false);
         }
 
         #endregion
@@ -63,14 +60,8 @@ namespace GameStates.GameStates
         {
             UIProv.CleanSceneScreens();
 
-            if (playerProv != null)
-            {
-                playerProv.CleanPlayerCharacter();
-            }
-
             if (poolProv != null)
             {
-                //WIP, it should be optional, and only destroy the object pooled by this Scene
                 poolProv.DestroyPoolsMembers();
             }
         }
@@ -88,16 +79,6 @@ namespace GameStates.GameStates
             if (sceneInfo)
             {
                 UIProv.RegisterSceneScreens(sceneInfo.SceneScreens);
-
-                if (playerProv != null)
-                {
-                    playerProv.RegisterScenePlayerCharacter(sceneInfo.PlayerCharacter);
-                }
-
-                if (poolProv != null)
-                {
-                    poolProv.PreloadPools(sceneInfo.PreloadPoolMembers);
-                }
             }
         }
 

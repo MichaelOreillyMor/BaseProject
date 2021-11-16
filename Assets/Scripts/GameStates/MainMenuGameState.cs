@@ -1,11 +1,11 @@
 using GFFramework.GameStates.UI;
-using Game.UI;
+using RPGGame.UI;
 
 using UnityEngine;
 using GFFramework.UI;
 using GFFramework;
 
-namespace Game.GameStates
+namespace RPGGame.GameStates
 {
     [CreateAssetMenu(menuName = "GameStates/MainMenuGameState")]
     public class MainMenuGameState : BaseUIGameState

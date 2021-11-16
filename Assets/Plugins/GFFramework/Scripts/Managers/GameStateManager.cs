@@ -75,14 +75,18 @@ namespace GFFramework.GameStates
                 {
                     prevGameState = currentGameState;
 
-                    Debug.Log("Unsetup " + name);
+                    Debug.Log("In GameState: " + gameState.name);
                     prevGameState.Unsetup();
                 }
 
                 currentGameState = gameState;
 
-                Debug.Log("Setup " + name);
+                Debug.Log("Out GameState: " + gameState.name);
                 gameState.Setup();
+            }
+            else 
+            {
+                Debug.LogError("GameState: " + gameStateKey.ToString() + " Not found");
             }
          }
 

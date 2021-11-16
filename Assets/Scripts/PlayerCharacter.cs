@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-namespace Game.PlayerControlles
+namespace RPGGame.PlayerControlles
 {
     public class PlayerCharacter : BasePlayerCharacter
     {

@@ -12,7 +12,5 @@ namespace GFFramework
         public void Despawn(PoolMember poolMember);
 
         public void DestroyPoolsMembers();
-
-        public void PreloadPools(PreloadPoolMember[] preloadPoolMembers);
     }
 }

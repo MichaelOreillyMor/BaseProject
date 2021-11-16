@@ -7,9 +7,9 @@ namespace GFFramework
         public IDataProvider DataProv { get; }
         public IUIProvider UIProv { get; }
         public IInputProvider InputProv { get; }
-        public IPlayerProvider PlayerProv { get; }
         public IPoolProvider PoolProv { get; }
         public ICameraProvider CameraProv { get; }
         public ICoroutinesProvider CoroutinesProv { get; }
+        public IGameSessionProvider GameSessionProv { get; }
     }
 }

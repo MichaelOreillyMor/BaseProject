@@ -4,13 +4,6 @@ using UnityEngine;
 
 namespace GFFramework.Pools
 {
-    [Serializable]
-    public struct PreloadPoolMember
-    {
-        public int amount;
-        public PoolMember prefab;
-    }
-
     /// <summary>
     /// Handles the instantiation of objects in-game
     /// </summary>
@@ -57,22 +50,6 @@ namespace GFFramework.Pools
             if (prefab != null && !pools.ContainsKey(prefab))
             {
                 pools.Add(prefab, new Pool(prefab, qty));
-            }
-        }
-
-        public void PreloadPools(PreloadPoolMember[] preloadPoolMembers) 
-        {
-            if (preloadPoolMembers != null) 
-            {
-                for (int i = 0; i < preloadPoolMembers.Length; i++)
-                {
-                    PreloadPoolMember pm = preloadPoolMembers[i];
-
-                    if (pm.prefab != null && pm.amount > 0)
-                    {
-                        Preload(pm.prefab, pm.amount);
-                    }
-                }
             }
         }
 

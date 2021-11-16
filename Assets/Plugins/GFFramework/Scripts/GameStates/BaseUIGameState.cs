@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 namespace GFFramework.GameStates.UI
 {
-    public abstract class BaseUIGameState : BaseGameState, GameControls.IUIStateActions
+    public abstract class BaseUIGameState : BaseGameState, GameControls.IUIScreenActions
     {
         //WIP I don't like to have three references to the same UIScreen (2 + upcasted one in the derived class)
         [SerializeField]
@@ -133,6 +133,11 @@ namespace GFFramework.GameStates.UI
                 }
             }
 #endif
+        }
+
+        public void OnSelect(InputAction.CallbackContext context)
+        {
+            throw new System.NotImplementedException();
         }
 
         #endregion

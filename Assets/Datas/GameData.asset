@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 602a7400f1b818946a08c1fabd3ecee2, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
-  playerControllerPref: {fileID: 215997350746272184, guid: b4f2b9e608feb9146904e8891f426be0, type: 3}
+  MapLevelDatas:
+  - {fileID: 11400000, guid: d1023b372d1e199499824ca21e4b56b7, type: 2}

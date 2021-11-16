@@ -4,20 +4,18 @@ using UnityEngine;
 namespace GFFramework.GameDatas
 {
     /// <summary>
-    ///Handles the game´s datas, the models needed to initialize the controllers (MVC)
+    ///Handles the game´s datas, this class is just an example, in a real game would be resposible of the game DDBB
     /// </summary>
-    public class DataManager : BaseGameManager, IDataProvider
+    public abstract class DataManager : BaseGameManager, IDataProvider
     {
         [SerializeField]
         private BaseGameData baseGameData;
-        private BaseGameDataState baseGameDataState;
 
         #region Setup/Unsetup methods
 
         public override void Setup(ISetProvidersRegister reg, Action onNextSetup)
         {
             reg.DataProv = this;
-            baseGameDataState = baseGameData.GetGameDataState();
 
             Debug.Log("Setup DataManager");
             onNextSetup?.Invoke();
@@ -35,9 +33,10 @@ namespace GFFramework.GameDatas
             return (T)baseGameData;
         }
 
-        public T GetGameDataState<T>() where T : BaseGameDataState
-        {
-            return (T)baseGameDataState;
-        }
+        /// <summary>
+        /// Again just an example
+        /// </summary>
+        protected abstract void OnGameDataLoaded(BaseGameData baseGameData);
+
     }
 }

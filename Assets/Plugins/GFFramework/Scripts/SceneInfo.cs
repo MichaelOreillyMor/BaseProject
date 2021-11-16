@@ -22,22 +22,6 @@ namespace GFFramework.Scenes
         [SerializeField]
         private RefsSceneUIScreens refsUIScreens;
 
-        /// <summary>
-        /// GameObject controlled by the player in this scene, it can be null
-        /// </summary>
-        public BasePlayerCharacter PlayerCharacter => playerCharacter;
-
-        [SerializeField]
-        private BasePlayerCharacter playerCharacter;
-
-        /// <summary>
-        /// Pool instances to load in this scene
-        /// </summary>
-        public PreloadPoolMember[] PreloadPoolMembers => preloadPoolMembers;
-
-        [SerializeField]
-        private PreloadPoolMember[] preloadPoolMembers;
-
         private void Awake() => SceneRef = this;
 
     }

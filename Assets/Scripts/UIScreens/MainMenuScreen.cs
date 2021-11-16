@@ -4,7 +4,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Game.UI
+namespace RPGGame.UI
 {
     public class MainMenuScreen : BaseUIScreen
     {

@@ -2,7 +2,7 @@ using GFFramework.UI;
 
 using UnityEngine;
 
-namespace Game.UI
+namespace RPGGame.UI
 {
     public class HUDScreen : BaseUIScreen
     {

@@ -30,24 +30,14 @@ namespace GFFramework.Input
 
         #endregion
 
-        public void SetIdleCallbacks(GameControls.IIdleStateActions idleStateActions)
+        public void SetUICallbacks(GameControls.IUIScreenActions uiStateActions)
         {
-            gameControls.IdleState.SetCallbacks(idleStateActions);
-        }
-
-        public void RemoveIdleCallbacks()
-        {
-            gameControls.IdleState.SetCallbacks(null);
-        }
-
-        public void SetUICallbacks(GameControls.IUIStateActions uiStateActions)
-        {
-            gameControls.UIState.SetCallbacks(uiStateActions);
+            gameControls.UIScreen.SetCallbacks(uiStateActions);
         }
 
         public void RemoveUICallbacks()
         {
-            gameControls.UIState.SetCallbacks(null);
+            gameControls.UIScreen.SetCallbacks(null);
         }
     }
 }
