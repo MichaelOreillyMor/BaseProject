@@ -17,6 +17,9 @@ namespace GameStates.GameStates
         [SerializeField]
         private SceneKey scene;
 
+        [SerializeField]
+        private bool cleanObjectsPool = true;
+
         private ISceneProvider SceneProv;
         private IPoolProvider poolProv;
         private IUIProvider UIProv;
@@ -25,7 +28,7 @@ namespace GameStates.GameStates
 
         #region Setup/Unsetup methods
 
-        protected override void SetProviders(IGetProvidersRegister reg)
+        protected override void OnSetProviders(IGetProvidersRegister reg)
         {
             SceneProv = reg.SceneProv;
             poolProv = reg.PoolProv;
@@ -59,8 +62,12 @@ namespace GameStates.GameStates
         private void CleanSceneRefs()
         {
             UIProv.CleanSceneScreens();
+            CleanObjectsPool();
+        }
 
-            if (poolProv != null)
+        private void CleanObjectsPool()
+        {
+            if (cleanObjectsPool && poolProv != null)
             {
                 poolProv.DestroyPoolsMembers();
             }

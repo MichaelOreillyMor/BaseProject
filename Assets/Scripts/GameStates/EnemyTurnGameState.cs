@@ -16,7 +16,7 @@ namespace RPGGame.GameStates
 
         #region Setup/Unsetup methods
 
-        protected override void SetProviders(IGetProvidersRegister reg)
+        protected override void OnSetProviders(IGetProvidersRegister reg)
         {
             sessionProv = (IRPGGameSessionProvider)reg.GameSessionProv;
         }

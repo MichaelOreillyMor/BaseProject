@@ -8,13 +8,9 @@ namespace GFFramework.GameStates
 {
     /// <summary>
     /// Base state that changes the state of the game, e.g: UI to show, input received, player´s  representation...
-    /// It keeps also a static reference to the providers (Managers)
     /// </summary>
     public abstract class BaseGameState : ScriptableObject
     {
-        private static IGetProvidersRegister register;
-        static public void SetProvidersRegister(IGetProvidersRegister reg) => register = reg;
-
         /// <summary>
         /// Unique ID that identifies this GameState
         /// </summary>
@@ -32,9 +28,22 @@ namespace GFFramework.GameStates
         #region Setup/Unsetup methods
 
         /// <summary>
-        /// Method executed before Setup(), here any derived GameState gets the references to the providers that needs.
+        /// The GameState gets the references to the providers that needs. 
+        /// It happens at the beginning of the game so it´s easy to see if someone provider is missing.
         /// </summary>
-        protected abstract void SetProviders(IGetProvidersRegister reg);
+        public void SetProviders(IGetProvidersRegister reg)
+        {
+            if (reg != null)
+            {
+                gameStateProv = reg.GameStateProv;
+                OnSetProviders(reg);
+            }
+        }
+
+        /// <summary>
+        /// Here any derived GameState gets the references to the providers that needs.
+        /// </summary>
+        protected abstract void OnSetProviders(IGetProvidersRegister reg);
 
         /// <summary>
         /// Entry method where the dependencies of the GameState components are resolved (Dependency Injection Composition root)
@@ -42,12 +51,7 @@ namespace GFFramework.GameStates
         /// </summary>
         public void Setup() 
         {
-            if (register != null)
-            {
-                gameStateProv = register.GameStateProv;
-                SetProviders(register);
-            }
-
+            //I did it to let space to add more logic to the BaseGameState initialization
             OnPostSetup();
         }
 

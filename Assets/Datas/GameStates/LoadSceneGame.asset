@@ -15,3 +15,4 @@ MonoBehaviour:
   key: 3
   nextGameState: 5
   scene: 2
+  cleanObjectsPool: 0

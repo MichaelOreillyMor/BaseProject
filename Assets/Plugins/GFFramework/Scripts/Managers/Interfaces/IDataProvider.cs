@@ -4,6 +4,6 @@ namespace GFFramework
 {
     public interface IDataProvider
     {
-        public T GetGameData<T>() where T : BaseGameData;
+        public BaseGameData GetBaseGameData();
     }
 }

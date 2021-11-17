@@ -17,6 +17,8 @@ namespace GFFramework.GameDatas
         {
             reg.DataProv = this;
 
+            OnGameDataLoaded(baseGameData);
+
             Debug.Log("Setup DataManager");
             onNextSetup?.Invoke();
         }
@@ -28,15 +30,15 @@ namespace GFFramework.GameDatas
 
         #endregion
 
-        public T GetGameData<T>() where T : BaseGameData
+        public BaseGameData GetBaseGameData()
         {
-            return (T)baseGameData;
+            return baseGameData;
         }
 
-        /// <summary>
-        /// Again just an example
-        /// </summary>
-        protected abstract void OnGameDataLoaded(BaseGameData baseGameData);
+    /// <summary>
+    /// Again just an example
+    /// </summary>
+    protected abstract void OnGameDataLoaded(BaseGameData baseGameData);
 
     }
 }

@@ -86,10 +86,10 @@ namespace GFFramework.Pools
         /// after spawning -- but remember that toggling IsActive will also
         /// call that function.
         /// </summary>
-        public PoolMember Spawn(PoolMember prefab, Vector3 pos, Quaternion rot)
+        public T Spawn<T>(T prefab, Vector3 pos, Quaternion rot) where T : PoolMember
         {
             InitPool(prefab);
-            return pools[prefab].Spawn(pos, rot);
+            return (T)pools[prefab].Spawn(pos, rot);
         }
 
         public List<PoolMember> GetActiveInstances(PoolMember prefab)

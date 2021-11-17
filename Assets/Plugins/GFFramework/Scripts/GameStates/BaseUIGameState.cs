@@ -24,19 +24,19 @@ namespace GFFramework.GameStates.UI
 
         #region Setup/Unsetup methods
 
-        protected sealed override void SetProviders(IGetProvidersRegister reg)
+        protected sealed override void OnSetProviders(IGetProvidersRegister reg)
         {
             uiProv = reg.UIProv;
             inputProv = reg.InputProv;
 
-            SetUIProviders(reg);
+            SetUIStateProviders(reg);
         }
 
         /// <summary>
-        /// Method executed before Setup(), here any derived UIGameState gets the references to the providers that needs.
+        /// Here any derived UIGameState gets the references to the providers that needs.
         /// </summary>
         /// 
-        protected abstract void SetUIProviders(IGetProvidersRegister reg);
+        protected abstract void SetUIStateProviders(IGetProvidersRegister reg);
 
         protected sealed override void OnPostSetup()
         {

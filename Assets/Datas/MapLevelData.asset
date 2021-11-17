@@ -16,14 +16,20 @@ MonoBehaviour:
   Player1Units:
   - Position: {x: 1, y: 0}
     UnitData: {fileID: 11400000, guid: 12ca3c878fc8cef468693b43564d8ba9, type: 2}
+    UnitLevel: 1
   - Position: {x: 3, y: 0}
     UnitData: {fileID: 11400000, guid: 12ca3c878fc8cef468693b43564d8ba9, type: 2}
+    UnitLevel: 1
   - Position: {x: 5, y: 0}
     UnitData: {fileID: 11400000, guid: 12ca3c878fc8cef468693b43564d8ba9, type: 2}
+    UnitLevel: 1
   Player2Units:
   - Position: {x: 1, y: 9}
     UnitData: {fileID: 11400000, guid: c6866652603343843987573633aa9a3f, type: 2}
+    UnitLevel: 1
   - Position: {x: 3, y: 9}
     UnitData: {fileID: 11400000, guid: c6866652603343843987573633aa9a3f, type: 2}
+    UnitLevel: 1
   - Position: {x: 5, y: 9}
     UnitData: {fileID: 11400000, guid: c6866652603343843987573633aa9a3f, type: 2}
+    UnitLevel: 1

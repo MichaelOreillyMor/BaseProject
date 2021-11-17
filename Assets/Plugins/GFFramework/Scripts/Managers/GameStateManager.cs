@@ -61,8 +61,23 @@ namespace GFFramework.GameStates
 
         public void LoadInitGameState(IGetProvidersRegister reg)
         {
-            BaseGameState.SetProvidersRegister(reg);
+            SetGameStatesProviders(reg);
             LoadGameState(initGameState);
+        }
+
+        /// <summary>
+        /// Resolves the references to the providers needed in every GameState.
+        /// </summary>
+        private void SetGameStatesProviders(IGetProvidersRegister reg)
+        {
+            if (gameStatesToLoad != null)
+            {
+                for (int i = 0; i < gameStatesToLoad.Length; i++)
+                {
+                    BaseGameState gs = gameStatesToLoad[i];
+                    gs.SetProviders(reg);
+                }
+            }
         }
 
         public void LoadGameState(GameStateKey gameStateKey)

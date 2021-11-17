@@ -7,6 +7,7 @@ using GFFramework.UI;
 
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 namespace RPGGame.GameStates
 {
@@ -20,7 +21,7 @@ namespace RPGGame.GameStates
 
         #region Setup/Unsetup methods
 
-        protected override void SetUIProviders(IGetProvidersRegister reg)
+        protected override void SetUIStateProviders(IGetProvidersRegister reg)
         {
             uiProv = reg.UIProv;
             inputProv = reg.InputProv;
@@ -33,6 +34,7 @@ namespace RPGGame.GameStates
             {
                 HUDScreen = screen;
                 HUDScreen.Setup();
+                inputProv.SetSelectWorldPointCalback(OnPointSelect);
             }
             else
             {
@@ -42,10 +44,15 @@ namespace RPGGame.GameStates
 
         protected override void OnPreUIUnsetup()
         {
-
+            inputProv.RemovetWorldPointCalback();
         }
 
         #endregion
+
+        private void OnPointSelect(Vector3 worldPoint) 
+        {
+            Debug.Log(worldPoint);
+        }
 
         public override void Update()
         {
@@ -54,14 +61,14 @@ namespace RPGGame.GameStates
 
         public override bool OnBack()
         {
-            gameStateProv.LoadGameState(GameStateKey.LoadMainMenuScene);
+            CloseSession();
             return true;
         }
 
-        public void OnSelectMap(InputAction.CallbackContext context)
+        private void CloseSession()
         {
-            Vector2 input = context.ReadValue<Vector2>();
-            Debug.Log("input " + input);
+            sessionProv.EndSession();
+            gameStateProv.LoadGameState(GameStateKey.LoadMainMenuScene);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace RPGGame.GameStates
     {
         MainMenuScreen mainMenuScreen;
 
-        protected override void SetUIProviders(IGetProvidersRegister reg)
+        protected override void SetUIStateProviders(IGetProvidersRegister reg)
         {
 
         }

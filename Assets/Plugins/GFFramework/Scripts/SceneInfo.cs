@@ -1,5 +1,3 @@
-using GFFramework.PlayerControllers;
-using GFFramework.Pools;
 using GFFramework.UI;
 
 using UnityEngine;

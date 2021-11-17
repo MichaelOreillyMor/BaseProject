@@ -7,7 +7,7 @@ namespace GFFramework
     public interface IPoolProvider
     {
         public void Preload(PoolMember prefab, int qty = 1);
-        public PoolMember Spawn(PoolMember prefab, Vector3 pos, Quaternion rot);
+        public T Spawn<T>(T prefab, Vector3 pos, Quaternion rot) where T :  PoolMember;
         public List<PoolMember> GetActiveInstances(PoolMember prefab);
         public void Despawn(PoolMember poolMember);
 

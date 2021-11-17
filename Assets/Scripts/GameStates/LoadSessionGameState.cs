@@ -1,9 +1,11 @@
 using GFFramework;
 using GFFramework.GameStates;
 using GFFramework.UI;
-
+using RPGGame.Board;
+using RPGGame.GameDatas;
 using RPGGame.Units;
 
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace RPGGame.GameStates
@@ -21,17 +23,21 @@ namespace RPGGame.GameStates
         [SerializeField]
         private UnitStatesFactory unitStatesFactory;
 
+        [SerializeField]
+        private MapBoardFactory mapCellsFactory;
+
         private LoadScreen loadScreen;
 
         #region Setup/Unsetup methods
 
-        protected override void SetProviders(IGetProvidersRegister reg)
+        protected override void OnSetProviders(IGetProvidersRegister reg)
         {
             dataProv = (IRPGDataProvider)reg.DataProv;
             sessionProv = (IRPGGameSessionProvider)reg.GameSessionProv;
             UIProv = reg.UIProv;
 
-            unitStatesFactory.Init(reg.PoolProv);
+            unitStatesFactory.SetPool(reg.PoolProv);
+            mapCellsFactory.SetPool(reg.PoolProv);
         }
 
         protected override void OnPostSetup()
@@ -60,7 +66,14 @@ namespace RPGGame.GameStates
 
         private void LoadGameSession()
         {
- 
+            MapLevelData map = dataProv.GetCurrentMapLevel();
+
+            List<UnitState> p1Units = unitStatesFactory.CreatePlayerUnits(map.Player1Units, true);
+            List<UnitState> p2Units = unitStatesFactory.CreatePlayerUnits(map.Player2Units, false);
+
+            MapBoard mapBoard = mapCellsFactory.CreateMapBoard(map.MapSize);
+            mapBoard.AddInitUnits(p1Units);
+            mapBoard.AddInitUnits(p2Units);
         }
 
         #endregion

@@ -8,6 +8,9 @@ namespace GFFramework.Input
     /// </summary>
     public class InputManager : BaseGameManager, IInputProvider
     {
+        [SerializeField]
+        private LayerMask selectWorldLayer;
+
         private GameControls gameControls;
 
         #region Setup/Unsetup methods
@@ -38,6 +41,16 @@ namespace GFFramework.Input
         public void RemoveUICallbacks()
         {
             gameControls.UIScreen.SetCallbacks(null);
+        }
+
+        public void SetSelectWorldPointCalback(Action<Vector3> onHitPoint)
+        {
+   
+        }
+
+        public void RemovetWorldPointCalback()
+        {
+
         }
     }
 }
