@@ -1,11 +1,11 @@
 using GFFramework;
 using GFFramework.GameStates;
 using GFFramework.UI;
-using RPGGame.Board;
+
+using RPGGame.BoardCells;
 using RPGGame.GameDatas;
 using RPGGame.Units;
 
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace RPGGame.GameStates
@@ -16,12 +16,12 @@ namespace RPGGame.GameStates
     [CreateAssetMenu(menuName = "GameStates/LoadSessionState")]
     public class LoadSessionGameState : BaseGameState
     {
-        private IRPGDataProvider dataProv;
         private IRPGGameSessionProvider sessionProv;
+        private IRPGDataProvider dataProv;
         private IUIProvider UIProv;
 
         [SerializeField]
-        private UnitStatesFactory unitStatesFactory;
+        private UnitsBoardFactory unitsBoardFactory;
 
         [SerializeField]
         private MapBoardFactory mapCellsFactory;
@@ -36,7 +36,7 @@ namespace RPGGame.GameStates
             sessionProv = (IRPGGameSessionProvider)reg.GameSessionProv;
             UIProv = reg.UIProv;
 
-            unitStatesFactory.SetPool(reg.PoolProv);
+            unitsBoardFactory.SetPool(reg.PoolProv);
             mapCellsFactory.SetPool(reg.PoolProv);
         }
 
@@ -67,13 +67,12 @@ namespace RPGGame.GameStates
         private void LoadGameSession()
         {
             MapLevelData map = dataProv.GetCurrentMapLevel();
+            Board board = mapCellsFactory.CreateBoard(map.BoardSize);
 
-            List<UnitState> p1Units = unitStatesFactory.CreatePlayerUnits(map.Player1Units, true);
-            List<UnitState> p2Units = unitStatesFactory.CreatePlayerUnits(map.Player2Units, false);
+            UnitState[] Player1Units = unitsBoardFactory.CreateBoardUnits(map.Player1Units, board, true);
+            UnitState[] Player2Units = unitsBoardFactory.CreateBoardUnits(map.Player2Units, board, false);
 
-            MapBoard mapBoard = mapCellsFactory.CreateMapBoard(map.MapSize);
-            mapBoard.AddInitUnits(p1Units);
-            mapBoard.AddInitUnits(p2Units);
+            sessionProv.InitSession(board, Player1Units, Player2Units);
         }
 
         #endregion

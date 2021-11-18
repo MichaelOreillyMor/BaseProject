@@ -18,12 +18,29 @@ namespace RPGGame.Units.Stats
             Value = InitValue;
         }
 
-        public void AddValueChangeListener(Action<int> callback) => onValueChange += callback;
-        public void RemoveValueChangeListener(Action<int> callback) => onValueChange -= callback;
+        public void AddValueChangeListener(Action<int> callback)
+        {
+            onValueChange += callback;
+        }
+
+        public void RemoveValueChangeListener(Action<int> callback)
+        {
+            onValueChange -= callback;
+        }
 
         public void AddValue(int value)
         {
             Value += value;
+
+            if (Value < 0)
+                Value = 0;
+
+            onValueChange?.Invoke(Value);
+        }
+
+        public void SubtractValue(int value)
+        {
+            Value -= value;
 
             if (Value < 0)
                 Value = 0;

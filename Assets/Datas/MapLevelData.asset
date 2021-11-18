@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34bddbeac4abf244dbb8cc6789bf9370, type: 3}
   m_Name: MapLevelData
   m_EditorClassIdentifier: 
-  MapSize: {x: 10, y: 10}
+  BoardSize: {x: 10, y: 10}
   Player1Units:
   - Position: {x: 1, y: 0}
     UnitData: {fileID: 11400000, guid: 12ca3c878fc8cef468693b43564d8ba9, type: 2}

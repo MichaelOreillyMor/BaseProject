@@ -1,17 +1,19 @@
 ﻿using RPGGame.GameDatas.Stats;
 
 using System;
-using UnityEngine;
 
 namespace RPGGame.Units.Stats
 {
     class UnitStatsState : IUnitStatsState
     {
-        public float Level { get; private set; }
+        #region Interfaces
         public IStatState ActionPoints => actionPoints;
         public IStatState Health => health;
         public IUnitAction Move => move;
         public IUnitActionRange Attack => attack;
+        #endregion
+
+        public float Level { get; private set; }
 
         private StatState actionPoints;
         private StatState health;
@@ -31,12 +33,21 @@ namespace RPGGame.Units.Stats
             move = new UnitMovement(unitStats.Move, Level);
         }
 
-        public void AddDefeatedListener(Action callback) => onDefeated += callback;
-        public void RemoveDefeatedListener(Action callback) => onDefeated -= callback;
+        public void AddDefeatedListener(Action callback) 
+        {
+            onDefeated += callback;
+        }
+
+        public void RemoveDefeatedListener(Action callback)
+        {
+            onDefeated -= callback;
+        }
+
+        #region Attack methods
 
         public void ApplyAttackDamage(int damage)
         {
-            health.AddValue(-damage);
+            health.SubtractValue(damage);
 
             if (health.Value == 0)
                 onDefeated?.Invoke();
@@ -46,7 +57,8 @@ namespace RPGGame.Units.Stats
         {
             if (attack.HasCost(actionPoints.Value) && attack.HasRange(distance))
             {
-                actionPoints.AddValue(attack.Cost);
+                actionPoints.SubtractValue(attack.Cost);
+                attack.Perform();
                 return true;
             }
 
@@ -58,20 +70,31 @@ namespace RPGGame.Units.Stats
             return attack.Value;
         }
 
+        #endregion
+
+        #region Move methods
+
         public bool TryMove(int distance)
         {
             if (move.HasCost(distance, actionPoints.Value))
             {
-                actionPoints.AddValue(move.Cost);
+                actionPoints.SubtractValue(move.Cost);
+                move.Perform();
                 return true;
             }
 
             return false;
         }
 
+        #endregion
+
+        #region Points methods
+
         public void ResetActionPoints()
         {
             actionPoints.ResetValue();
         }
+
+        #endregion
     }
 }

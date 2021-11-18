@@ -4,7 +4,7 @@ using UnityEngine;
 namespace GFFramework.GameSession
 {
     /// <summary>
-    ///Handles the current player session (e:g: the state of the match and the win state
+    ///Handles the current play session and the rules of the game
     /// </summary>
     public abstract class GameSessionManager : BaseGameManager, IGameSessionProvider
     {
@@ -23,6 +23,7 @@ namespace GFFramework.GameSession
 
         public override void Unsetup()
         {
+            EndSession();
             Debug.Log("Unsetup GameSessionManager");
         }
 

@@ -5,7 +5,7 @@ namespace RPGGame.GameDatas
     [CreateAssetMenu(menuName = "GameData/MapLevelData")]
     public class MapLevelData : ScriptableObject
     {
-        public Vector2Int MapSize;
+        public Vector2Int BoardSize;
         public MapUnitData[] Player1Units;
         public MapUnitData[] Player2Units;
     }

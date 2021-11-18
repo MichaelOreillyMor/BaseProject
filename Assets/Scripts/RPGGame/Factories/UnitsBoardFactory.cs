@@ -1,37 +1,36 @@
-using System.Collections.Generic;
-using UnityEngine;
-
 using GFFramework.Pools;
-
+using RPGGame.BoardCells;
 using RPGGame.GameDatas;
+using UnityEngine;
 
 namespace RPGGame.Units
 {
     [System.Serializable]
-    public class UnitStatesFactory : PoolFactory
+    public class UnitsBoardFactory : PoolFactory
     {
         [SerializeField]
         private UnitState unitStatePref;
 
-        public List<UnitState> CreatePlayerUnits(MapUnitData[] playerUnits, bool isTeam1)
+        public UnitState[] CreateBoardUnits(MapUnitData[] playerMapUnits, Board board, bool isTeam1)
         {
-            int numUnits = playerUnits.Length;
-            List<UnitState> unitStates = new List<UnitState>(numUnits);
+            int numUnits = playerMapUnits.Length;
+            UnitState[] PlayerUnits = new UnitState[numUnits];
 
             for (int i = 0; i < numUnits; i++)
             {
-                MapUnitData mapUnitData = playerUnits[i];
+                MapUnitData mapUnitData = playerMapUnits[i];
                 UnitState unitState = CreateUnit(mapUnitData, isTeam1);
-                unitStates.Add(unitState);
+
+                board.AddUnit(unitState, mapUnitData.Position);
+                PlayerUnits[i] = unitState;
             }
 
-            return unitStates;
+            return PlayerUnits;
         }
 
         private UnitState CreateUnit(MapUnitData mapUnitData, bool isTeam1)
         {
             UnitData unitData = mapUnitData.UnitData;
-
             UnitState unitState = PoolManager.Spawn(unitStatePref, Vector3.zero, Quaternion.identity);
 
             UnitCosmeticController unitCosmetic = PoolManager.Spawn(unitData.CosmeticPref, Vector3.zero, Quaternion.identity);
@@ -39,8 +38,6 @@ namespace RPGGame.Units
             unitCosmetic.transform.localPosition = Vector3.zero;
 
             unitState.SetInitSate(isTeam1, mapUnitData.UnitLevel, unitData.UnitStats, unitCosmetic);
-            unitState.SetBoardPosition(mapUnitData.Position);
-
             return unitState;
         }
     }

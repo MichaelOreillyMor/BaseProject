@@ -1,4 +1,5 @@
 using GFFramework.Pools;
+using UnityEngine;
 
 namespace RPGGame.Units
 {
@@ -7,17 +8,25 @@ namespace RPGGame.Units
     /// </summary>
     public class UnitCosmeticController : PoolMember
     {
+        [SerializeField]
+        private ParticleSystem attackFX;
+
+        [SerializeField]
+        private ParticleSystem hitFX;
+
         public void PlayAttack()
         {
-
-        }
-
-        public void PlayMove()
-        {
-
+            //Just to show feedback, this should play an animation
+            attackFX.Play();
         }
 
         public void PlayHit()
+        { 
+            //Just to show feedback, this should play an animation
+            hitFX.Play();
+        }
+
+        public void PlayMove()
         {
 
         }

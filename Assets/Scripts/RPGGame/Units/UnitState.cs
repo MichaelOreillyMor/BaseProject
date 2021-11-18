@@ -11,7 +11,6 @@ namespace RPGGame.Units
 {
     public class UnitState : PoolMember
     {
-        public Vector2Int BoardPosition { get; private set; }
         public bool IsTeam1 { get; private set; }
 
         [SerializeField, ReadOnly]
@@ -23,11 +22,6 @@ namespace RPGGame.Units
             IsTeam1 = isTeam1;
             cosmetic = unitCosmetic;
             unitStatsState = new UnitStatsState(level, statsData);
-        }
-
-        public void SetBoardPosition(Vector2Int boardPosition)
-        {
-            BoardPosition = boardPosition;
         }
 
         public void ApplyAttackDamage(int damage)

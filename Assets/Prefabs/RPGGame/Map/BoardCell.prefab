@@ -45,6 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40311a0fd3411124989f116d9b7f6248, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anchorPoint: {fileID: 8564200993461027916}
+  position: {x: 0, y: 0}
 --- !u!65 &2779256596461896340
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -118,5 +120,10 @@ PrefabInstance:
 --- !u!4 &8834577480296352981 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1624925404859231210, guid: eb6c32524e89e7c4fb2676ccca4f0904, type: 3}
+  m_PrefabInstance: {fileID: 7788514184825579327}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8564200993461027916 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1931053646516347763, guid: eb6c32524e89e7c4fb2676ccca4f0904, type: 3}
   m_PrefabInstance: {fileID: 7788514184825579327}
   m_PrefabAsset: {fileID: 0}
