@@ -8,17 +8,18 @@ namespace GFFramework.GameSession
     /// </summary>
     public abstract class GameSessionManager : BaseGameManager, IGameSessionProvider
     {
+        protected bool GameStarted { get; private set; }
         protected bool GamePaused { get; private set; }
 
         #region Setup/Unsetup methods
 
-        public override void Setup(ISetProvidersRegister reg, Action onNextSetup)
+        public override void Setup(ISetProvidersRegister reg, Action onNextSetupCallback)
         {
             reg.GameSessionProv = this;
             GamePaused = true;
 
             Debug.Log("Setup GameSessionManager");
-            onNextSetup?.Invoke();
+            onNextSetupCallback?.Invoke();
         }
 
         public override void Unsetup()
@@ -45,6 +46,26 @@ namespace GFFramework.GameSession
             }
         }
 
-        public abstract void EndSession();
+        protected bool TryInitSession()
+        {
+            if (!GameStarted)
+            {
+                GameStarted = true;
+                return true;
+            }
+
+            return false;
+        }
+
+        public void EndSession()
+        {
+            if (GameStarted)
+            {
+                OnPreEndSession();
+                GameStarted = false;
+            }
+        }
+
+        public abstract void OnPreEndSession();
     }
 }

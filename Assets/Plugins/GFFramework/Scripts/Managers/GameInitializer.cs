@@ -19,8 +19,6 @@ namespace GFFramework
 
         private void Start() => Setup();
 
-        private void OnDestroy() => Unsetup();
-
         /// <summary>
         /// Just to be able to test scenes alone in the Unity Editor
         /// </summary>

@@ -60,7 +60,7 @@ namespace GFFramework.Coroutines
         private IEnumerator DelayAction(Action action, int delay)
         {
             yield return new WaitForSeconds(delay);
-            action();
+            action.Invoke();
         }
 
         public void StopAllGameStateCoroutines()

@@ -28,6 +28,14 @@ namespace RPGGame.BoardCells
             }
         }
 
+        public void DespawnCells()
+        {
+            for (int i = 0; i < cells.Length; i++)
+            {
+                cells[i].Despawn();
+            }
+        }
+
         public void AddUnit(UnitState unitState, Vector2Int boardPosition)
         {
             Cell boardCell = GetCell(boardPosition);

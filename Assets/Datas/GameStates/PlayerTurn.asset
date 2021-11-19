@@ -15,5 +15,5 @@ MonoBehaviour:
   key: 2
   nextGameState: 6
   uiScreenPref: {fileID: 5322689829067601021, guid: 644df990f4ae4164fa48eaaa439316c5, type: 3}
-  isMenuInputListener: 1
   canReturnPrevState: 0
+  surrerderGameState: 8

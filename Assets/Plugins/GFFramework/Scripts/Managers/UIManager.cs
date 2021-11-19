@@ -7,9 +7,8 @@ using UnityEngine;
 namespace GFFramework.UI
 {
     /// <summary>
-    /// Handles the UIScreens instantiation, and keeps a reference to the LoadScreen, the only UIScreen that is persistent
-    /// It contains a dictionary of the UIScreens that are part of the scene and don´t need to be instantiated on run-time
-    /// 
+    /// Handles the UIScreens instantiation . It contains a dictionary of the 
+    /// UIScreens that are part of the scene and don´t need to be instantiated on run-time
     /// If you want a persistent UIScreen: add it to this prefab (right now is just LoadScreen WIP)
     /// If you want a persistent UIScreen during the life time of a scene: add it to SceneInfo prefab
     /// If you want a UIScreen loaded in run-time that will be destroyed: just add the reference to the GameState
@@ -17,22 +16,22 @@ namespace GFFramework.UI
     public class UIManager : BaseGameManager, IUIProvider
     {
         [SerializeField]
-        private LoadScreen loadScreen;
+        private UIMainPanel mainPanel;
 
         private Dictionary<GameStateKey, BaseUIScreen> sceneScreens;
         private BaseUIScreen currentScreen;
 
         #region Setup/Unsetup methods
 
-        public override void Setup(ISetProvidersRegister reg, Action onNextSetup)
+        public override void Setup(ISetProvidersRegister reg, Action onNextSetupCallback)
         {
             reg.UIProv = this;
 
             sceneScreens = new Dictionary<GameStateKey, BaseUIScreen>();
-            ShowLoadScreen(true);
+            ShowLoadPanel();
 
             Debug.Log("Setup UIManager");
-            onNextSetup?.Invoke();
+            onNextSetupCallback?.Invoke();
         }
 
         public override void Unsetup()
@@ -112,15 +111,24 @@ namespace GFFramework.UI
 
         #endregion
 
-        public LoadScreen ShowLoadScreen(bool show)
-        {
-            if (loadScreen)
-            {
-                loadScreen.Show(show);
-            }
+        #region MainPanel methods
 
-            return loadScreen;
+        public void ShowLoadPanel()
+        {
+            mainPanel.FadeIn();
         }
+
+        public void HideLoadPanel()
+        {
+            mainPanel.FadeOut();
+        }
+
+        public void AddContent(Transform panelTr)
+        {
+            mainPanel.AddContent(panelTr);
+        }
+
+        #endregion
 
         public bool HasScreenInstance(GameStateKey owner)
         {

@@ -8,7 +8,7 @@ namespace RPGGame.GameDatas
     [CreateAssetMenu(menuName = "GameData/UnitData")]
     public class UnitData : ScriptableObject
     {
-        public UnitCosmeticController CosmeticPref;
+        public UnitCosmetic CosmeticPref;
         public UnitStatsData UnitStats;
     }
 }

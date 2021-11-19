@@ -1,4 +1,4 @@
-using RPGGame.UI;
+using RPGGame.UI.HUD;
 
 using GFFramework;
 using GFFramework.Enums;
@@ -6,18 +6,16 @@ using GFFramework.GameStates.UI;
 using GFFramework.UI;
 
 using UnityEngine;
-using UnityEngine.InputSystem;
-using System;
 
 namespace RPGGame.GameStates
 {
     [CreateAssetMenu(menuName = "GameStates/PlayerTurnGameState")]
     public class PlayerTurnGameState : BaseUIGameState
     {
-        private HUDScreen HUDScreen;
+        private UIScreenHUD HUDScreen;
 
         private IInputProvider inputProv;
-        private  IRPGGameSessionProvider sessionProv;
+        private IRPGGameSessionProvider sessionProv;
 
         #region Setup/Unsetup methods
 
@@ -30,10 +28,10 @@ namespace RPGGame.GameStates
 
         protected override void OnPostUILoaded(BaseUIScreen uiScreen)
         {
-            if (uiScreen is HUDScreen screen)
+            if (uiScreen is UIScreenHUD screen)
             {
                 HUDScreen = screen;
-                HUDScreen.Setup();
+                HUDScreen.Setup(OnEndTurn, OnSurrender);
                 inputProv.SetSelectWorldPointCalback(OnPointSelect);
             }
             else
@@ -49,6 +47,17 @@ namespace RPGGame.GameStates
 
         #endregion
 
+        private void OnEndTurn()
+        {
+            LoadNextGameState();
+        }
+
+        private void OnSurrender()
+        {
+            sessionProv.EndSession();
+            gameStateProv.LoadGameState(GameStateKey.LoseMenu);
+        }
+
         private void OnPointSelect(Vector3 worldPoint) 
         {
             Debug.Log(worldPoint);
@@ -61,11 +70,11 @@ namespace RPGGame.GameStates
 
         public override bool OnBack()
         {
-            CloseSession();
+            OnCloseSession();
             return true;
         }
 
-        private void CloseSession()
+        private void OnCloseSession()
         {
             sessionProv.EndSession();
             gameStateProv.LoadGameState(GameStateKey.LoadMainMenuScene);

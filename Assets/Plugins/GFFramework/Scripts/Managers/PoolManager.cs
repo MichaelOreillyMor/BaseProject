@@ -22,12 +22,12 @@ namespace GFFramework.Pools
 
         #region Setup/Unsetup methods
 
-        public override void Setup(ISetProvidersRegister reg, Action onNextSetup)
+        public override void Setup(ISetProvidersRegister reg, Action onNextSetuCallbackp)
         {
             reg.PoolProv = this;
 
             Debug.Log("Setup PoolManager");
-            onNextSetup?.Invoke();
+            onNextSetuCallbackp?.Invoke();
         }
 
         public override void Unsetup()
@@ -49,7 +49,7 @@ namespace GFFramework.Pools
 
             if (prefab != null && !pools.ContainsKey(prefab))
             {
-                pools.Add(prefab, new Pool(prefab, qty));
+                pools.Add(prefab, new Pool(prefab, qty, Despawn));
             }
         }
 
@@ -92,24 +92,28 @@ namespace GFFramework.Pools
             return (T)pools[prefab].Spawn(pos, rot);
         }
 
-        public List<PoolMember> GetActiveInstances(PoolMember prefab)
-        {
-            return pools[prefab].GetActiveInstances();
-        }
-
         /// <summary>
         /// Despawn the specified gameobject back into its pool.
         /// </summary>
         public void Despawn(PoolMember poolMember)
         {
-            if (poolMember.Pool == null)
+            Pool ownerPool = poolMember.GetPool();
+            Despawn(poolMember, ownerPool);
+        }
+
+        private void Despawn(PoolMember poolMember, Pool pool)
+        {
+            if (poolMember != null)
             {
-                Debug.Log("Object '" + poolMember.name + "' wasn't spawned from a pool. Destroying it instead.");
-                Destroy(poolMember.gameObject);
-            }
-            else
-            {
-                poolMember.Pool.Despawn(poolMember);
+                if (pool != null)
+                {
+                    pool.Despawn(poolMember);
+                }
+                else 
+                {
+                    Debug.Log("Object '" + poolMember.name + "' wasn't spawned from a pool. Destroying it instead.");
+                    Destroy(poolMember.gameObject);
+                }
             }
         }
 

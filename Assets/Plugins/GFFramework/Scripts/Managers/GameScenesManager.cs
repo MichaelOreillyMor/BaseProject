@@ -22,18 +22,18 @@ namespace GFFramework.Scenes
         private SceneInfo[] scenesToLoad;
         private Dictionary<SceneKey, string> scenes;
 
-        Action onSceneLoaded;
+        private Action onSceneLoadCallback;
 
         #region Setup/Unsetup methods
 
-        public override void Setup(ISetProvidersRegister reg, Action onNextSetup)
+        public override void Setup(ISetProvidersRegister reg, Action onNextSetupCallback)
         {
             reg.SceneProv = this;
 
             LoadSGamecenes();
 
             Debug.Log("Setup SceneManager");
-            onNextSetup?.Invoke();
+            onNextSetupCallback?.Invoke();
         }
 
         private void LoadSGamecenes()
@@ -72,14 +72,14 @@ namespace GFFramework.Scenes
 
         #region Load scene methods
 
-        public void LoadScene(SceneKey sceneKey, Action onSceneLoaded, bool canReloadSameScene = false)
+        public void LoadScene(SceneKey sceneKey, Action onSceneLoadCallback, bool canReloadSameScene = false)
         {
             string sceneToLoad = GetScene(sceneKey);
             Scene currentScene = SceneManager.GetActiveScene();
 
             if (sceneToLoad != null)
             {
-                this.onSceneLoaded = onSceneLoaded;
+                this.onSceneLoadCallback = onSceneLoadCallback;
 
                 if (canReloadSameScene || (sceneToLoad != currentScene.name))
                 {
@@ -88,15 +88,15 @@ namespace GFFramework.Scenes
                 }
                 else 
                 {
-                    onSceneLoaded?.Invoke();
+                    onSceneLoadCallback?.Invoke();
                 }
             }
         }
 
         private void OnSceneLoaded(AsyncOperation asyncLoad)
         {
-            onSceneLoaded?.Invoke();
-            onSceneLoaded = null;
+            onSceneLoadCallback?.Invoke();
+            onSceneLoadCallback = null;
         }
 
         #endregion

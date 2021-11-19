@@ -108,8 +108,12 @@ PrefabInstance:
       value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 404484950527044202, guid: 0e7955569a0db5541af13517e82309a9, type: 3}
+      propertyPath: m_Name
+      value: UIScreenMain
+      objectReference: {fileID: 0}
+    - target: {fileID: 404484950527044202, guid: 0e7955569a0db5541af13517e82309a9, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1489498903749945329, guid: 0e7955569a0db5541af13517e82309a9, type: 3}
       propertyPath: m_RootOrder
@@ -205,7 +209,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7641534970926474044, guid: 0e7955569a0db5541af13517e82309a9, type: 3}
       propertyPath: gameStatesToLoad.Array.size
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7641534970926474044, guid: 0e7955569a0db5541af13517e82309a9, type: 3}
       propertyPath: gameStatesToLoad.Array.data[4]
@@ -215,6 +219,22 @@ PrefabInstance:
       propertyPath: gameStatesToLoad.Array.data[5]
       value: 
       objectReference: {fileID: 11400000, guid: 7798f0d4ab0a1f44997f3465e569518f, type: 2}
+    - target: {fileID: 7641534970926474044, guid: 0e7955569a0db5541af13517e82309a9, type: 3}
+      propertyPath: gameStatesToLoad.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: ef8e6b0b28333c049aadcbefc73a4be8, type: 2}
+    - target: {fileID: 7641534970926474044, guid: 0e7955569a0db5541af13517e82309a9, type: 3}
+      propertyPath: gameStatesToLoad.Array.data[7]
+      value: 
+      objectReference: {fileID: 11400000, guid: 90d70700c1e272f4e90e28539d2e7490, type: 2}
+    - target: {fileID: 8460937127851687761, guid: 0e7955569a0db5541af13517e82309a9, type: 3}
+      propertyPath: m_Name
+      value: SplashPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 8460937127851687761, guid: 0e7955569a0db5541af13517e82309a9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e7955569a0db5541af13517e82309a9, type: 3}
 --- !u!4 &7535504583238944468 stripped

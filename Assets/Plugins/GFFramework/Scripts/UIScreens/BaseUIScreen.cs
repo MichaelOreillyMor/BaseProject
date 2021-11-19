@@ -34,7 +34,7 @@ namespace GFFramework.UI
                 owner = gameStateKey;
                 UnityEditor.EditorApplication.delayCall += () =>
                 {
-                    if (gameObject)
+                    if (gameObject != null)
                     {
                         UnityEditor.PrefabUtility.SavePrefabAsset(gameObject);
                     }  

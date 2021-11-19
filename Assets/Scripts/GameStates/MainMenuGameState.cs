@@ -1,16 +1,17 @@
 using GFFramework.GameStates.UI;
-using RPGGame.UI;
+using RPGGame.UI.MainMenu;
 
-using UnityEngine;
 using GFFramework.UI;
 using GFFramework;
+
+using UnityEngine;
 
 namespace RPGGame.GameStates
 {
     [CreateAssetMenu(menuName = "GameStates/MainMenuGameState")]
     public class MainMenuGameState : BaseUIGameState
     {
-        MainMenuScreen mainMenuScreen;
+        private UIScreenMainMenu mainMenuScreen;
 
         protected override void SetUIStateProviders(IGetProvidersRegister reg)
         {
@@ -19,7 +20,7 @@ namespace RPGGame.GameStates
 
         protected override void OnPostUILoaded(BaseUIScreen uiScreen)
         {
-            if (uiScreen is MainMenuScreen screen)
+            if (uiScreen is UIScreenMainMenu screen)
             {
                 mainMenuScreen = screen;
                 mainMenuScreen.Setup(LoadNextGameState);

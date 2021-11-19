@@ -14,9 +14,6 @@ namespace GFFramework.GameStates.UI
         private BaseUIScreen uiScreen;
 
         [SerializeField]
-        private bool isMenuInputListener;
-
-        [SerializeField]
         protected bool canReturnPrevState;
 
         protected IUIProvider uiProv;
@@ -43,12 +40,7 @@ namespace GFFramework.GameStates.UI
             if (uiScreenPref)
             {
                 uiScreen = uiProv.LoadUIScreen(uiScreenPref);
-
-                if (isMenuInputListener)
-                {
-                    inputProv.SetUICallbacks(this);
-                }
-
+                inputProv.SetUICallbacks(this);
                 OnPostUILoaded(uiScreen);
             }
             else 
@@ -63,11 +55,7 @@ namespace GFFramework.GameStates.UI
 
             if (uiScreen)
             {
-                if (isMenuInputListener)
-                {
-                    inputProv.RemoveUICallbacks();
-                }
-
+                inputProv.RemoveUICallbacks();
                 uiScreen.Unsetup();
                 uiProv.UnloadUIScreen();
             }

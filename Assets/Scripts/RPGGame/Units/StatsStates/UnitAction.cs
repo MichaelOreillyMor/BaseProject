@@ -7,26 +7,36 @@ namespace RPGGame.Units.Stats
     {
         public int Cost { get; private set; }
 
-        private event Action onPerform;
+        private event Action onPerformEvent;
 
         public UnitAction(ActionData actionData, float level) : base(actionData, level)
         {
             Cost = actionData.Cost;
         }
 
+        #region Listeners methods
+
         public void AddPerformListener(Action callback)
         {
-            onPerform += callback;
+            onPerformEvent += callback;
         }
 
         public void RemovePerformListener(Action callback)
         {
-            onPerform -= callback;
+            onPerformEvent -= callback;
         }
+
+        public override void RemoveAllListeners()
+        {
+            base.RemoveAllListeners();
+            onPerformEvent = null;
+        }
+
+        #endregion
 
         public void Perform()
         {
-            onPerform?.Invoke();
+            onPerformEvent?.Invoke();
         }
     }
 }

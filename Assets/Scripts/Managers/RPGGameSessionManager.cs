@@ -6,21 +6,32 @@ namespace RPGGame.GameSession
 {
     public class RPGGameSessionManager : GameSessionManager, IRPGGameSessionProvider
     {
-        protected bool GameStarted { get; private set; }
+        private Board board;
+        private UnitState[] player1Units;
+        private UnitState[] player2Units;
 
         public void InitSession(Board board, UnitState[] player1Units, UnitState[] player2Units) 
         {
-            if (!GameStarted)
+            if (TryInitSession())
             {
-                GameStarted = true;
+                this.board = board;
+                this.player1Units = player1Units;
+                this.player2Units = player2Units;
             }
         }
 
-        public override void EndSession()
+        public override void OnPreEndSession()
         {
-            if (GameStarted)
+            board.DespawnCells();
+            DespawnPlayerUnits(player1Units);
+            DespawnPlayerUnits(player2Units);
+        }
+
+        private void DespawnPlayerUnits(UnitState[] playerUnits) 
+        {
+            for (int i = 0; i < playerUnits.Length; i++)
             {
-                GameStarted = false;
+                playerUnits[i].DespawnUnit();
             }
         }
     }

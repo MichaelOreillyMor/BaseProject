@@ -26,6 +26,7 @@
 /// 
 /// 
 /// 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -46,19 +47,20 @@ namespace GFFramework.Pools
         // We'll always just grab the last one, which eliminates
         // any need to shuffle the objects around in memory.
         private Stack<PoolMember> inactive;
-        List<PoolMember> active;
+        private List<PoolMember> active;
 
         // The prefab that we are pooling
         private PoolMember prefab;
 
+        //Callback to allow PoolMembers to despawn themselves properly
+        private Action<PoolMember, Pool> onDespawnToPoolCallback;
+
         // Constructor
-        public Pool(PoolMember prefab, int initialQty)
+        public Pool(PoolMember prefab, int initialQty, Action<PoolMember, Pool> onDespawnToPoolCallback)
         {
             this.prefab = prefab;
+            this.onDespawnToPoolCallback = onDespawnToPoolCallback;
 
-            // If Stack uses a linked list internally, then this
-            // whole initialQty thing is a placebo that we could
-            // strip out for more minimal code. But it can't *hurt*.
             inactive = new Stack<PoolMember>(initialQty);
             active = new List<PoolMember>(initialQty);
         }
@@ -83,11 +85,6 @@ namespace GFFramework.Pools
             active.Clear();
         }
 
-        public List<PoolMember> GetActiveInstances()
-        {
-            return active;
-        }
-
         // Spawn an object from our pool
         public PoolMember Spawn(Vector3 pos, Quaternion rot)
         {
@@ -98,13 +95,13 @@ namespace GFFramework.Pools
                 // instantiate a whole new object.
                 poolMember = GameObject.Instantiate(prefab, pos, rot);
                 poolMember.name = prefab.name + " (" + (nextId++) + ")";
-                poolMember.Pool = this;
+                poolMember.InitPoolMember(this, onDespawnToPoolCallback);
             }
             else
             {
                 // Grab the last object in the inactive array
                 poolMember = inactive.Pop();
-                active.Add(poolMember);
+    
 
                 if (poolMember == null)
                 {
@@ -120,11 +117,13 @@ namespace GFFramework.Pools
                 }
             }
 
+            active.Add(poolMember);
+
             poolMember.transform.position = pos;
             poolMember.transform.rotation = rot;
+
             poolMember.gameObject.SetActive(true);
             return poolMember;
-
         }
 
         // Return an object to the inactive pool.
@@ -132,13 +131,8 @@ namespace GFFramework.Pools
         {
             poolMember.gameObject.SetActive(false);
 
-            // Since Stack doesn't have a Capacity member, we can't control
-            // the growth factor if it does have to expand an internal array.
-            // On the other hand, it might simply be using a linked list 
-            // internally.  But then, why does it allow us to specify a size
-            // in the constructor? Maybe it's a placebo? Stack is weird.
-            inactive.Push(poolMember);
-            active.Remove(poolMember);
+            if(active.Remove(poolMember))
+                inactive.Push(poolMember);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace GFFramework.Input
 
         #region Setup/Unsetup methods
 
-        public override void Setup(ISetProvidersRegister reg, Action onNextSetup)
+        public override void Setup(ISetProvidersRegister reg, Action onNextSetupCallback)
         {
             reg.InputProv = this;
 
@@ -23,7 +23,7 @@ namespace GFFramework.Input
             gameControls.Enable();
 
             Debug.Log("Setup InputManager");
-            onNextSetup?.Invoke();
+            onNextSetupCallback?.Invoke();
         }
 
         public override void Unsetup()

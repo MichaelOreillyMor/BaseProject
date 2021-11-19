@@ -6,6 +6,7 @@ using RPGGame.BoardCells;
 using RPGGame.GameDatas;
 using RPGGame.Units;
 
+using System;
 using UnityEngine;
 
 namespace RPGGame.GameStates
@@ -26,8 +27,6 @@ namespace RPGGame.GameStates
         [SerializeField]
         private MapBoardFactory mapCellsFactory;
 
-        private LoadScreen loadScreen;
-
         #region Setup/Unsetup methods
 
         protected override void OnSetProviders(IGetProvidersRegister reg)
@@ -42,8 +41,7 @@ namespace RPGGame.GameStates
 
         protected override void OnPostSetup()
         {
-            loadScreen = UIProv.ShowLoadScreen(true);
-            loadScreen.Setup();
+            UIProv.ShowLoadPanel();
 
             LoadGameSession();
             LoadNextGameState();
@@ -51,8 +49,7 @@ namespace RPGGame.GameStates
 
         protected override void OnPreUnsetup()
         {
-            loadScreen.Unsetup();
-            UIProv.ShowLoadScreen(false);
+            UIProv.HideLoadPanel();
         }
 
         #endregion
@@ -66,11 +63,13 @@ namespace RPGGame.GameStates
 
         private void LoadGameSession()
         {
+            Action<Transform> onCreatePanelCallback = UIProv.AddContent;
+
             MapLevelData map = dataProv.GetCurrentMapLevel();
             Board board = mapCellsFactory.CreateBoard(map.BoardSize);
 
-            UnitState[] Player1Units = unitsBoardFactory.CreateBoardUnits(map.Player1Units, board, true);
-            UnitState[] Player2Units = unitsBoardFactory.CreateBoardUnits(map.Player2Units, board, false);
+            UnitState[] Player1Units = unitsBoardFactory.CreateBoardUnits(map.Player1Units, board, true, onCreatePanelCallback);
+            UnitState[] Player2Units = unitsBoardFactory.CreateBoardUnits(map.Player2Units, board, false, onCreatePanelCallback);
 
             sessionProv.InitSession(board, Player1Units, Player2Units);
         }

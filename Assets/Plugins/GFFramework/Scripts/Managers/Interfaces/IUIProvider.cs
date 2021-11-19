@@ -1,5 +1,7 @@
 ﻿using GFFramework.UI;
 
+using UnityEngine;
+
 namespace GFFramework
 {
     public interface IUIProvider
@@ -8,6 +10,8 @@ namespace GFFramework
         public void UnloadUIScreen();
         public void RegisterSceneScreens(BaseUIScreen[] UIScreens);
         public void CleanSceneScreens();
-        public LoadScreen ShowLoadScreen(bool show);
+        public void ShowLoadPanel();
+        public void HideLoadPanel();
+        public void AddContent(Transform panelTr);
     }
 }

@@ -6,13 +6,6 @@ namespace RPGGame.Units.Stats
 {
     class UnitStatsState : IUnitStatsState
     {
-        #region Interfaces
-        public IStatState ActionPoints => actionPoints;
-        public IStatState Health => health;
-        public IUnitAction Move => move;
-        public IUnitActionRange Attack => attack;
-        #endregion
-
         public float Level { get; private set; }
 
         private StatState actionPoints;
@@ -21,7 +14,7 @@ namespace RPGGame.Units.Stats
         private UnitAttack attack;
         private UnitMovement move;
 
-        private event Action onDefeated;
+        private event Action onDefeatedEvent;
 
         public UnitStatsState(float level, UnitStatsData unitStats)
         {
@@ -33,24 +26,45 @@ namespace RPGGame.Units.Stats
             move = new UnitMovement(unitStats.Move, Level);
         }
 
+        public void ForceDefeated()
+        {
+            ApplyAttackDamage(health.Value);
+        }
+
+        #region Listeners methods
+
         public void AddDefeatedListener(Action callback) 
         {
-            onDefeated += callback;
+            onDefeatedEvent += callback;
         }
 
         public void RemoveDefeatedListener(Action callback)
         {
-            onDefeated -= callback;
+            onDefeatedEvent -= callback;
         }
+
+        public void RemoveAllListeners()
+        {
+            actionPoints.RemoveAllListeners();
+            health.RemoveAllListeners();
+            attack.RemoveAllListeners();
+            move.RemoveAllListeners();
+            onDefeatedEvent = null;
+        }
+
+        #endregion
 
         #region Attack methods
 
-        public void ApplyAttackDamage(int damage)
+        public bool ApplyAttackDamage(int damage)
         {
             health.SubtractValue(damage);
+            bool isDead = (health.Value <= 0);
 
-            if (health.Value == 0)
-                onDefeated?.Invoke();
+            if (isDead)
+                onDefeatedEvent?.Invoke();
+
+            return isDead;
         }
 
         public bool TryAttack(int distance)
@@ -93,6 +107,30 @@ namespace RPGGame.Units.Stats
         public void ResetActionPoints()
         {
             actionPoints.ResetValue();
+        }
+
+        #endregion
+
+        #region Get stats methods
+
+        public IStatState GetActionPoints()
+        {
+            return actionPoints;
+        }
+
+        public IStatState GetHealth()
+        {
+            return health;
+        }
+
+        public IUnitAction GetMoveAction()
+        {
+            return move;
+        }
+
+        public IUnitActionRange GetAttackAction()
+        {
+            return attack;
         }
 
         #endregion

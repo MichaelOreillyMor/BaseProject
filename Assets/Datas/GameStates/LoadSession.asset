@@ -16,6 +16,7 @@ MonoBehaviour:
   nextGameState: 2
   unitsBoardFactory:
     unitStatePref: {fileID: 7855087951469780927, guid: 1c7f8ef50cc171c4aaef056bbbbc60c6, type: 3}
+    panelUnitPref: {fileID: 3915179103123525334, guid: 4a1bae085ff075946af5fff7a40821b8, type: 3}
   mapCellsFactory:
     cellPref: {fileID: 7427408246632165614, guid: 37ea167c09cfd014fbedd1bcc36cb650, type: 3}
     cellDistance: 1.2

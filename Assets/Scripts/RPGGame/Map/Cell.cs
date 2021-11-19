@@ -73,5 +73,10 @@ namespace RPGGame.BoardCells
         {
            return position;
         }
+
+        public void Despawn()
+        {
+            DespawnToPool();
+        }
     }
 }

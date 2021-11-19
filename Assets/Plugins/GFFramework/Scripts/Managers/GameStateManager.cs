@@ -28,13 +28,13 @@ namespace GFFramework.GameStates
 
         #region Setup/Unsetup methods
 
-        public override void Setup(ISetProvidersRegister reg, Action onNextSetup)
+        public override void Setup(ISetProvidersRegister reg, Action onNextSetupCallback)
         {
             reg.GameStateProv = this;
             LoadGameStates();
 
             Debug.Log("Setup GameStateManager");
-            onNextSetup?.Invoke();
+            onNextSetupCallback?.Invoke();
         }
 
         public override void Unsetup()

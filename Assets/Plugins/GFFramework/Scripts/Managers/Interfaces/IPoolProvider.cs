@@ -8,9 +8,7 @@ namespace GFFramework
     {
         public void Preload(PoolMember prefab, int qty = 1);
         public T Spawn<T>(T prefab, Vector3 pos, Quaternion rot) where T :  PoolMember;
-        public List<PoolMember> GetActiveInstances(PoolMember prefab);
         public void Despawn(PoolMember poolMember);
-
         public void DestroyPoolsMembers();
     }
 }

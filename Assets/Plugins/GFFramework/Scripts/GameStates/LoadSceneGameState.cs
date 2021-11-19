@@ -24,8 +24,6 @@ namespace GameStates.GameStates
         private IPoolProvider poolProv;
         private IUIProvider UIProv;
 
-        private LoadScreen loadScreen;
-
         #region Setup/Unsetup methods
 
         protected override void OnSetProviders(IGetProvidersRegister reg)
@@ -37,8 +35,7 @@ namespace GameStates.GameStates
 
         protected override void OnPostSetup()
         {
-            loadScreen = UIProv.ShowLoadScreen(true);
-            loadScreen.Setup();
+            UIProv.ShowLoadPanel();
 
             CleanSceneRefs();
             SceneProv.LoadScene(scene, OnSceneLoaded);
@@ -46,8 +43,7 @@ namespace GameStates.GameStates
 
         protected override void OnPreUnsetup()
         {
-            loadScreen.Unsetup();
-            UIProv.ShowLoadScreen(false);
+            UIProv.HideLoadPanel();
         }
 
         #endregion

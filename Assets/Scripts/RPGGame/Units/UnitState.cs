@@ -1,11 +1,10 @@
-using UnityEngine;
-
 using GFFramework.Pools;
 using GFFramework.Utils;
 
 using RPGGame.GameDatas.Stats;
 using RPGGame.Units.Stats;
-using System;
+
+using UnityEngine;
 
 namespace RPGGame.Units
 {
@@ -14,20 +13,24 @@ namespace RPGGame.Units
         public bool IsTeam1 { get; private set; }
 
         [SerializeField, ReadOnly]
-        private UnitCosmeticController cosmetic;
+        private UnitCosmetic cosmetic;
+
         private UnitStatsState unitStatsState;
 
-        public void SetInitSate(bool isTeam1, float level, UnitStatsData statsData, UnitCosmeticController unitCosmetic)
+        public void SetInitSate(bool isTeam1, float level, UnitStatsData statsData, UnitCosmetic unitCosmetic)
         {
             IsTeam1 = isTeam1;
             cosmetic = unitCosmetic;
+
             unitStatsState = new UnitStatsState(level, statsData);
         }
 
-        public void ApplyAttackDamage(int damage)
+        public bool ApplyAttackDamage(int damage)
         {
             cosmetic.PlayHit();
-            unitStatsState.ApplyAttackDamage(damage);
+            bool isDead = unitStatsState.ApplyAttackDamage(damage);
+
+            return isDead;
         }
 
         public bool TryAttackUnit(UnitState otherUnit, int distance)
@@ -55,6 +58,20 @@ namespace RPGGame.Units
             }
 
             return false;
+        }
+
+        public IUnitStatsState GetStatsState()
+        {
+            return unitStatsState;
+        }
+
+        public void DespawnUnit() 
+        {
+            unitStatsState.ForceDefeated();
+
+            unitStatsState.RemoveAllListeners();
+            cosmetic.Despawn();
+            DespawnToPool();
         }
     }
 }

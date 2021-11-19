@@ -16,6 +16,8 @@ namespace GFFramework.Enums
         LoadMainMenuScene,
         LoadSession,
         EnemyTurn,
+        WinMenu,
+        LoseMenu
     }
 
     /// <summary>
