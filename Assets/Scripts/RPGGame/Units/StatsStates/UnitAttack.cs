@@ -16,9 +16,9 @@ namespace RPGGame.Units.Stats
             return (distance <= Range);
         }
 
-        public bool HasCost(int actionPoints)
+        public int GetCost()
         {
-            return (actionPoints >= Cost);
+            return BaseCost;
         }
     }
 }

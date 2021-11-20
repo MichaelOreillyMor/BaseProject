@@ -9,10 +9,9 @@ namespace RPGGame.Units.Stats
 
         }
 
-        public bool HasCost(int distance, int actionPoints)
+        public int GetCost(int distance)
         {
-            int distanceCost = (Cost * distance);
-            return (actionPoints >= distanceCost);
+            return (BaseCost * distance);
         }
     }
 }

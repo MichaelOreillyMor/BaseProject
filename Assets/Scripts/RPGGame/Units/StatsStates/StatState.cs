@@ -10,7 +10,7 @@ namespace RPGGame.Units.Stats
         public int Value { get; private set; }
         public int InitValue { get; private set; }
 
-        private event Action<int> onValueChangeEvent;
+        private event Action<int, int> onValueChangeEvent;
 
         #region Listeners methods
 
@@ -20,12 +20,12 @@ namespace RPGGame.Units.Stats
             Value = InitValue;
         }
 
-        public void AddValueChangeListener(Action<int> callback)
+        public void AddValueChangeListener(Action<int, int> callback)
         {
             onValueChangeEvent += callback;
         }
 
-        public void RemoveValueChangeListener(Action<int> callback)
+        public void RemoveValueChangeListener(Action<int, int> callback)
         {
             onValueChangeEvent -= callback;
         }
@@ -46,7 +46,7 @@ namespace RPGGame.Units.Stats
             if (Value < 0)
                 Value = 0;
 
-            onValueChangeEvent?.Invoke(Value);
+            onValueChangeEvent?.Invoke(Value, InitValue);
         }
 
         public void SubtractValue(int value)
@@ -56,13 +56,13 @@ namespace RPGGame.Units.Stats
             if (Value < 0)
                 Value = 0;
 
-            onValueChangeEvent?.Invoke(Value);
+            onValueChangeEvent?.Invoke(Value, InitValue);
         }
 
         public void ResetValue()
         {
             Value = InitValue;
-            onValueChangeEvent?.Invoke(Value);
+            onValueChangeEvent?.Invoke(Value, InitValue);
         }
 
         #endregion

@@ -1,7 +1,8 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-namespace GFFramework.Input
+namespace GFFramework.Inputs
 {
     /// <summary>
     /// Basic class to encapsulate the inputs maps and control the input listeners
@@ -12,6 +13,11 @@ namespace GFFramework.Input
         private LayerMask selectWorldLayer;
 
         private GameControls gameControls;
+
+        private Action<Transform> onSelectCallback;
+        private bool isListeningSelect;
+        private RaycastHit hit;
+        private Ray ray;
 
         #region Setup/Unsetup methods
 
@@ -43,14 +49,36 @@ namespace GFFramework.Input
             gameControls.UIScreen.SetCallbacks(null);
         }
 
-        public void SetSelectWorldPointCalback(Action<Vector3> onHitPoint)
+        public void SetSelectWorldObjectCalback(Action<Transform> onSelectCallback)
         {
-   
+            isListeningSelect = true;
+            this.onSelectCallback = onSelectCallback;
         }
 
-        public void RemovetWorldPointCalback()
+        public void RemoveSelectWorldObjectCalback()
         {
+            isListeningSelect = false;
+            onSelectCallback = null;
+        }
 
+        private void Update()
+        {
+            if (isListeningSelect)
+            {
+                CheckSelectWorldObject();
+            }
+        }
+
+        private void CheckSelectWorldObject()
+        {
+            if (Mouse.current.leftButton.wasPressedThisFrame)
+            {
+                ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+                if (Physics.Raycast(ray, out hit, 100.0f, selectWorldLayer))
+                {
+                    onSelectCallback?.Invoke(hit.transform);
+                }
+            }
         }
     }
 }

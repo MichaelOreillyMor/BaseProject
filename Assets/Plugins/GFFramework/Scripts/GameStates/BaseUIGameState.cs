@@ -1,4 +1,4 @@
-using GFFramework.Input;
+using GFFramework.Inputs;
 using GFFramework.UI;
 
 using UnityEngine;
@@ -55,6 +55,8 @@ namespace GFFramework.GameStates.UI
 
             if (uiScreen)
             {
+                Debug.Log(uiScreen.name + " Unsetup");
+
                 inputProv.RemoveUICallbacks();
                 uiScreen.Unsetup();
                 uiProv.UnloadUIScreen();

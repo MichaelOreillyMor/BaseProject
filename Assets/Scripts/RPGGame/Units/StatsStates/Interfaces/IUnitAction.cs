@@ -4,7 +4,7 @@ namespace RPGGame.Units.Stats
 {
     public interface IUnitAction : IStatState
     {
-        public int Cost { get; }
+        public int BaseCost { get; }
 
         public void AddPerformListener(Action callback);
         public void RemovePerformListener(Action callback);

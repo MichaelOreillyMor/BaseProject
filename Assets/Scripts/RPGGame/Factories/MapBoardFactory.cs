@@ -1,14 +1,14 @@
 using GFFramework.Pools;
+using GFFramework;
 
 using RPGGame.BoardCells;
 
 using UnityEngine;
-using System;
 
 namespace RPGGame.Units
 {
     [System.Serializable]
-    public class MapBoardFactory : PoolFactory
+    public class MapBoardFactory : SpawnFactory
     {
         [SerializeField]
         private Cell cellPref;
@@ -16,12 +16,15 @@ namespace RPGGame.Units
         [SerializeField]
         private float cellDistance;
 
+        public void Init(ISpawnProvider spawnProv)
+        {
+            SetSpawner(spawnProv);
+        }
+
         public Board CreateBoard(Vector2Int boardSize)
         {
-            Board mapBoard = new Board();
             Cell[] boardCells = CreateBoardCells(boardSize);
-
-            mapBoard.Init(boardCells, boardSize);
+            Board mapBoard = new Board(boardCells, boardSize);
             return mapBoard;
         }
 
@@ -49,9 +52,9 @@ namespace RPGGame.Units
         private Cell CreateCell(Vector2Int boardPosition)
         {
             Vector3 worldPosition = new Vector3(boardPosition.x * cellDistance, 0, boardPosition.y * cellDistance);
-            Cell cell = PoolManager.Spawn(cellPref, worldPosition, Quaternion.identity);
+            Cell cell = Spawn(cellPref, worldPosition, Quaternion.identity);
 
-            cell.Init(boardPosition);
+            cell.Setup(boardPosition);
             return cell;
         }
     }

@@ -1,6 +1,7 @@
 using GFFramework.Pools;
 
 using RPGGame.Units;
+
 using System;
 using UnityEngine;
 
@@ -11,14 +12,14 @@ namespace RPGGame.BoardCells
         [SerializeField]
         private Transform anchorPoint;
 
-        public Vector2Int position;
+        private Vector2Int position;
         private UnitState UnitState;
 
         private Action<Cell> onSelectCell;
 
-        #region Init methods
+        #region Setup methods
 
-        public void Init(Vector2Int boardPosition)
+        public void Setup(Vector2Int boardPosition)
         {
             position = boardPosition;
         }
@@ -26,6 +27,15 @@ namespace RPGGame.BoardCells
         public void SetOnSelectCallback(Action<Cell> callback) 
         {
             this.onSelectCell = callback;
+        }
+
+        #endregion
+
+        #region Unsetup methods
+
+        public void Unsetup()
+        {
+            DespawnToPool();
         }
 
         #endregion
@@ -57,6 +67,11 @@ namespace RPGGame.BoardCells
             return (UnitState != null);
         }
 
+        public bool IsUnitTeam1()
+        {
+            return (UnitState != null) ? UnitState.IsTeam1 : false;
+        }
+
         public UnitState GetUnit()
         {
             return UnitState;
@@ -69,14 +84,9 @@ namespace RPGGame.BoardCells
             onSelectCell?.Invoke(this);
         }
 
-        public Vector2Int GetBoardPosition()
+        public Vector2Int GetPosition()
         {
            return position;
-        }
-
-        public void Despawn()
-        {
-            DespawnToPool();
         }
     }
 }

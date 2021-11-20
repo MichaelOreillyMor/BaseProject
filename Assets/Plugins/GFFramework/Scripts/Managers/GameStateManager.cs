@@ -82,22 +82,22 @@ namespace GFFramework.GameStates
 
         public void LoadGameState(GameStateKey gameStateKey)
         {
-            BaseGameState gameState = GetGameState(gameStateKey);
+            BaseGameState nextGameState = GetGameState(gameStateKey);
 
-            if (gameState)
+            if (nextGameState)
             {
                 if (currentGameState)
                 {
                     prevGameState = currentGameState;
 
-                    Debug.Log("In GameState: " + gameState.name);
+                    Debug.Log("Out GameState: " + prevGameState.name);
                     prevGameState.Unsetup();
                 }
 
-                currentGameState = gameState;
+                currentGameState = nextGameState;
 
-                Debug.Log("Out GameState: " + gameState.name);
-                gameState.Setup();
+                Debug.Log("In GameState: " + currentGameState.name);
+                currentGameState.Setup();
             }
             else 
             {

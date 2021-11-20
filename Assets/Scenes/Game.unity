@@ -216,6 +216,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &1087803824 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7128115234666131762, guid: 0348251d93118544b9bda701eefa551b, type: 3}
+  m_PrefabInstance: {fileID: 257719559221958355}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfd92e60a8347ef4d9c77905bac90347, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1462015662 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4341467457683247031, guid: 0348251d93118544b9bda701eefa551b, type: 3}
+  m_PrefabInstance: {fileID: 257719559221958355}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfd92e60a8347ef4d9c77905bac90347, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &257719559221958355
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -231,6 +253,18 @@ PrefabInstance:
       propertyPath: playerController
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 257719558860346340, guid: 0348251d93118544b9bda701eefa551b, type: 3}
+      propertyPath: refsUIScreens.screens.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 257719558860346340, guid: 0348251d93118544b9bda701eefa551b, type: 3}
+      propertyPath: refsUIScreens.screens.Array.data[1]
+      value: 
+      objectReference: {fileID: 1087803824}
+    - target: {fileID: 257719558860346340, guid: 0348251d93118544b9bda701eefa551b, type: 3}
+      propertyPath: refsUIScreens.screens.Array.data[2]
+      value: 
+      objectReference: {fileID: 1462015662}
     - target: {fileID: 257719558860346341, guid: 0348251d93118544b9bda701eefa551b, type: 3}
       propertyPath: m_Name
       value: SceneInfo
@@ -300,6 +334,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1210742753732235759, guid: 2016f94dea487f84ead1e42465b036c8, type: 3}
+      propertyPath: selectWorldLayer.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
     - target: {fileID: 2434213530046828232, guid: 2016f94dea487f84ead1e42465b036c8, type: 3}
       propertyPath: m_Name
       value: RPGGameInitializer

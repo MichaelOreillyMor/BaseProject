@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 874f37fe27978544b902b923e30548ed, type: 3}
   m_Name: BasicMonsterData
   m_EditorClassIdentifier: 
-  CosmeticPref: {fileID: 677727324890943079, guid: 512beb04bdfb89246b454af63c741cd7, type: 3}
+  CosmeticPref: {fileID: 3514445327068207690, guid: 4936ec4ed2463c44ab80c96132addbcc, type: 3}
   UnitStats:
     ActionPoints:
       BaseValue: 5
@@ -27,5 +27,5 @@ MonoBehaviour:
     Attack:
       BaseValue: 2
       ScalePerLevel: 0.5
-      Range: 1
-      Cost: 1
+      Cost: 3
+      Range: 2

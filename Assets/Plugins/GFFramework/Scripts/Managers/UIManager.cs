@@ -76,9 +76,8 @@ namespace GFFramework.UI
 
         private BaseUIScreen CreateScreenInstance(BaseUIScreen screenPref)
         {
-            Debug.Log("You are creating a UIScreen instance on run-time, consider the creation of one instance inside the Ref SceneScreens");
-            BaseUIScreen screenInstance = Instantiate(screenPref, transform);
-            screenInstance.transform.SetAsLastSibling();
+            Debug.LogError("You are creating a UIScreen (" + screenPref.Owner + ") instance on run-time, consider the creation of one instance inside the Ref SceneScreens");
+            BaseUIScreen screenInstance = Instantiate(screenPref);
             return screenInstance;
         }
 

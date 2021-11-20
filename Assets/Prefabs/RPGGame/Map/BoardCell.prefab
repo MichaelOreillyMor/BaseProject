@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7022082532742347028}
   - component: {fileID: 7427408246632165614}
   - component: {fileID: 2779256596461896340}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BoardCell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,9 +111,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6806775634748651854, guid: eb6c32524e89e7c4fb2676ccca4f0904, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 7736438500077233898, guid: eb6c32524e89e7c4fb2676ccca4f0904, type: 3}
       propertyPath: m_Name
       value: Cosmetic
+      objectReference: {fileID: 0}
+    - target: {fileID: 7736438500077233898, guid: eb6c32524e89e7c4fb2676ccca4f0904, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb6c32524e89e7c4fb2676ccca4f0904, type: 3}

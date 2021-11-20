@@ -1,12 +1,11 @@
 using GFFramework;
 using GFFramework.GameStates;
-using GFFramework.UI;
 
 using RPGGame.BoardCells;
 using RPGGame.GameDatas;
 using RPGGame.Units;
 
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace RPGGame.GameStates
@@ -35,8 +34,11 @@ namespace RPGGame.GameStates
             sessionProv = (IRPGGameSessionProvider)reg.GameSessionProv;
             UIProv = reg.UIProv;
 
-            unitsBoardFactory.SetPool(reg.PoolProv);
-            mapCellsFactory.SetPool(reg.PoolProv);
+            ICameraProvider camProv = reg.CameraProv;
+            IPoolProvider  poolProv = reg.PoolProv;
+
+            unitsBoardFactory.Init(poolProv, camProv, UIProv);
+            mapCellsFactory.Init(poolProv);
         }
 
         protected override void OnPostSetup()
@@ -63,13 +65,11 @@ namespace RPGGame.GameStates
 
         private void LoadGameSession()
         {
-            Action<Transform> onCreatePanelCallback = UIProv.AddContent;
-
             MapLevelData map = dataProv.GetCurrentMapLevel();
             Board board = mapCellsFactory.CreateBoard(map.BoardSize);
 
-            UnitState[] Player1Units = unitsBoardFactory.CreateBoardUnits(map.Player1Units, board, true, onCreatePanelCallback);
-            UnitState[] Player2Units = unitsBoardFactory.CreateBoardUnits(map.Player2Units, board, false, onCreatePanelCallback);
+            List<UnitState> Player1Units = unitsBoardFactory.CreateBoardUnits(map.Player1Units, board, true);
+            List<UnitState> Player2Units = unitsBoardFactory.CreateBoardUnits(map.Player2Units, board, false);
 
             sessionProv.InitSession(board, Player1Units, Player2Units);
         }

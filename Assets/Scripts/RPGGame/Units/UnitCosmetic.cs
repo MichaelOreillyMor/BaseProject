@@ -18,10 +18,25 @@ namespace RPGGame.Units
         [SerializeField]
         private ParticleSystem hitFX;
 
-        public Transform GetPanelAnchor()
+        private Transform mainCameraTr;
+
+        private Vector3 lastPosCamera;
+        private Vector3 posAnchor;
+        private Vector3 dirCam;
+
+        public void Init(Transform mainCameraTr)
         {
-            return panelAnchor;
+            this.mainCameraTr = mainCameraTr;
         }
+
+        public void Despawn()
+        {
+            attackFX.Stop();
+            hitFX.Stop();
+            DespawnToPool();
+        }
+
+        #region Animator methods
 
         public void PlayAttack()
         {
@@ -30,7 +45,7 @@ namespace RPGGame.Units
         }
 
         public void PlayHit()
-        { 
+        {
             //Just to show feedback, this should play an animation
             hitFX.Play();
         }
@@ -40,11 +55,30 @@ namespace RPGGame.Units
 
         }
 
-        public void Despawn() 
+        #endregion
+
+        #region Panel anchor methods
+
+        private void UpdateAnchorPanelPos()
         {
-            attackFX.Stop();
-            hitFX.Stop();
-            DespawnToPool();
+            dirCam = (mainCameraTr.position - transform.position).normalized;
+            posAnchor = transform.position + dirCam;
+            panelAnchor.position = posAnchor;
         }
+
+        public Transform GetPanelAnchor()
+        {
+            return panelAnchor;
+        }
+
+        private void Update()
+        {
+            if (lastPosCamera != mainCameraTr.position)
+            {
+                UpdateAnchorPanelPos();
+            }
+        }
+
+        #endregion
     }
 }

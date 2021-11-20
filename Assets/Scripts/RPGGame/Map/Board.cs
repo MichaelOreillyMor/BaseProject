@@ -8,10 +8,12 @@ namespace RPGGame.BoardCells
     {
         private Cell[] cells;
 
-        private int cellsCount;
         private Vector2Int size;
+        private int cellsCount;
 
-        public void Init(Cell[] cells, Vector2Int size)
+        #region Setup methods
+
+        public Board(Cell[] cells, Vector2Int size)
         {
             this.cells = cells;
             this.size = size;
@@ -28,13 +30,21 @@ namespace RPGGame.BoardCells
             }
         }
 
-        public void DespawnCells()
+        #endregion
+
+        #region Unsetup methods
+
+        public void Unsetup()
         {
             for (int i = 0; i < cells.Length; i++)
             {
-                cells[i].Despawn();
+                cells[i].Unsetup();
             }
         }
+
+        #endregion
+
+        #region Units methods
 
         public void AddUnit(UnitState unitState, Vector2Int boardPosition)
         {
@@ -46,19 +56,32 @@ namespace RPGGame.BoardCells
             }
         }
 
-        public UnitState RemoveUnit(Vector2Int boardPosition)
+        public void RemoveUnit(Cell cell)
         {
-            Cell boardCell = GetCell(boardPosition);
-
-            if (boardCell != null)
+            if (cell != null)
             {
-                return boardCell.RemoveUnit();
+                cell.RemoveUnit();
             }
-
-            return null;
         }
 
-        private Cell GetCell(Vector2Int boardPosition)
+        public void MoveUnit(Cell cellA, Cell cellB)
+        {
+            if (cellA && cellB && !cellB.HasUnit())
+            {
+                UnitState unit = cellA.RemoveUnit();
+
+                if (unit)
+                {
+                    cellB.AddUnit(unit);
+                }  
+            }
+        }
+
+        #endregion
+
+        #region Cells methods
+
+        public Cell GetCell(Vector2Int boardPosition)
         {
             int index = (boardPosition.y * size.x) + boardPosition.x;
 
@@ -68,15 +91,30 @@ namespace RPGGame.BoardCells
             return null;
         }
 
+        public Cell GetCell(int index)
+        {
+            if (index < cellsCount)
+                return cells[index];
+
+            return null;
+        }
+
+        public int GetCellsCount() 
+        {
+            return cellsCount;
+        }
+
         public int GetCellsDistance(Cell cellA, Cell cellB)
         {
-            Vector2Int posA = cellA.position;
-            Vector2Int posB = cellB.position;
+            Vector2Int posA = cellA.GetPosition();
+            Vector2Int posB = cellB.GetPosition();
 
             int xDistance = Mathf.Abs(posA.x - posB.x);
             int yDistance = Mathf.Abs(posA.y - posB.y);
 
             return (xDistance > yDistance) ? xDistance : yDistance;
         }
+
+        #endregion
     }
 }

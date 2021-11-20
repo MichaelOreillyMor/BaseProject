@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 874f37fe27978544b902b923e30548ed, type: 3}
   m_Name: BasicSoldierData
   m_EditorClassIdentifier: 
-  CosmeticPref: {fileID: 1818512573180626375, guid: 2178276f7d3016340b91d0981a037fb3, type: 3}
+  CosmeticPref: {fileID: 1671876099376940206, guid: af7bbc6e9a3715a4382433b2a614f546, type: 3}
   UnitStats:
     ActionPoints:
       BaseValue: 5
@@ -25,7 +25,7 @@ MonoBehaviour:
       ScalePerLevel: 1
       Cost: 1
     Attack:
-      BaseValue: 2
+      BaseValue: 3
       ScalePerLevel: 0.5
-      Range: 1
-      Cost: 1
+      Cost: 3
+      Range: 3

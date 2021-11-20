@@ -6,7 +6,7 @@ namespace RPGGame.Units.Stats
     {
         public int InitValue { get; }
         public int Value { get; }
-        public void AddValueChangeListener(Action<int> callback);
-        public void RemoveValueChangeListener(Action<int> callback);
+        public void AddValueChangeListener(Action<int, int> callback);
+        public void RemoveValueChangeListener(Action<int, int> callback);
     }
 }

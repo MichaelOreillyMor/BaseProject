@@ -69,9 +69,11 @@ namespace RPGGame.Units.Stats
 
         public bool TryAttack(int distance)
         {
-            if (attack.HasCost(actionPoints.Value) && attack.HasRange(distance))
+            int cost = attack.GetCost();
+
+            if (cost <= actionPoints.Value && attack.HasRange(distance))
             {
-                actionPoints.SubtractValue(attack.Cost);
+                actionPoints.SubtractValue(attack.BaseCost);
                 attack.Perform();
                 return true;
             }
@@ -90,9 +92,11 @@ namespace RPGGame.Units.Stats
 
         public bool TryMove(int distance)
         {
-            if (move.HasCost(distance, actionPoints.Value))
+            int cost = move.GetCost(distance);
+
+            if (cost <= actionPoints.Value)
             {
-                actionPoints.SubtractValue(move.Cost);
+                actionPoints.SubtractValue(cost);
                 move.Perform();
                 return true;
             }

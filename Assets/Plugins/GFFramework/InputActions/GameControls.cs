@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-namespace GFFramework.Input
+namespace GFFramework.Inputs
 {
     public class @GameControls : IInputActionCollection, IDisposable
     {

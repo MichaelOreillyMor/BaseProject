@@ -1,4 +1,4 @@
-﻿using GFFramework.Input;
+﻿using GFFramework.Inputs;
 using System;
 using UnityEngine;
 
@@ -8,8 +8,7 @@ namespace GFFramework
     {
         public void SetUICallbacks(GameControls.IUIScreenActions uiStateActions);
         public void RemoveUICallbacks();
-
-        public void SetSelectWorldPointCalback(Action<Vector3> onHitPoint);
-        public void RemovetWorldPointCalback();
+        public void SetSelectWorldObjectCalback(Action<Transform> onSelectCallback);
+        public void RemoveSelectWorldObjectCalback();
     }
 }

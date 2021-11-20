@@ -2,11 +2,7 @@ using GFFramework.Pools;
 
 using RPGGame.Units.Stats;
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace RPGGame.UI.HUD
 {
@@ -16,37 +12,78 @@ namespace RPGGame.UI.HUD
         private RectTransform rectTransform;
 
         [SerializeField]
-        private Image background;
+        private UIPanelStatBar lifePanel;
 
         [SerializeField]
-        private Color team1Color;
+        private UIPanelStatText attackPanel;
 
         [SerializeField]
-        private Color team2Color;
+        private UIPanelStatText actionPointsPanel;
+
+        private Vector3 lastAnchorPosition;
+        private Transform anchorPoint;
+        private Camera mainCamera;
 
         private IUnitStatsState unitStats;
-        private Transform anchorPoint;
 
-        public void Init(IUnitStatsState unitStats, Transform anchorPoint, bool isTeam1)
+        #region Setup methods
+
+        public void Setup(IUnitStatsState unitStats, Transform anchorPoint, bool isTeam1, Camera mainCamera)
         {
-            this.unitStats = unitStats;
             this.anchorPoint = anchorPoint;
+            this.mainCamera = mainCamera;
+            this.unitStats = unitStats;
 
-            background.color = (isTeam1) ? team1Color : team2Color;
+            SetupStatsPanels(unitStats, isTeam1);
+            unitStats.AddDefeatedListener(Unsetup);
+
             rectTransform.anchoredPosition = Vector2.zero;
-
-            unitStats.AddDefeatedListener(Despawn);
+            lastAnchorPosition = Vector3.zero;
         }
 
-        private void RemoveAllListeners()
+        private void SetupStatsPanels(IUnitStatsState unitStats, bool isTeam1)
         {
-            unitStats.RemoveDefeatedListener(Despawn);
+            lifePanel.Setup(unitStats.GetHealth(), isTeam1);
+            attackPanel.Setup(unitStats.GetAttackAction(), isTeam1);
+            actionPointsPanel.Setup(unitStats.GetActionPoints(), isTeam1);
         }
 
-        public void Despawn()
+        #endregion
+
+        #region Unsetup methods
+
+        private void Unsetup()
         {
-            RemoveAllListeners();
+            UnsetupStatsPanels();
+            unitStats.RemoveDefeatedListener(Unsetup);
             DespawnToPool();
         }
+
+        private void UnsetupStatsPanels()
+        {
+            lifePanel.Unsetup();
+            attackPanel.Unsetup();
+            actionPointsPanel.Unsetup();
+        }
+
+        #endregion
+
+        #region Position methods
+
+        private void UpdatePosition()
+        {
+            Vector3 screenPos = mainCamera.WorldToScreenPoint(anchorPoint.position);
+            transform.position = screenPos;
+        }
+
+        private void Update()
+        {
+            if (lastAnchorPosition != anchorPoint.position) 
+            {
+                UpdatePosition();
+            }
+        }
+
+        #endregion
     }
 }

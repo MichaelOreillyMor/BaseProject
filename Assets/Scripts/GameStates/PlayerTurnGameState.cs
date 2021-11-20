@@ -6,6 +6,7 @@ using GFFramework.GameStates.UI;
 using GFFramework.UI;
 
 using UnityEngine;
+using RPGGame.BoardCells;
 
 namespace RPGGame.GameStates
 {
@@ -32,7 +33,9 @@ namespace RPGGame.GameStates
             {
                 HUDScreen = screen;
                 HUDScreen.Setup(OnEndTurn, OnSurrender);
-                inputProv.SetSelectWorldPointCalback(OnPointSelect);
+                inputProv.SetSelectWorldObjectCalback(OnCellSelected);
+
+                sessionProv.StartTurn(OnWinGame);
             }
             else
             {
@@ -42,14 +45,23 @@ namespace RPGGame.GameStates
 
         protected override void OnPreUIUnsetup()
         {
-            inputProv.RemovetWorldPointCalback();
+            inputProv.RemoveSelectWorldObjectCalback();
         }
 
         #endregion
 
         private void OnEndTurn()
         {
-            LoadNextGameState();
+            if (sessionProv.EndTurn(true))
+            {
+                LoadNextGameState();
+            }
+        }
+
+        private void OnWinGame()
+        {
+            sessionProv.EndSession();
+            gameStateProv.LoadGameState(GameStateKey.WinMenu);
         }
 
         private void OnSurrender()
@@ -58,9 +70,11 @@ namespace RPGGame.GameStates
             gameStateProv.LoadGameState(GameStateKey.LoseMenu);
         }
 
-        private void OnPointSelect(Vector3 worldPoint) 
+        private void OnCellSelected(Transform obj) 
         {
-            Debug.Log(worldPoint);
+            //WIP: I will try to remove the GetComponent if I have time enough.
+            Cell cell =  obj.GetComponent<Cell>();
+            cell?.Select();
         }
 
         public override void Update()

@@ -3,7 +3,7 @@ using GFFramework.Utils;
 
 using RPGGame.GameDatas.Stats;
 using RPGGame.Units.Stats;
-
+using System;
 using UnityEngine;
 
 namespace RPGGame.Units
@@ -15,33 +15,58 @@ namespace RPGGame.Units
         [SerializeField, ReadOnly]
         private UnitCosmetic cosmetic;
 
-        private UnitStatsState unitStatsState;
+        private UnitStatsState statsState;
 
-        public void SetInitSate(bool isTeam1, float level, UnitStatsData statsData, UnitCosmetic unitCosmetic)
+        #region Setup methods
+
+        public void Setup(bool isTeam1, float level, UnitStatsData statsData, UnitCosmetic unitCosmetic)
         {
             IsTeam1 = isTeam1;
             cosmetic = unitCosmetic;
 
-            unitStatsState = new UnitStatsState(level, statsData);
+            statsState = new UnitStatsState(level, statsData);
         }
+
+        #endregion
+
+        #region Unsetup methods
+
+        public void Unsetup()
+        {
+            statsState.ForceDefeated();
+
+            statsState.RemoveAllListeners();
+            cosmetic.Despawn();
+            DespawnToPool();
+        }
+
+        #endregion
+
+        #region Attack methods
 
         public bool ApplyAttackDamage(int damage)
         {
             cosmetic.PlayHit();
-            bool isDead = unitStatsState.ApplyAttackDamage(damage);
+            bool isDead = statsState.ApplyAttackDamage(damage);
 
             return isDead;
         }
 
-        public bool TryAttackUnit(UnitState otherUnit, int distance)
+        public bool TryAttackUnit(UnitState otherUnit, int distance, Action<UnitState> onDeadCallback)
         {
-            if (IsTeam1 != otherUnit.IsTeam1 )
+            if (otherUnit && IsTeam1 != otherUnit.IsTeam1)
             {
-                if (unitStatsState.TryAttack(distance))
+                if (statsState.TryAttack(distance))
                 {
-                    int damame = unitStatsState.GetAttackDamage();
-                    unitStatsState.ApplyAttackDamage(damame);
+                    int damame = statsState.GetAttackDamage();
+                    bool isDead = otherUnit.ApplyAttackDamage(damame);
                     cosmetic.PlayAttack();
+
+                    if (isDead)
+                    {
+                        onDeadCallback?.Invoke(otherUnit);
+                    }
+
                     return true;
                 }
             }
@@ -49,9 +74,13 @@ namespace RPGGame.Units
             return false;
         }
 
+        #endregion
+
+        #region Stats methods
+
         public bool TryMovePosition(int distance)
         {
-            if (unitStatsState.TryMove(distance))
+            if (statsState.TryMove(distance))
             {
                 cosmetic.PlayMove();
                 return true;
@@ -60,18 +89,20 @@ namespace RPGGame.Units
             return false;
         }
 
+        #endregion
+
+        #region Stats methods
+
+        public void ResetActionPoints()
+        {
+            statsState.ResetActionPoints();
+        }
+
         public IUnitStatsState GetStatsState()
         {
-            return unitStatsState;
+            return statsState;
         }
 
-        public void DespawnUnit() 
-        {
-            unitStatsState.ForceDefeated();
-
-            unitStatsState.RemoveAllListeners();
-            cosmetic.Despawn();
-            DespawnToPool();
-        }
+        #endregion
     }
 }

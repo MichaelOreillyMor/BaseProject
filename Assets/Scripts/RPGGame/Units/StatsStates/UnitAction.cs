@@ -3,15 +3,15 @@ using System;
 
 namespace RPGGame.Units.Stats
 {
-    public class UnitAction : StatState, IUnitAction
+    public abstract class UnitAction : StatState, IUnitAction
     {
-        public int Cost { get; private set; }
+        public int BaseCost { get; private set; }
 
         private event Action onPerformEvent;
 
         public UnitAction(ActionData actionData, float level) : base(actionData, level)
         {
-            Cost = actionData.Cost;
+            BaseCost = actionData.Cost;
         }
 
         #region Listeners methods

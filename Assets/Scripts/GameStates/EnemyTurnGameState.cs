@@ -1,7 +1,7 @@
 using GFFramework;
 using GFFramework.Enums;
 using GFFramework.GameStates;
-using GFFramework.UI;
+
 using UnityEngine;
 
 namespace RPGGame.GameStates
@@ -13,6 +13,7 @@ namespace RPGGame.GameStates
     public class EnemyTurnGameState : BaseGameState
     {
         private IRPGGameSessionProvider sessionProv;
+        private bool hasWin;
 
         #region Setup/Unsetup methods
 
@@ -23,7 +24,7 @@ namespace RPGGame.GameStates
 
         protected override void OnPostSetup()
         {
-            LoadNextGameState();
+            PlayTurn();
         }
 
         protected override void OnPreUnsetup()
@@ -32,6 +33,28 @@ namespace RPGGame.GameStates
         }
 
         #endregion
+
+        private void PlayTurn()
+        {
+            hasWin = false;
+            sessionProv.StartTurn(OnWinGame);
+            sessionProv.PlayAI();
+
+            if (!hasWin)
+            {
+                if (sessionProv.EndTurn(false))
+                {
+                    LoadNextGameState();
+                }
+            }
+        }
+
+        private void OnWinGame()
+        {
+            hasWin = true;
+            sessionProv.EndSession();
+            gameStateProv.LoadGameState(GameStateKey.LoseMenu);
+        }
 
         public override void Update()
         {
