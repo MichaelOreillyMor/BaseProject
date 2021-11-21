@@ -2,6 +2,9 @@
 
 namespace RPGGame.Units.Stats
 {
+    /// <summary>
+    /// Current state of the Unit attack action and the cost of perform it
+    /// </summary>
     public class UnitAttack : UnitAction, IUnitActionRange
     {
         public int Range { get; private set; }

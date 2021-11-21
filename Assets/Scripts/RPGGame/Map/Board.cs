@@ -4,16 +4,16 @@ using UnityEngine;
 
 namespace RPGGame.BoardCells
 {
-    public class Board
+    public class Board : IBoard
     {
-        private Cell[] cells;
+        private ICell[] cells;
 
         private Vector2Int size;
         private int cellsCount;
 
         #region Setup methods
 
-        public Board(Cell[] cells, Vector2Int size)
+        public Board(ICell[] cells, Vector2Int size)
         {
             this.cells = cells;
             this.size = size;
@@ -21,11 +21,14 @@ namespace RPGGame.BoardCells
             cellsCount = cells.Length;
         }
 
-        public void SetOnSelectCallback(Action<Cell> callback)
+        /// <summary>
+        /// Set in the Cells the callback that they should call when they are selected
+        /// </summary>
+        public void SetOnSelectCallback(Action<ICell> callback)
         {
             for (int i = 0; i < cells.Length; i++)
             {
-                Cell cell = cells[i];
+                ICell cell = cells[i];
                 cell.SetOnSelectCallback(callback);
             }
         }
@@ -46,17 +49,25 @@ namespace RPGGame.BoardCells
 
         #region Units methods
 
-        public void AddUnit(UnitState unitState, Vector2Int boardPosition)
+        /// <summary>
+        /// Adds a UnitState to a Board position if it´s empty
+        /// </summary>
+        public bool AddUnit(IUnitState unitState, Vector2Int boardPosition)
         {
-            Cell boardCell = GetCell(boardPosition);
+            ICell cell = GetCell(boardPosition);
 
-            if (boardCell != null)
+            if (cell != null)
             {
-                boardCell.AddUnit(unitState);
+                return cell.AddUnit(unitState);
             }
+
+            return false;
         }
 
-        public void RemoveUnit(Cell cell)
+        /// <summary>
+        /// Removes a Unit from a Cell
+        /// </summary>
+        public void RemoveUnit(ICell cell)
         {
             if (cell != null)
             {
@@ -64,24 +75,29 @@ namespace RPGGame.BoardCells
             }
         }
 
-        public void MoveUnit(Cell cellA, Cell cellB)
+        /// <summary>
+        /// Moves a UnitState from one cell to the other one if it´s possible
+        /// </summary>
+        public bool MoveUnit(ICell cellA, ICell cellB)
         {
-            if (cellA && cellB && !cellB.HasUnit())
+            if (cellA != null && cellB != null && !cellB.HasUnit())
             {
-                UnitState unit = cellA.RemoveUnit();
+                IUnitState unit = cellA.RemoveUnit();
 
-                if (unit)
+                if (unit != null)
                 {
-                    cellB.AddUnit(unit);
-                }  
+                    return cellB.AddUnit(unit);
+                }
             }
+
+            return false;
         }
 
         #endregion
 
         #region Cells methods
 
-        public Cell GetCell(Vector2Int boardPosition)
+        public ICell GetCell(Vector2Int boardPosition)
         {
             int index = (boardPosition.y * size.x) + boardPosition.x;
 
@@ -91,7 +107,7 @@ namespace RPGGame.BoardCells
             return null;
         }
 
-        public Cell GetCell(int index)
+        public ICell GetCell(int index)
         {
             if (index < cellsCount)
                 return cells[index];
@@ -99,12 +115,12 @@ namespace RPGGame.BoardCells
             return null;
         }
 
-        public int GetCellsCount() 
+        public int GetCellsCount()
         {
             return cellsCount;
         }
 
-        public int GetCellsDistance(Cell cellA, Cell cellB)
+        public int GetCellsDistance(ICell cellA, ICell cellB)
         {
             Vector2Int posA = cellA.GetPosition();
             Vector2Int posB = cellB.GetPosition();

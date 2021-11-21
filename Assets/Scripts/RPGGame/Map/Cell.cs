@@ -8,15 +8,15 @@ using UnityEngine;
 
 namespace RPGGame.BoardCells
 {
-    public class Cell : PoolMember, ISelectable
+    public class Cell : PoolMember, ISelectable, ICell
     {
         [SerializeField]
         private Transform anchorPoint;
 
         private Vector2Int position;
-        private UnitState UnitState;
+        private IUnitState unitState;
 
-        private Action<Cell> onSelectCell;
+        private Action<ICell> onSelectCell;
 
         #region Setup methods
 
@@ -25,7 +25,7 @@ namespace RPGGame.BoardCells
             position = boardPosition;
         }
 
-        public void SetOnSelectCallback(Action<Cell> callback) 
+        public void SetOnSelectCallback(Action<ICell> callback)
         {
             this.onSelectCell = callback;
         }
@@ -43,39 +43,42 @@ namespace RPGGame.BoardCells
 
         #region Units methods
 
-        public bool AddUnit(UnitState unitState)
+        public bool AddUnit(IUnitState unitState)
         {
-            if (unitState != null)
+            if (!HasUnit())
             {
-                this.UnitState = unitState;
-                unitState.transform.position =  anchorPoint.position;
+                this.unitState = unitState;
+                unitState.SetWorldPosition(anchorPoint.position);
                 return true;
             }
 
             return false;
         }
 
-        public UnitState RemoveUnit()
+        public IUnitState RemoveUnit()
         {
-            UnitState temp = UnitState;
-            UnitState = null;
+            IUnitState temp = unitState;
+            unitState = null;
 
             return temp;
         }
 
         public bool HasUnit()
         {
-            return (UnitState != null);
+            return (unitState != null);
         }
 
+        /// <summary>
+        /// If the contentained UnitState belongs to Player 1
+        /// </summary>
         public bool IsUnitTeam1()
         {
-            return (UnitState != null) ? UnitState.IsTeam1 : false;
+            return (unitState != null) ? unitState.IsTeam1 : false;
         }
 
-        public UnitState GetUnit()
+        public IUnitState GetUnit()
         {
-            return UnitState;
+            return unitState;
         }
 
         #endregion
@@ -87,7 +90,7 @@ namespace RPGGame.BoardCells
 
         public Vector2Int GetPosition()
         {
-           return position;
+            return position;
         }
     }
 }

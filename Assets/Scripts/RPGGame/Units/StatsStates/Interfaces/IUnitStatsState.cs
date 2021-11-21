@@ -3,7 +3,7 @@
 namespace RPGGame.Units.Stats
 {
     /// <summary>
-    /// Provides to the UI (or any other listeners) just the information that they need. No methods that change the stats values
+    /// Provides to the UI (or any other listeners) read-only methods
     /// </summary>
     public interface IUnitStatsState
     {

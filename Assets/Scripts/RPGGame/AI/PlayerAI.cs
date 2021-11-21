@@ -8,31 +8,40 @@ namespace RPGGame.SessionsMan.AI
 {
     /// <summary>
     /// Very basic AI just to give some feedback to the player
-    /// This is a VERY, VERY, VERY bad code, but it works as an example.
+    /// This is a VERY code, but it works as an example.
     /// </summary>
-    public class BasicAI
+    public class PlayerAI : IPlayerAI
     {
         private Board board;
         private int numCells;
         private bool isPlayer1;
- 
-        private List<Cell> cellsAI;
-        private List<Cell> cellsEnemy;
-        private List<Cell> cellsEmpty;
 
-        private Action<Cell> onSelectCellCallback;
+        private List<ICell> cellsAI;
+        private List<ICell> cellsEnemy;
+        private List<ICell> cellsEmpty;
 
-        public BasicAI(Board board, int numAIUnits, int numEnemyUnits, bool isPlayer1, Action<Cell> onSelectCellCallback) 
+        private Action<ICell> onSelectCellCallback;
+
+        #region Setup methods
+
+        public PlayerAI(Board board, int numAIUnits, int numEnemyUnits, bool isPlayer1)
         {
             this.board = board;
             this.isPlayer1 = isPlayer1;
-            this.onSelectCellCallback = onSelectCellCallback;
 
             numCells = board.GetCellsCount();
-            cellsEmpty = new List<Cell>(numCells);
-            cellsAI = new List<Cell>(numAIUnits);
-            cellsEnemy = new List<Cell>(numEnemyUnits);
+
+            cellsEmpty = new List<ICell>(numCells);
+            cellsAI = new List<ICell>(numAIUnits);
+            cellsEnemy = new List<ICell>(numEnemyUnits);
         }
+
+        public void SetOnSelectCallback(Action<ICell> callback)
+        {
+            onSelectCellCallback = callback;
+        }
+
+        #endregion
 
         #region AI turn methods
 
@@ -54,7 +63,7 @@ namespace RPGGame.SessionsMan.AI
 
             for (int i = 0; i < numCells; i++)
             {
-                Cell cell = board.GetCell(i);
+                ICell cell = board.GetCell(i);
 
                 if (cell.HasUnit())
                 {
@@ -80,25 +89,26 @@ namespace RPGGame.SessionsMan.AI
 
         private void PlayToMoves()
         {
-            Cell cellEnemy = GetFirstCellEnemy();
+            ICell cellEnemy = GetFirstCellEnemy();
 
             if (cellEnemy != null)
             {
-                List<Cell> cellsSorted = cellsEmpty.OrderBy(c => board.GetCellsDistance(cellEnemy, c)).ToList();
+                //This is a VERY code, but it works as an example.
+                List<ICell> cellsSorted = cellsEmpty.OrderBy(c => board.GetCellsDistance(cellEnemy, c)).ToList();
 
                 for (int i = 0; i < cellsSorted.Count; i++)
                 {
-                    Cell cell = cellsSorted[i];
+                    ICell cell = cellsSorted[i];
                     TryMoveUnits(cell);
                 }
             }
         }
 
-        private void TryMoveUnits(Cell cellEmpty)
+        private void TryMoveUnits(ICell cellEmpty)
         {
             for (int j = 0; j < cellsAI.Count; j++)
             {
-                Cell cellAI = cellsAI[j];
+                ICell cellAI = cellsAI[j];
 
                 if (cellAI.HasUnit() && !cellEmpty.HasUnit())
                 {
@@ -116,11 +126,11 @@ namespace RPGGame.SessionsMan.AI
             }
         }
 
-        private Cell GetFirstCellEnemy()
+        private ICell GetFirstCellEnemy()
         {
             for (int i = 0; i < cellsEnemy.Count; i++)
             {
-                Cell cellEnemy = cellsEnemy[i];
+                ICell cellEnemy = cellsEnemy[i];
 
                 if (cellEnemy.HasUnit() && isPlayer1 != cellEnemy.IsUnitTeam1())
                 {
@@ -139,11 +149,11 @@ namespace RPGGame.SessionsMan.AI
         {
             for (int i = 0; i < cellsAI.Count; i++)
             {
-                Cell cellAI = cellsAI[i];
+                ICell cellAI = cellsAI[i];
 
                 for (int j = 0; j < cellsEnemy.Count; j++)
                 {
-                    Cell cellEnemy = cellsEnemy[j];
+                    ICell cellEnemy = cellsEnemy[j];
 
                     if (cellEnemy.HasUnit())
                     {

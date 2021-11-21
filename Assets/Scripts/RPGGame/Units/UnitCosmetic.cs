@@ -24,12 +24,12 @@ namespace RPGGame.Units
         private Vector3 posAnchor;
         private Vector3 dirCam;
 
-        public void Init(Transform mainCameraTr)
+        public void Setup(Transform mainCameraTr)
         {
             this.mainCameraTr = mainCameraTr;
         }
 
-        public void Despawn()
+        public void Unsetup()
         {
             attackFX.Stop();
             hitFX.Stop();

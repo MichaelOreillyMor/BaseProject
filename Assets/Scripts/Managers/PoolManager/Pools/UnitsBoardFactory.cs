@@ -34,10 +34,10 @@ namespace RPGGame.PoolsMan.Pools
             SetSpawner(poolManager);
         }
 
-        public List<UnitState> CreateBoardUnits(MapUnitData[] playerMapUnits, Board board, bool isTeam1)
+        public List<IUnitState> CreateBoardUnits(MapUnitData[] playerMapUnits, Board board, bool isTeam1)
         {
             int numUnits = playerMapUnits.Length;
-            List<UnitState> PlayerUnits = new List<UnitState>(numUnits);
+            List<IUnitState> PlayerUnits = new List<IUnitState>(numUnits);
 
             for (int i = 0; i < numUnits; i++)
             {
@@ -69,7 +69,7 @@ namespace RPGGame.PoolsMan.Pools
             unitCosmetic.transform.SetParent(unitState.transform);
             unitCosmetic.transform.localPosition = Vector3.zero;
 
-            unitCosmetic.Init(mainCamera.transform);
+            unitCosmetic.Setup(mainCamera.transform);
             return unitCosmetic;
         }
 

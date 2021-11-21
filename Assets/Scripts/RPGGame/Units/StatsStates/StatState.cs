@@ -4,7 +4,9 @@ using UnityEngine;
 
 namespace RPGGame.Units.Stats
 {
-    [System.Serializable]
+    /// <summary>
+    /// Current state of a Unit stat, the initial value is loaded from a serialized data
+    /// </summary>
     public class StatState : IStatState
     {
         public int Value { get; private set; }

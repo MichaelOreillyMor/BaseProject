@@ -9,19 +9,22 @@ using System.Collections.Generic;
 
 namespace RPGGame.SessionsMan
 {
-    public class RPGGameController : ITurnBasedGameController
+    /// <summary>
+    /// Responsible  of the rules, actions and state of a Player vs AI match
+    /// </summary>
+    public class PlayerVsAIController : ITurnBasedGameController
     {
         protected bool GameStarted { get; private set; }
 
-        private Board board;
-        private BasicAI basicAI;
+        private IBoard board;
+        private IPlayerAI playerAI;
 
-        private List<UnitState> player1Units;
-        private List<UnitState> player2Units;
+        private List<IUnitState> player1Units;
+        private List<IUnitState> player2Units;
 
-        private UnitState unitSelect;
-        private Cell cellUnitSelect;
-        private Cell cellAttacked;
+        private IUnitState unitSelect;
+        private ICell cellUnitSelect;
+        private ICell cellAttacked;
 
         private bool isPlayer1Turn;
 
@@ -29,14 +32,15 @@ namespace RPGGame.SessionsMan
 
         #region Setup methods
 
-        public RPGGameController(Board board, List<UnitState> player1Units, List<UnitState> player2Units)
+        public PlayerVsAIController(IBoard board, IPlayerAI playerAI, List<IUnitState> player1Units, List<IUnitState> player2Units)
         {
             this.board = board;
+            this.playerAI = playerAI;
             this.player1Units = player1Units;
             this.player2Units = player2Units;
 
+            playerAI.SetOnSelectCallback(OnSelectCell);
             board.SetOnSelectCallback(OnSelectCell);
-            basicAI = new BasicAI(board, player2Units.Count, player1Units.Count, false, OnSelectCell);
         }
 
         public void StartGame()
@@ -63,7 +67,7 @@ namespace RPGGame.SessionsMan
             }
         }
 
-        private void UnsetupUnits(List<UnitState> playerUnits)
+        private void UnsetupUnits(List<IUnitState> playerUnits)
         {
             for (int i = 0; i < playerUnits.Count; i++)
             {
@@ -75,7 +79,7 @@ namespace RPGGame.SessionsMan
 
         #region Select cells methods
 
-        private void OnSelectCell(Cell cell)
+        private void OnSelectCell(ICell cell)
         {
             if (cell.HasUnit())
             {
@@ -96,19 +100,19 @@ namespace RPGGame.SessionsMan
             }
         }
 
-        private void SelectUnitCell(Cell cell)
+        private void SelectUnitCell(ICell cell)
         {
             cellUnitSelect = cell;
-            unitSelect = (cellUnitSelect) ? cellUnitSelect.GetUnit() : null;
+            unitSelect = (cellUnitSelect != null) ? cellUnitSelect.GetUnit() : null;
         }
 
         #endregion
 
         #region Player actions methods
 
-        private void TryMoveUnit(Cell cell)
+        private void TryMoveUnit(ICell cell)
         {
-            if (cellUnitSelect && cell && !cell.HasUnit())
+            if (cellUnitSelect != null && cell != null && !cell.HasUnit())
             {
                 int distance = GetCellUnitDistance(cell);
                 if (unitSelect.TryMovePosition(distance))
@@ -119,11 +123,11 @@ namespace RPGGame.SessionsMan
             }
         }
 
-        private void TryAttackUnit(Cell cell)
+        private void TryAttackUnit(ICell cell)
         {
-            if (cellUnitSelect && cell && cell.HasUnit())
+            if (cellUnitSelect != null && cell != null && cell.HasUnit())
             {
-                UnitState enemyUnit = cell.GetUnit();
+                IUnitState enemyUnit = cell.GetUnit();
                 int distance = GetCellUnitDistance(cell);
                 cellAttacked = cell;
 
@@ -138,9 +142,9 @@ namespace RPGGame.SessionsMan
 
         #region Dead unit methods
 
-        private void OnDeadUnit(UnitState enemyUnit)
+        private void OnDeadUnit(IUnitState enemyUnit)
         {
-            List<UnitState> enemyUnits = GetEnemyUnits();
+            List<IUnitState> enemyUnits = GetEnemyUnits();
             if (enemyUnits.Remove(enemyUnit))
             {
                 board.RemoveUnit(cellAttacked);
@@ -153,7 +157,7 @@ namespace RPGGame.SessionsMan
 
         private void CheckWinState()
         {
-            List<UnitState> enemyUnits = GetEnemyUnits();
+            List<IUnitState> enemyUnits = GetEnemyUnits();
 
             if (enemyUnits.Count == 0)
             {
@@ -173,7 +177,7 @@ namespace RPGGame.SessionsMan
 
                 if (!isPlayer1)
                 {
-                    basicAI.Play();
+                    playerAI.Play();
                 }
 
                 return true;
@@ -189,7 +193,7 @@ namespace RPGGame.SessionsMan
                 SelectUnitCell(null);
                 cellAttacked = null;
 
-                List<UnitState> enemyUnits = GetEnemyUnits();
+                List<IUnitState> enemyUnits = GetEnemyUnits();
                 ResetUnitsActionPoints(enemyUnits);
 
                 isPlayer1Turn = !isPlayer1Turn;
@@ -199,7 +203,7 @@ namespace RPGGame.SessionsMan
             return false;
         }
 
-        private void ResetUnitsActionPoints(List<UnitState> playerUnits)
+        private void ResetUnitsActionPoints(List<IUnitState> playerUnits)
         {
             for (int i = 0; i < playerUnits.Count; i++)
             {
@@ -216,12 +220,12 @@ namespace RPGGame.SessionsMan
             return GameStarted && isPlayer1 == isPlayer1Turn;
         }
 
-        private int GetCellUnitDistance(Cell cell)
+        private int GetCellUnitDistance(ICell cell)
         {
-            return (cellUnitSelect && cell) ? board.GetCellsDistance(cellUnitSelect, cell) : int.MaxValue;
+            return (cellUnitSelect != null && cell != null) ? board.GetCellsDistance(cellUnitSelect, cell) : int.MaxValue;
         }
 
-        private List<UnitState> GetEnemyUnits()
+        private List<IUnitState> GetEnemyUnits()
         {
             return (isPlayer1Turn) ? player2Units : player1Units;
         }

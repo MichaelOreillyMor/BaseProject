@@ -10,10 +10,11 @@ using RPGGame.DatasMan;
 using RPGGame.SessionsMan;
 using RPGGame.Units;
 using RPGGame.DatasMan.GameDatas;
+using RPGGame.PoolsMan.Pools;
+using RPGGame.SessionsMan.AI;
 
 using System.Collections.Generic;
 using UnityEngine;
-using RPGGame.PoolsMan.Pools;
 
 namespace RPGGame.GameStatesMan.GameStates
 {
@@ -75,10 +76,12 @@ namespace RPGGame.GameStatesMan.GameStates
             MapLevelData map = dataProv.GetCurrentMapLevel();
             Board board = mapCellsFactory.CreateBoard(map.BoardSize);
 
-            List<UnitState> Player1Units = unitsBoardFactory.CreateBoardUnits(map.Player1Units, board, true);
-            List<UnitState> Player2Units = unitsBoardFactory.CreateBoardUnits(map.Player2Units, board, false);
+            List<IUnitState> player1Units = unitsBoardFactory.CreateBoardUnits(map.Player1Units, board, true);
+            List<IUnitState> player2Units = unitsBoardFactory.CreateBoardUnits(map.Player2Units, board, false);
 
-            RPGGameController gameController = new RPGGameController(board, Player1Units, Player2Units);
+            PlayerAI playerAI = new PlayerAI(board, player2Units.Count, player1Units.Count, false);
+
+            PlayerVsAIController gameController = new PlayerVsAIController(board, playerAI, player1Units, player2Units);
 
             sessionProv.InitSession(gameController);
         }

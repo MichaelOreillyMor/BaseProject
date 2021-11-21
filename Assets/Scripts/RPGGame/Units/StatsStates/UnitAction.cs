@@ -3,6 +3,10 @@ using System;
 
 namespace RPGGame.Units.Stats
 {
+    /// <summary>
+    /// Current state of a Unit action and the cost of perform it
+    /// In more complex games we can have debuffs and power-ups applied to this action
+    /// </summary>
     public abstract class UnitAction : StatState, IUnitAction
     {
         public int BaseCost { get; private set; }
