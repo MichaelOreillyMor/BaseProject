@@ -72,7 +72,7 @@ namespace GFF.GameStatesMan.GameStates
         protected abstract void OnPostUILoaded(BaseUIScreen uiScreen);
 
         /// <summary>
-        /// Unsetup what you need here before UIScreen unloading
+        /// Unsetup what you need here before UIScreen Unsetup()
         /// </summary>
         protected abstract void OnPreUIUnsetup();
 
