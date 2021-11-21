@@ -54,11 +54,14 @@ namespace RPGGame.PoolsMan.Pools
         private UnitState CreateUnitState(MapUnitData mapUnitData, bool isTeam1)
         {
             UnitData unitData = mapUnitData.UnitData;
+            UnitStatsState statsState = new UnitStatsState(mapUnitData.UnitLevel, unitData.UnitStats);
+
             UnitState unitState = Spawn(unitStatePref, Vector3.zero, Quaternion.identity);
 
             UnitCosmetic unitCosmetic = CreateUnitCosmetic(unitData, unitState);
-            unitState.Setup(isTeam1, mapUnitData.UnitLevel, unitData.UnitStats, unitCosmetic);
-            CreateUnitStatsPanel(unitState, unitCosmetic, isTeam1);
+
+            unitState.Setup(isTeam1, statsState, unitCosmetic);
+            CreateUnitStatsPanel(statsState, unitCosmetic, isTeam1);
 
             return unitState;
         }
@@ -73,15 +76,14 @@ namespace RPGGame.PoolsMan.Pools
             return unitCosmetic;
         }
 
-        private void CreateUnitStatsPanel(UnitState unitState, UnitCosmetic unitCosmetic, bool isTeam1)
+        private void CreateUnitStatsPanel(IReadUnitStatsState statsState, UnitCosmetic unitCosmetic, bool isTeam1)
         {
             UIPanelUnitStats panelUnitStats = Spawn(panelUnitPref, Vector3.zero, Quaternion.identity);
             UIProvider.AddContent(panelUnitStats.transform);
 
-            IUnitStatsState unitStats = unitState.GetStatsState();
             Transform anchorPoint = unitCosmetic.GetPanelAnchor();
 
-            panelUnitStats.Setup(unitStats, anchorPoint, isTeam1, mainCamera);
+            panelUnitStats.Setup(statsState, anchorPoint, isTeam1, mainCamera);
         }
     }
 }

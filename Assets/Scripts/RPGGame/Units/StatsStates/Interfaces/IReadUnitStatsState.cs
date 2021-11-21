@@ -3,9 +3,9 @@
 namespace RPGGame.Units.Stats
 {
     /// <summary>
-    /// Provides to the UI (or any other listeners) read-only methods
+    /// Provides to the UI (or any other listeners) only methods that don´t change the stats state
     /// </summary>
-    public interface IUnitStatsState
+    public interface IReadUnitStatsState
     {
         public float Level { get; }
         public IStatState GetActionPoints();

@@ -20,16 +20,15 @@ namespace RPGGame.Units
         [SerializeField, ReadOnly]
         private UnitCosmetic cosmetic;
 
-        private UnitStatsState statsState;
+        private IWriteUnitStatsState statsState;
 
         #region Setup methods
 
-        public void Setup(bool isTeam1, float level, UnitStatsData statsData, UnitCosmetic unitCosmetic)
+        public void Setup(bool isTeam1, IWriteUnitStatsState statsState, UnitCosmetic unitCosmetic)
         {
             IsTeam1 = isTeam1;
             cosmetic = unitCosmetic;
-
-            statsState = new UnitStatsState(level, statsData);
+            this.statsState = statsState;
         }
 
         #endregion
@@ -101,11 +100,6 @@ namespace RPGGame.Units
         public void ResetActionPoints()
         {
             statsState.ResetActionPoints();
-        }
-
-        public IUnitStatsState GetStatsState()
-        {
-            return statsState;
         }
 
         #endregion

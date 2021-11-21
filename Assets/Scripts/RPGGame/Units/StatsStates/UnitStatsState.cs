@@ -7,7 +7,7 @@ namespace RPGGame.Units.Stats
     /// <summary>
     /// Current state of the Unit stats, the initial values are loaded from a serialized data
     /// </summary>
-    class UnitStatsState : IUnitStatsState
+    class UnitStatsState : IReadUnitStatsState, IWriteUnitStatsState
     {
         public float Level { get; private set; }
 

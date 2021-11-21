@@ -24,11 +24,11 @@ namespace RPGGame.UIsMan.StatsPanels
         private Transform anchorPoint;
         private Camera mainCamera;
 
-        private IUnitStatsState unitStats;
+        private IReadUnitStatsState unitStats;
 
         #region Setup methods
 
-        public void Setup(IUnitStatsState unitStats, Transform anchorPoint, bool isTeam1, Camera mainCamera)
+        public void Setup(IReadUnitStatsState unitStats, Transform anchorPoint, bool isTeam1, Camera mainCamera)
         {
             this.anchorPoint = anchorPoint;
             this.mainCamera = mainCamera;
@@ -41,7 +41,7 @@ namespace RPGGame.UIsMan.StatsPanels
             lastAnchorPosition = Vector3.zero;
         }
 
-        private void SetupStatsPanels(IUnitStatsState unitStats, bool isTeam1)
+        private void SetupStatsPanels(IReadUnitStatsState unitStats, bool isTeam1)
         {
             lifePanel.Setup(unitStats.GetHealth(), isTeam1);
             attackPanel.Setup(unitStats.GetAttackAction(), isTeam1);

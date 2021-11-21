@@ -12,7 +12,7 @@ namespace RPGGame.SessionsMan.AI
     /// </summary>
     public class PlayerAI : IPlayerAI
     {
-        private Board board;
+        private IBoard board;
         private int numCells;
         private bool isPlayer1;
 
@@ -24,7 +24,7 @@ namespace RPGGame.SessionsMan.AI
 
         #region Setup methods
 
-        public PlayerAI(Board board, int numAIUnits, int numEnemyUnits, bool isPlayer1)
+        public PlayerAI(IBoard board, int numAIUnits, int numEnemyUnits, bool isPlayer1)
         {
             this.board = board;
             this.isPlayer1 = isPlayer1;
