@@ -1,4 +1,4 @@
-using RPGGame.GameDatas.Stats;
+using RPGGame.GameDatasMan.Stats;
 
 namespace RPGGame.Units.Stats
 {

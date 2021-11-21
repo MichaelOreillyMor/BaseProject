@@ -1,6 +1,9 @@
+using GFF.GameStatesMan;
+using GFF.RegProviders;
+
 using UnityEngine;
 
-namespace GFFramework
+namespace GFF
 {
     /// <summary>
     /// Handles the game´s initialization and keeps a register of the managers

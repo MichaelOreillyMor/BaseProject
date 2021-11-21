@@ -4,12 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RPGGame.GameSession.AI
+namespace RPGGame.SessionsMan.AI
 {
     /// <summary>
     /// Very basic AI just to give some feedback to the player
-    /// This is a very, very, VERY bad code, but it works as an example.
-    /// Please don´t read it
+    /// This is a VERY, VERY, VERY bad code, but it works as an example.
     /// </summary>
     public class BasicAI
     {
@@ -20,97 +19,31 @@ namespace RPGGame.GameSession.AI
         private List<Cell> cellsAI;
         private List<Cell> cellsEnemy;
         private List<Cell> cellsEmpty;
-        private List<Cell> sortedEmptyCells;
 
         private Action<Cell> onSelectCellCallback;
 
-        public BasicAI(Board board, int numUnits, bool isPlayer1, Action<Cell> onSelectCellCallback) 
+        public BasicAI(Board board, int numAIUnits, int numEnemyUnits, bool isPlayer1, Action<Cell> onSelectCellCallback) 
         {
             this.board = board;
             this.isPlayer1 = isPlayer1;
             this.onSelectCellCallback = onSelectCellCallback;
 
             numCells = board.GetCellsCount();
-            cellsEnemy = new List<Cell>(numUnits);
-            cellsAI = new List<Cell>(numUnits);
             cellsEmpty = new List<Cell>(numCells);
+            cellsAI = new List<Cell>(numAIUnits);
+            cellsEnemy = new List<Cell>(numEnemyUnits);
         }
 
-        public void Play()
-        {
-            FillCells();
-            TryToAttack();
-            TryToMove();
-        }
+        #region AI turn methods
 
         /// <summary>
         /// This is a very, very, VERY bad code, but it works as an example.
-        /// Please don´t read it
         /// </summary>
-        private void TryToMove()
+        public void Play()
         {
-            Cell cellEnemy = GetFirstCellEnemy();
-
-            if (cellEnemy != null)
-            {
-                sortedEmptyCells = cellsEmpty.OrderBy(c => board.GetCellsDistance(cellEnemy, c)).ToList();
-
-                for (int i = 0; i < sortedEmptyCells.Count; i++)
-                {
-                    Cell cellEmpty = sortedEmptyCells[i];
-
-                    for (int j = 0; j < cellsAI.Count; j++)
-                    {
-                        Cell cellAI = cellsAI[j];
-
-                        if (cellAI.HasUnit())
-                        {
-                            onSelectCellCallback?.Invoke(cellAI);
-                            onSelectCellCallback?.Invoke(cellEmpty);
-                        }
-                        else 
-                        {
-                            cellsAI.Remove(cellAI);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        private Cell GetFirstCellEnemy()
-        {
-            for (int i = 0; i < cellsEnemy.Count; i++)
-            {
-                Cell cellEnemy = cellsEnemy[i];
-
-                if (cellEnemy.HasUnit() && isPlayer1 != cellEnemy.IsUnitTeam1())
-                {
-                    return cellEnemy;
-                }
-            }
-
-            return null;
-        }
-
-        private void TryToAttack()
-        {
-            for (int i = 0; i < cellsAI.Count; i++)
-            {
-                Cell cellAI = cellsAI[i];
-
-                for (int j = 0; j < cellsEnemy.Count; j++)
-                {
-                    Cell cellEnemy = cellsEnemy[j];
-
-                    if (cellEnemy.HasUnit())
-                    {
-                        onSelectCellCallback?.Invoke(cellAI);
-                        onSelectCellCallback?.Invoke(cellEnemy);
-                    }
-
-                }
-            }
+            FillCells();
+            PlayAttacks();
+            PlayToMoves();
         }
 
         private void FillCells()
@@ -134,11 +67,94 @@ namespace RPGGame.GameSession.AI
                         cellsEnemy.Add(cell);
                     }
                 }
-                else 
+                else
                 {
                     cellsEmpty.Add(cell);
                 }
             }
         }
+
+        #endregion
+
+        #region move Units methods
+
+        private void PlayToMoves()
+        {
+            Cell cellEnemy = GetFirstCellEnemy();
+
+            if (cellEnemy != null)
+            {
+                List<Cell> cellsSorted = cellsEmpty.OrderBy(c => board.GetCellsDistance(cellEnemy, c)).ToList();
+
+                for (int i = 0; i < cellsSorted.Count; i++)
+                {
+                    Cell cell = cellsSorted[i];
+                    TryMoveUnits(cell);
+                }
+            }
+        }
+
+        private void TryMoveUnits(Cell cellEmpty)
+        {
+            for (int j = 0; j < cellsAI.Count; j++)
+            {
+                Cell cellAI = cellsAI[j];
+
+                if (cellAI.HasUnit() && !cellEmpty.HasUnit())
+                {
+                    onSelectCellCallback?.Invoke(cellAI);
+                    onSelectCellCallback?.Invoke(cellEmpty);
+
+                    if (cellEmpty.HasUnit())
+                    {
+                        //The AI was able to move this unit to the cell.
+                        //This turn we ended using this Unit.
+                        cellsAI.Remove(cellAI);
+                        break;
+                    }
+                }
+            }
+        }
+
+        private Cell GetFirstCellEnemy()
+        {
+            for (int i = 0; i < cellsEnemy.Count; i++)
+            {
+                Cell cellEnemy = cellsEnemy[i];
+
+                if (cellEnemy.HasUnit() && isPlayer1 != cellEnemy.IsUnitTeam1())
+                {
+                    return cellEnemy;
+                }
+            }
+
+            return null;
+        }
+
+        #endregion
+
+        #region attact Units methods
+
+        private void PlayAttacks()
+        {
+            for (int i = 0; i < cellsAI.Count; i++)
+            {
+                Cell cellAI = cellsAI[i];
+
+                for (int j = 0; j < cellsEnemy.Count; j++)
+                {
+                    Cell cellEnemy = cellsEnemy[j];
+
+                    if (cellEnemy.HasUnit())
+                    {
+                        onSelectCellCallback?.Invoke(cellAI);
+                        onSelectCellCallback?.Invoke(cellEnemy);
+                    }
+
+                }
+            }
+        }
+
+        #endregion
     }
 }

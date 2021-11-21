@@ -1,7 +1,9 @@
-﻿using System;
+﻿using GFF.RegProviders;
+
+using System;
 using UnityEngine;
 
-namespace GFFramework
+namespace GFF
 {
     public abstract class BaseGameManager : MonoBehaviour
     {

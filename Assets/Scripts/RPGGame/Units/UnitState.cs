@@ -1,7 +1,7 @@
-using GFFramework.Pools;
-using GFFramework.Utils;
+using GFF.PoolsMan.Pools;
+using GFF.Utils;
 
-using RPGGame.GameDatas.Stats;
+using RPGGame.GameDatasMan.Stats;
 using RPGGame.Units.Stats;
 using System;
 using UnityEngine;

@@ -267,7 +267,7 @@ PrefabInstance:
       objectReference: {fileID: 1462015662}
     - target: {fileID: 257719558860346341, guid: 0348251d93118544b9bda701eefa551b, type: 3}
       propertyPath: m_Name
-      value: SceneInfo
+      value: GameUIScreensRefs
       objectReference: {fileID: 0}
     - target: {fileID: 257719558860346347, guid: 0348251d93118544b9bda701eefa551b, type: 3}
       propertyPath: m_RootOrder

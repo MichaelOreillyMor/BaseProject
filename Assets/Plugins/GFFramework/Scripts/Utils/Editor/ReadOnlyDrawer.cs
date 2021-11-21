@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace GFFramework.Utils
+namespace GFF.Utils
 {
     [CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
     public class ReadOnlyDrawer : PropertyDrawer

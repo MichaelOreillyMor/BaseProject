@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GFFramework.Utils
+namespace GFF.Utils
 {
     public class ReadOnlyAttribute : PropertyAttribute { }
 }

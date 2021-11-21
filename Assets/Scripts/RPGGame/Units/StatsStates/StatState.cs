@@ -1,4 +1,4 @@
-﻿using RPGGame.GameDatas.Stats;
+﻿using RPGGame.GameDatasMan.Stats;
 using System;
 using UnityEngine;
 

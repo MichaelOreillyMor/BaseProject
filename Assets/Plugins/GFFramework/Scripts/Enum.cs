@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-
-namespace GFFramework.Enums
+namespace GFF.Enums
 {
     /// <summary>
     /// I´m aware that I´m creating references to the game from the framework

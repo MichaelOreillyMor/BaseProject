@@ -1,4 +1,4 @@
-﻿namespace RPGGame.GameDatas.Stats
+﻿namespace RPGGame.GameDatasMan.Stats
 {
     [System.Serializable]
     public class StatData

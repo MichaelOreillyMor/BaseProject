@@ -1,4 +1,5 @@
-using GFFramework.Pools;
+using GFF.InputsMan;
+using GFF.PoolsMan.Pools;
 
 using RPGGame.Units;
 
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace RPGGame.BoardCells
 {
-    public class Cell : PoolMember
+    public class Cell : PoolMember, ISelectable
     {
         [SerializeField]
         private Transform anchorPoint;
