@@ -1,12 +1,11 @@
 using GFF.Enums;
-using GFF.Utils;
 
 using UnityEngine;
 
 namespace GFF.UIsMan.UIScreens
 {
     /// <summary>
-    /// Base class for UIScreens (Canvas + UI objects) that need an initialization (setup()) and an deinitialization (Unsetup()) of resources.
+    /// Base class for UIScreens (Canvas + UI components) that need an initialization (setup()) and an deinitialization (Unsetup()) of resources.
     /// </summary>
     public abstract class BaseUIScreen : MonoBehaviour
     {
@@ -15,7 +14,7 @@ namespace GFF.UIsMan.UIScreens
         /// </summary>
         public GameStateKey Owner => owner;
 
-        [SerializeField, ReadOnly]
+        [SerializeField]
         private GameStateKey owner;
    
 

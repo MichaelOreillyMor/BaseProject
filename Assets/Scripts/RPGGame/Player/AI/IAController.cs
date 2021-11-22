@@ -4,13 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RPGGame.SessionsMan.AI
+namespace RPGGame.SessionsMan.Players.AIs
 {
     /// <summary>
     /// Very basic AI just to give some feedback to the player
-    /// This is a VERY code, but it works as an example.
+    /// This is a bad code, based on brute froce and the use of Linq, but it works as an example.
+    /// I didn´t have time to design an good IA.
     /// </summary>
-    public class PlayerAI : IPlayerAI
+    public class IAController : IAIController
     {
         private IBoard board;
         private int numCells;
@@ -24,7 +25,7 @@ namespace RPGGame.SessionsMan.AI
 
         #region Setup methods
 
-        public PlayerAI(IBoard board, int numAIUnits, int numEnemyUnits, bool isPlayer1)
+        public IAController(IBoard board, int numAIUnits, int numEnemyUnits, bool isPlayer1)
         {
             this.board = board;
             this.isPlayer1 = isPlayer1;

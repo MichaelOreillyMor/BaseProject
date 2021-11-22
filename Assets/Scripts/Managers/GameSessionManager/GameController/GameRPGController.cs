@@ -1,26 +1,24 @@
 using GFF.SessionsMan.TurnBasedSessions;
 
 using RPGGame.BoardCells;
-using RPGGame.SessionsMan.AI;
+using RPGGame.SessionsMan.Players;
 using RPGGame.Units;
 
 using System;
-using System.Collections.Generic;
 
 namespace RPGGame.SessionsMan
 {
     /// <summary>
-    /// Responsible  of the rules, actions and state of a Player vs AI match
+    /// Responsible  of the rules, actions and state of a PlayerRPG vs PlayerRPG match
     /// </summary>
-    public class PlayerVsAIController : ITurnBasedGameController
+    public class GameRPGController : ITurnBasedGameController
     {
         protected bool GameStarted { get; private set; }
 
         private IBoard board;
-        private IPlayerAI playerAI;
 
-        private List<IUnitState> player1Units;
-        private List<IUnitState> player2Units;
+        private IPlayerRPG player1;
+        private IPlayerRPG player2;
 
         private IUnitState unitSelect;
         private ICell cellUnitSelect;
@@ -32,15 +30,11 @@ namespace RPGGame.SessionsMan
 
         #region Setup methods
 
-        public PlayerVsAIController(IBoard board, IPlayerAI playerAI, List<IUnitState> player1Units, List<IUnitState> player2Units)
+        public GameRPGController(IBoard board, IPlayerRPG player1, IPlayerRPG player2)
         {
             this.board = board;
-            this.playerAI = playerAI;
-            this.player1Units = player1Units;
-            this.player2Units = player2Units;
-
-            playerAI.SetOnSelectCallback(OnSelectCell);
-            board.SetOnSelectCallback(OnSelectCell);
+            this.player1 = player1;
+            this.player2 = player2;
         }
 
         public void StartGame()
@@ -61,17 +55,9 @@ namespace RPGGame.SessionsMan
             if (GameStarted)
             {
                 board.Unsetup();
-                UnsetupUnits(player1Units);
-                UnsetupUnits(player2Units);
+                player1.Unsetup();
+                player2.Unsetup();
                 GameStarted = false;
-            }
-        }
-
-        private void UnsetupUnits(List<IUnitState> playerUnits)
-        {
-            for (int i = 0; i < playerUnits.Count; i++)
-            {
-                playerUnits[i].Unsetup();
             }
         }
 
@@ -79,7 +65,7 @@ namespace RPGGame.SessionsMan
 
         #region Select cells methods
 
-        private void OnSelectCell(ICell cell)
+        public void OnSelectCell(ICell cell)
         {
             if (cell.HasUnit())
             {
@@ -144,22 +130,16 @@ namespace RPGGame.SessionsMan
 
         private void OnDeadUnit(IUnitState enemyUnit)
         {
-            List<IUnitState> enemyUnits = GetEnemyUnits();
-            if (enemyUnits.Remove(enemyUnit))
+            IPlayerRPG enemyPlayer = GetEnemyPlayer();
+  
+            if (enemyPlayer.KillUnit(enemyUnit))
             {
                 board.RemoveUnit(cellAttacked);
-                enemyUnit.Unsetup();
             }
 
             cellAttacked = null;
-            CheckWinState();
-        }
 
-        private void CheckWinState()
-        {
-            List<IUnitState> enemyUnits = GetEnemyUnits();
-
-            if (enemyUnits.Count == 0)
+            if (enemyPlayer.IsDead())
             {
                 onWinGameCallback?.Invoke();
             }
@@ -177,7 +157,8 @@ namespace RPGGame.SessionsMan
 
                 if (!isPlayer1)
                 {
-                    playerAI.Play();
+                    IPlayerRPG player = GetTurnPlayer();
+                    player.StartTurn();
                 }
 
                 return true;
@@ -193,22 +174,14 @@ namespace RPGGame.SessionsMan
                 SelectUnitCell(null);
                 cellAttacked = null;
 
-                List<IUnitState> enemyUnits = GetEnemyUnits();
-                ResetUnitsActionPoints(enemyUnits);
+                IPlayerRPG enemyPlayer = GetEnemyPlayer();
+                enemyPlayer.ReseActionPoints();
 
                 isPlayer1Turn = !isPlayer1Turn;
                 return true;
             }
 
             return false;
-        }
-
-        private void ResetUnitsActionPoints(List<IUnitState> playerUnits)
-        {
-            for (int i = 0; i < playerUnits.Count; i++)
-            {
-                playerUnits[i].ResetActionPoints();
-            }
         }
 
         #endregion
@@ -225,9 +198,14 @@ namespace RPGGame.SessionsMan
             return (cellUnitSelect != null && cell != null) ? board.GetCellsDistance(cellUnitSelect, cell) : int.MaxValue;
         }
 
-        private List<IUnitState> GetEnemyUnits()
+        private IPlayerRPG GetEnemyPlayer()
         {
-            return (isPlayer1Turn) ? player2Units : player1Units;
+            return (isPlayer1Turn) ? player2 : player1;
+        }
+
+        private IPlayerRPG GetTurnPlayer()
+        {
+            return (isPlayer1Turn) ? player1 : player2;
         }
 
         #endregion

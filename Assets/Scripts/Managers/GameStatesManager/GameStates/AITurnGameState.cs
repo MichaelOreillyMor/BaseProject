@@ -8,13 +8,11 @@ using UnityEngine;
 namespace RPGGame.GameStatesMan.GameStates
 {
     /// <summary>
-    /// This the base state that handles the load of a new scene and the dispose of the previous one.
+    /// Handles an AI turn.
     /// </summary>
     [CreateAssetMenu(menuName = "GameStates/AITurnGameState")]
     public class AITurnGameState : BaseGameState
     {
-        private const bool isPlayer1 = false;
-
         private ITurnBasedSessionProvider sessionProv;
         private bool hasWin;
 
@@ -42,7 +40,7 @@ namespace RPGGame.GameStatesMan.GameStates
         private void PlayTurn()
         {
             hasWin = false;
-            sessionProv.StartTurn(isPlayer1, OnWinGame);
+            sessionProv.StartTurn(false, OnWinGame);
 
             if (!hasWin)
             {

@@ -9,6 +9,9 @@ using UnityEngine.InputSystem;
 
 namespace GFF.GameStatesMan.GameStates
 {
+    /// <summary>
+    /// Base class that gets a UIScreen from the IUIProvider and shows it to the player. 
+    /// </summary>
     public abstract class BaseUIGameState : BaseGameState, GameControls.IUIScreenActions
     {
         //WIP I don't like to have three references to the same UIScreen (2 + upcasted one in the derived class)
@@ -67,12 +70,12 @@ namespace GFF.GameStatesMan.GameStates
         }
 
         /// <summary>
-        /// The UIScreen should be setup here
+        /// Here you should call to UIScreen.Setup() and resolve the dependencies of any other GameState component.
         /// </summary>
         protected abstract void OnPostUILoaded(BaseUIScreen uiScreen);
 
         /// <summary>
-        /// Unsetup what you need here before UIScreen Unsetup()
+        /// Unsetup what you need here. The UIScreen.Unsetup() will be called after this.
         /// </summary>
         protected abstract void OnPreUIUnsetup();
 
@@ -81,7 +84,7 @@ namespace GFF.GameStatesMan.GameStates
         #region navigation methods
 
         /// <summary>
-        /// Returns true if back was captured by the screen (e.g: a UI panel was closed)
+        /// Returns true if the Goback InputAction was captured by the screen (e.g: a UI panel was closed)
         /// </summary>
         public virtual bool OnBack() => false;
 

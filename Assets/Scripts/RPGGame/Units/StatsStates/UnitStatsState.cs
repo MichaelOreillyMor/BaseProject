@@ -5,7 +5,7 @@ using System;
 namespace RPGGame.Units.Stats
 {
     /// <summary>
-    /// Current state of the Unit stats, the initial values are loaded from a serialized data
+    /// Current state of the Unit stats, the initial values are loaded from a UnitStatsData
     /// </summary>
     class UnitStatsState : IReadUnitStatsState, IWriteUnitStatsState
     {

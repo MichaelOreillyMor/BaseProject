@@ -123,6 +123,7 @@ namespace GFF.PoolsMan.Pools
             poolMember.transform.rotation = rot;
 
             poolMember.gameObject.SetActive(true);
+
             return poolMember;
         }
 
@@ -131,8 +132,15 @@ namespace GFF.PoolsMan.Pools
         {
             poolMember.gameObject.SetActive(false);
 
-            if(active.Remove(poolMember))
+            if (active.Remove(poolMember))
+            {
                 inactive.Push(poolMember);
+            }
+            else 
+            {
+                Debug.LogError("Cant Despawn:" + poolMember.name + " Destroyed instead");
+                GameObject.Destroy(poolMember.gameObject);
+            }
         }
     }
 }

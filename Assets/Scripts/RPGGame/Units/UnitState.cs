@@ -1,7 +1,5 @@
 using GFF.PoolsMan.Pools;
-using GFF.Utils;
 
-using RPGGame.GameDatasMan.Stats;
 using RPGGame.Units.Stats;
 
 using System;
@@ -17,7 +15,7 @@ namespace RPGGame.Units
     {
         public bool IsTeam1 { get; private set; }
 
-        [SerializeField, ReadOnly]
+        [SerializeField]
         private UnitCosmetic cosmetic;
 
         private IWriteUnitStatsState statsState;
@@ -38,9 +36,12 @@ namespace RPGGame.Units
         public void Unsetup()
         {
             statsState.ForceDefeated();
-
             statsState.RemoveAllListeners();
             cosmetic.Unsetup();
+
+            cosmetic = null;
+            statsState = null;
+
             DespawnToPool();
         }
 

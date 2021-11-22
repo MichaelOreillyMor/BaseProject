@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace RPGGame.UIsMan.StatsPanels
 {
+    /// <summary>
+    /// Shows the current StatsState of a UnitState
+    /// </summary>
     public class UIPanelUnitStats : PoolMember
     {
         [SerializeField]
@@ -56,6 +59,10 @@ namespace RPGGame.UIsMan.StatsPanels
         {
             UnsetupStatsPanels();
             unitStats.RemoveDefeatedListener(Unsetup);
+
+            anchorPoint = null;
+            mainCamera = null;
+
             DespawnToPool();
         }
 

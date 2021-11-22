@@ -36,6 +36,8 @@ namespace RPGGame.BoardCells
 
         public void Unsetup()
         {
+            unitState = null;
+            onSelectCell = null;
             DespawnToPool();
         }
 

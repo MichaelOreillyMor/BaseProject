@@ -6,17 +6,17 @@ using GFF.RegProviders;
 using GFF.UIsMan.UIScreens;
 
 using RPGGame.UIsMan.HUD;
-using RPGGame.BoardCells;
 
 using UnityEngine;
 
 namespace RPGGame.GameStatesMan.GameStates
 {
+    /// <summary>
+    /// Handles the Local Player turn.
+    /// </summary>
     [CreateAssetMenu(menuName = "GameStates/PlayerTurnGameState")]
     public class PlayerTurnGameState : BaseUIGameState
     {
-        private const bool isPlayer1 = true;
-
         private UIScreenHUD HUDScreen;
 
         private IInputProvider inputProv;
@@ -39,7 +39,7 @@ namespace RPGGame.GameStatesMan.GameStates
                 HUDScreen.Setup(OnEndTurn, OnSurrender);
                 inputProv.EnableSelection();
 
-                sessionProv.StartTurn(isPlayer1, OnWinGame);
+                sessionProv.StartTurn(true, OnWinGame);
             }
             else
             {
@@ -58,7 +58,7 @@ namespace RPGGame.GameStatesMan.GameStates
 
         private void OnEndTurn()
         {
-            if (sessionProv.EndTurn(isPlayer1))
+            if (sessionProv.EndTurn(true))
             {
                 LoadNextGameState();
             }

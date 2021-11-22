@@ -22,7 +22,7 @@ namespace RPGGame.UIsMan.StatsPanels
         {
             this.stat = stat;
             stat.AddValueChangeListener(OnValueChange);
-
+     
             background.color = (isTeam1) ? team1Color : team2Color;
             OnValueChange(stat.Value, stat.InitValue);
         }

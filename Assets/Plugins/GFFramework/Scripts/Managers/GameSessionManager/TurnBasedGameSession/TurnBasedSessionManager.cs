@@ -2,6 +2,9 @@ using System;
 
 namespace GFF.SessionsMan.TurnBasedSessions
 {
+    /// <summary>
+    /// Acts as connexion point between the players and the GameController
+    /// </summary>
     public class TurnBasedSessionManager : GameSessionManager, ITurnBasedSessionProvider
     {
         private ITurnBasedGameController gameController;

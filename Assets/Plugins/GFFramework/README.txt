@@ -4,7 +4,7 @@ This works as a layer over the engine to speed up the games development process,
 It's designed to use the GameInitializer to load only the managers needed in a similar way to how Unreal modules or Unity packages work.
 Only the GameStateManager or other implementation of IGameStateProvider is required by the GameInitializer.
 
-All the parts of the framework are goint to be decouple, you don´t have to use the whole framework or all the managers. 
+All the parts of the framework are going to be decoupled, you don't have to use the whole framework or all the managers. 
 The GameStates are the glue that makes all the systems work, but no system/manager (UIScreens,GameStates,Input...) 
 is going to be required by others.
 
