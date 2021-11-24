@@ -128,3 +128,5 @@ The references to RPGGame objects are Interfaces, eveything is testable and enca
 - PlayerTurn: user can interact with Board, OnEndTurn() => EnemyTurn, OnWin() => WinGameState.
 - EnemyTurn: user cant interact with Board, AI moves, OnEndTurn() => PlayerTurn, OnWin() => LoseGameState.
 - Win/LoseGameState: OnPlayAgain() => LoadGameSession, OnExit() => LoadSceneMainMenu.
+
+![Game flow](/readmeImgs/GameFlow.png)
