@@ -47,10 +47,10 @@ LoadSessionGameState
 
 Builds the play session/game match. It gets a MapLevelData and creates:
 
-*The Boardand itsCellsusing a MapBoardFactory.
-*The UnitStates(soldiers and monsters) using a UnitsBoardFactory.
-*The PlayerControllersthat handle the state of a player(e.g: soldiers alive).
-*The GameControllerthat handles the match state whichplayer wins.
+- The Boardand itsCellsusing a MapBoardFactory.
+- The UnitStates(soldiers and monsters) using a UnitsBoardFactory.
+- The PlayerControllersthat handle the state of a player(e.g: soldiers alive).
+- The GameControllerthat handles the match state whichplayer wins.
 
 The Factories use the PoolManager to get the cells, UnitStates, UnitConsmetics and
 UIPanelUnitStats. Then everything is injected, wired and returned.
@@ -109,12 +109,12 @@ a cost to perform them.
 
 ## 2. 5  Game Dependencies 
 
-*A UnitState has an IUnitCosmetic and IStatsState.
-*A PlayerRPG has N IUnitStates and can have an IAIController.
-*A Board has N ICells.
-*A GameRPGController has an IBoard and two IPlayerRPG.
-*A GameSessionManager has a IGameRPGController.
-*A PlayerTurnStates interacts with the GameSessionManager.
+- A UnitState has an IUnitCosmetic and IStatsState.
+- A PlayerRPG has N IUnitStates and can have an IAIController.
+- A Board has N ICells.
+- A GameRPGController has an IBoard and two IPlayerRPG.
+- A GameSessionManager has a IGameRPGController.
+- A PlayerTurnStates interacts with the GameSessionManager.
 
 RPGGame objects are loaded using theMapLevelData that contains the UnitPositionDatas and Board size. 
 All the Datas are ScriptableObjects or serialize classes inside them. 
@@ -122,12 +122,9 @@ The references to RPGGame objects are Interfaces, eveything is testable and enca
 
 ## 2. 6  GameStates Flow
 
-*LoadSceneMainMenu: loads the MainMenu Scene and gets UIScreens, OnClick(PLay) => LoadSceneGame.
-*LoadSceneGame: loads the MainMenu Scene and gets UIScreens, OnLoaded() => LoadGameSession.
-*LoadGameSession: injects dependecies, builds the play session/game match, OnLoaded() => PlayerTurn.
-*PlayerTurn: user can interact with Board, OnEndTurn() => EnemyTurn, OnWin() => WinGameState.
-*EnemyTurn: user cant interact with Board, AI moves, OnEndTurn() => PlayerTurn, OnWin() => LoseGameState.
-*Win/LoseGameState: OnPlayAgain() => LoadGameSession, OnExit() => LoadSceneMainMenu.
-
-![This is an image](https://myoctocat.com/assets/images/base-octocat.svg)
-/assets/images/electrocat.png
+- LoadSceneMainMenu: loads the MainMenu Scene and gets UIScreens, OnClick(PLay) => LoadSceneGame.
+- LoadSceneGame: loads the MainMenu Scene and gets UIScreens, OnLoaded() => LoadGameSession.
+- LoadGameSession: injects dependecies, builds the play session/game match, OnLoaded() => PlayerTurn.
+- PlayerTurn: user can interact with Board, OnEndTurn() => EnemyTurn, OnWin() => WinGameState.
+- EnemyTurn: user cant interact with Board, AI moves, OnEndTurn() => PlayerTurn, OnWin() => LoseGameState.
+- Win/LoseGameState: OnPlayAgain() => LoadGameSession, OnExit() => LoadSceneMainMenu.
