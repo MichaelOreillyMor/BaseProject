@@ -21,14 +21,14 @@ manager folder and complete the decoupling of the managers from each other.
 The game’s flow is a State pattern. Each state of the game is a ScriptableObject, which
 helps to create as many states as you want easily. Each GameState has this important methods:
 
-Setup():Entry method where the dependencies of theGameState components are resolved
+**Setup():** Entry method where the dependencies of theGameState components are resolved
 (Dependency Injection Composition root), the components can also start to listen to the
 events that they need here.
 
-Unsetup():Exit method where all the resources takenby the game state are disposed and
+**Unsetup():** Exit method where all the resources takenby the game state are disposed and
 stop listening to events.
 
-TheGameStateManager is responsible for loading andunloading each GameState.
+The **GameStateManager** is responsible for loading andunloading each GameState.
 
 BaseUIGameState is an important GameState that is worth mentioning. It's the base class
 that gets a UIScreen (Prefab [Canvas +UI components]) from the UIManager and shows it
@@ -39,10 +39,12 @@ to the player.
 ## 2. 1 The Game Initialization
 
 **LoadSceneGameState**
+
 Loads a Scene, sends the UIScreens that are part of this scene to the UIManager and
 moves to the next GameState.
 
 **LoadSessionGameState**
+
 Builds the play session/game match. It gets a MapLevelData and creates:
 
 - The Boardand itsCellsusing a MapBoardFactory.
@@ -62,10 +64,12 @@ e.g: Cell.Setup() is not visible for classes that use ICell.**
 ## 2. 2 The Game Loop
 
 **TurnBasedSessionManager**
+
 Acts as connection point between the players and the GameController and provides some
 utilities like pause the game.
 
 **GameRPGController**
+
 Responsible for the rules, actions, who wins and state of a PlayerRPG vs PlayerRPG match.
 It handles the interactions between the PlayerRPG UnitStates and the Board.
 
@@ -84,9 +88,11 @@ Cosmetic, Transform and UnitStatsState (life, attack, actionPoints...)
 Current state of the Unit stats and actions, their initial values are loaded from a UnitStatsData.
 
 **IReadUnitStatsState**
+
 Provides to the UI (or any otherlisteners) only methods to listen to stats values.
 
 **IWriteUnitStatsState**
+
 Provides to the UnitState just the methods to
 change the state of the stats.
 
