@@ -28,11 +28,12 @@ events that they need here.
 **Unsetup():** Exit method where all the resources takenby the game state are disposed and
 stop listening to events.
 
-The **GameStateManager** is responsible for loading andunloading each GameState.
+**GameStateManager** is responsible for loading andunloading each GameState.
 
 BaseUIGameState is an important GameState that is worth mentioning. It's the base class
 that gets a UIScreen (Prefab [Canvas +UI components]) from the UIManager and shows it
 to the player.
+![PlayerTurn](/readmeImgs/PlayerTurn.png)
 
 # 2 The Game
 
@@ -54,6 +55,7 @@ Builds the play session/game match. It gets a MapLevelData and creates:
 
 The Factories use the PoolManager to get the cells, UnitStates, UnitConsmetics and
 UIPanelUnitStats. Then everything is injected, wired and returned.
+![pawnFactory](/readmeImgs/pawnFactory.png)
 
 the GameController is ready and it’s given to the SessionManager that starts the
 game session. **After this point of the flow, all the references to these objects 
@@ -67,25 +69,29 @@ e.g: Cell.Setup() is not visible for classes that use ICell.**
 
 Acts as connection point between the players and the GameController and provides some
 utilities like pause the game.
+![SessionManager](/readmeImgs/SessionManager.png)
 
 **GameRPGController**
 
 Responsible for the rules, actions, who wins and state of a PlayerRPG vs PlayerRPG match.
 It handles the interactions between the PlayerRPG UnitStates and the Board.
-
+![GameController](/readmeImgs/GameController.png)
 
 ## 2. 3 game Board and Cells
 
 The Board provide utilities to remove and add IUnitState from the Cells
+![Cell](/readmeImgs/Cell.png)
 
 ## 2. 3 UnitStates
 
 Current state of a Unit (e.g: Soldier, Monster), it acts as a facade (pattern) to connect the
 Cosmetic, Transform and UnitStatsState (life, attack, actionPoints...)
+![UnitState](/readmeImgs/UnitState.png)
 
 ## 2. 4 UnitStatStates
 
 Current state of the Unit stats and actions, their initial values are loaded from a UnitStatsData.
+![StatsState](/readmeImgs/StatsState.png)
 
 **IReadUnitStatsState**
 
@@ -97,16 +103,22 @@ Provides to the UnitState just the methods to
 change the state of the stats.
 
 **UnitStatsData**
+
 The UnitStatsData is obtained from the list of UnitPositions 
 of each Player in the MapLevelData.
+![MapLevelData](/readmeImgs/MapLevelData.png)
 
 **UnitActions**
+
 The health and the ActionPoints of each unit are plain StatStates, the attack and movement
 of the units on the other hand are UnitAction : StatStates since they have a value and 
 a cost to perform them.
+![UnitAttack](/readmeImgs/UnitAttack.png)
+![UnitMove](/readmeImgs/UnitMove.png)
 
 ## 2. 5  Game Dependencies 
 
+- A StatsState has UnitStatStates and UnitActionStates.
 - A UnitState has an IUnitCosmetic and IStatsState.
 - A PlayerRPG has N IUnitStates and can have an IAIController.
 - A Board has N ICells.
