@@ -38,13 +38,11 @@ to the player.
 
 ## 2. 1 The Game Initialization
 
-LoadSceneGameState
-
+**LoadSceneGameState**
 Loads a Scene, sends the UIScreens that are part of this scene to the UIManager and
 moves to the next GameState.
 
-LoadSessionGameState
-
+**LoadSessionGameState**
 Builds the play session/game match. It gets a MapLevelData and creates:
 
 - The Boardand itsCellsusing a MapBoardFactory.
@@ -63,13 +61,11 @@ e.g: Cell.Setup() is not visible for classes that use ICell.**
 
 ## 2. 2 The Game Loop
 
-TurnBasedSessionManager
-
+**TurnBasedSessionManager**
 Acts as connection point between the players and the GameController and provides some
 utilities like pause the game.
 
-GameRPGController
-
+**GameRPGController**
 Responsible for the rules, actions, who wins and state of a PlayerRPG vs PlayerRPG match.
 It handles the interactions between the PlayerRPG UnitStates and the Board.
 
@@ -85,24 +81,20 @@ Cosmetic, Transform and UnitStatsState (life, attack, actionPoints...)
 
 ## 2. 4 UnitStatStates
 
-Current state of the Unit stats, their initial values are loaded from a UnitStatsData.
+Current state of the Unit stats and actions, their initial values are loaded from a UnitStatsData.
 
-IReadUnitStatsState
-
+**IReadUnitStatsState**
 Provides to the UI (or any otherlisteners) only methods to listen to stats values.
 
-IWriteUnitStatsState
-
+**IWriteUnitStatsState**
 Provides to the UnitState just the methods to
 change the state of the stats.
 
-UnitStatsData
-
+**UnitStatsData**
 The UnitStatsData is obtained from the list of UnitPositions 
 of each Player in the MapLevelData.
 
-UnitActions
-
+**UnitActions**
 The health and the ActionPoints of each unit are plain StatStates, the attack and movement
 of the units on the other hand are UnitAction : StatStates since they have a value and 
 a cost to perform them.
@@ -121,12 +113,4 @@ All the Datas are ScriptableObjects or serialize classes inside them.
 The references to RPGGame objects are Interfaces, eveything is testable and encapsulated.
 
 ## 2. 6  GameStates Flow
-
-- LoadSceneMainMenu: loads the MainMenu Scene and gets UIScreens, OnClick(PLay) => LoadSceneGame.
-- LoadSceneGame: loads the MainMenu Scene and gets UIScreens, OnLoaded() => LoadGameSession.
-- LoadGameSession: injects dependecies, builds the play session/game match, OnLoaded() => PlayerTurn.
-- PlayerTurn: user can interact with Board, OnEndTurn() => EnemyTurn, OnWin() => WinGameState.
-- EnemyTurn: user cant interact with Board, AI moves, OnEndTurn() => PlayerTurn, OnWin() => LoseGameState.
-- Win/LoseGameState: OnPlayAgain() => LoadGameSession, OnExit() => LoadSceneMainMenu.
-
 ![Game flow](/readmeImgs/GameFlow.png)
