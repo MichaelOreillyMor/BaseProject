@@ -13,7 +13,7 @@ framework or all the managers. The GameStates are the glue that makes all the sy
 work, but no manager (UIMan ,InputMan, CameraMan...) is going to be required by others.
 
 Right now there are some dependencies between the UIManager and the GameState
-manager. In the next few weeks, I ́m going to create an Assembly definition for each
+manager. In the next few weeks, I'm going to create an Assembly definition for each
 manager folder and complete the decoupling of the managers from each other.
 
 ## 1. 1 GameStates system
@@ -28,7 +28,7 @@ events that they need here.
 **Unsetup():** Exit method where all the resources takenby the game state are disposed and
 stop listening to events.
 
-**GameStateManager** is responsible for loading andunloading each GameState.
+**GameStateManager** is responsible for loading and unloading each GameState.
 
 **BaseUIGameState** is an important GameState that is worth mentioning. It's the base class
 that gets a UIScreen (Prefab [Canvas +UI components]) from the UIManager and shows it
@@ -49,17 +49,17 @@ moves to the next GameState.
 
 Builds the play session/game match. It gets a MapLevelData and creates:
 
-- The Boardand itsCellsusing a MapBoardFactory.
+- The Board and its Cells using a MapBoardFactory.
 - The UnitStates(soldiers and monsters) using a UnitsBoardFactory.
-- The PlayerControllersthat handle the state of a player(e.g: soldiers alive).
-- The GameControllerthat handles the match state whichplayer wins.
+- The PlayerController sthat handles the state of a player(e.g: soldiers alive).
+- The GameController that handles the match state and which player wins.
 
 The Factories use the PoolManager to get the cells, UnitStates, UnitConsmetics and
 UIPanelUnitStats. Then everything is injected, wired and returned.
 
 ![pawnFactory](/readmeImgs/pawnFactory.png)
 
-the GameController is ready and it’s given to the SessionManager that starts the
+the GameController now is ready and it’s given to the SessionManager that starts the
 game session. **After this point of the flow, all the references to these objects 
 are Interfaces, these Interfaces provide the methods needed in each context.
 e.g: Cell.Setup() is not visible for classes that use ICell.**
@@ -96,18 +96,18 @@ Cosmetic, Transform and UnitStatsState (life, attack, actionPoints...)
 
 ## 2. 4 UnitStatStates
 
-Current state of the Unit stats and actions, their initial values are loaded from a UnitStatsData.
+Current state of the Unit stats and actions. Their initial values are loaded from a UnitStatsData.
 
 ![StatsState](/readmeImgs/StatsState.png)
 
 **IReadUnitStatsState**
 
-Provides to the UI (or any otherlisteners) only methods to listen to stats values.
+Provides to the UI (or any other listeners) only methods to listen to stats changes.
 
 **IWriteUnitStatsState**
 
 Provides to the UnitState just the methods to
-change the state of the stats.
+change the state of the stats (e.g: receive an attack).
 
 **UnitStatsData**
 
@@ -126,13 +126,16 @@ a cost to perform them.
 
 ## 2. 5  Game Dependencies 
 
+- UnitStatStates and UnitActionStates initial values are obtained from serialized datas
 - A StatsState has UnitStatStates and UnitActionStates.
+- A UnitCosmetic has a 3D model inside its hierarchy and an AnimatorController.
 - A UnitState has an IUnitCosmetic and IStatsState.
 - A PlayerRPG has N IUnitStates and can have an IAIController.
 - A Board has N ICells.
 - A GameRPGController has an IBoard and two IPlayerRPG.
 - A GameSessionManager has a IGameRPGController.
 - A PlayerTurnStates interacts with the GameSessionManager.
+- GameSessionManager decides the state of the game, that can be validated locally or in a server.
 
 RPGGame objects are loaded using theMapLevelData that contains the UnitPositionDatas and Board size. 
 All the Datas are ScriptableObjects or serialize classes inside them. 
