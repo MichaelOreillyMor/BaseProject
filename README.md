@@ -51,7 +51,7 @@ Builds the play session/game match. It gets a MapLevelData and creates:
 
 - The Board and its Cells using a MapBoardFactory.
 - The UnitStates(soldiers and monsters) using a UnitsBoardFactory.
-- The PlayerController sthat handles the state of a player(e.g: soldiers alive).
+- The PlayerController that handles the state of a player(e.g: soldiers alive).
 - The GameController that handles the match state and which player wins.
 
 The Factories use the PoolManager to get the cells, UnitStates, UnitConsmetics and
@@ -61,7 +61,7 @@ UIPanelUnitStats. Then everything is injected, wired and returned.
 
 the GameController now is ready and it’s given to the SessionManager that starts the
 game session. **After this point of the flow, all the references to these objects 
-are Interfaces, these Interfaces provide the methods needed in each context.
+are Interfaces (DIP), these Interfaces provide the methods needed in each context.
 e.g: Cell.Setup() is not visible for classes that use ICell.**
 
 
