@@ -140,6 +140,7 @@ a cost to perform them.
 RPGGame objects are loaded using theMapLevelData that contains the UnitPositionDatas and Board size. 
 All the Datas are ScriptableObjects or serialize classes inside them. 
 The references to RPGGame objects are Interfaces, eveything is testable and encapsulated.
+I always apply the Dependency inversion principle in all my projects.
 
 ## 2. 6  GameStates Flow
 ![Game flow](/readmeImgs/GameFlow.png)
