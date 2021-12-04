@@ -53,12 +53,7 @@ namespace RPGGame.Units.Stats
 
         public void SubtractValue(int value)
         {
-            Value -= value;
-
-            if (Value < 0)
-                Value = 0;
-
-            onValueChangeEvent?.Invoke(Value, InitValue);
+            AddValue(-value);
         }
 
         public void ResetValue()

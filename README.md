@@ -25,7 +25,7 @@ helps to create as many states as you want easily. Each GameState has this impor
 (Dependency Injection Composition root), the components can also start to listen to the
 events that they need here.
 
-**Unsetup():** Exit method where all the resources takenby the game state are disposed and
+**Unsetup():** Exit method where all the resources taken by the game state are disposed and
 stop listening to events.
 
 **GameStateManager** is responsible for loading and unloading each GameState.
@@ -70,14 +70,14 @@ e.g: Cell.Setup() is not visible for classes that use ICell.**
 **TurnBasedSessionManager**
 
 Acts as connection point between the players and the GameController and provides some
-utilities like pause the game.
+utilities like pause the game (similar to Unreal GameMode class).
 
 ![SessionManager](/readmeImgs/SessionManager.png)
 
 **GameRPGController**
 
 Responsible for the rules, actions, who wins and state of a PlayerRPG vs PlayerRPG match.
-It handles the interactions between the PlayerRPG UnitStates and the Board.
+It handles the interactions between the PlayerRPG UnitStates and the Board (similar to Unreal GameState class).
 
 ![GameController](/readmeImgs/GameController.png)
 

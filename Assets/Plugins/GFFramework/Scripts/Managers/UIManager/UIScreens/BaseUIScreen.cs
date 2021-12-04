@@ -25,7 +25,7 @@ namespace GFF.UIsMan.UIScreens
 
         public void Show(bool show) => gameObject.SetActive(show);
 
-        public void SetOwner(GameStateKey gameStateKey)
+        public void SetOwner_Editor(GameStateKey gameStateKey)
         {
 #if UNITY_EDITOR
             if (!Application.isPlaying)

@@ -110,7 +110,7 @@ namespace GFF.GameStatesMan.GameStates
 #if UNITY_EDITOR
             if (!Application.isPlaying)
             {
-                SetKeyToUIScreen();
+                SetKeyToUIScreen_Editor();
             }
 #endif
         }
@@ -118,14 +118,14 @@ namespace GFF.GameStatesMan.GameStates
         /// <summary>
         /// Adds its key to the UIScreen as a link between them
         /// </summary>
-        private void SetKeyToUIScreen()
+        private void SetKeyToUIScreen_Editor()
         {
 #if UNITY_EDITOR
             if (!Application.isPlaying)
             {
                 if (uiScreenPref)
                 {
-                    uiScreenPref.SetOwner(Key);
+                    uiScreenPref.SetOwner_Editor(Key);
                 }
             }
 #endif
