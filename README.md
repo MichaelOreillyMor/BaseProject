@@ -43,7 +43,8 @@ Minimum requirements (MVP) defined before starting this example:
 - The game has a board composed of N x M cells.
 - It's a turn based game, player VS AI.
 - The player starts the game with 3 units on the board, the AI can have more units.
-- A Unit can attack and move, each Unit has some healt, attack and move range.
+- A Unit can attack and move, each Unit has some health, attack and move range.
+- The health amount has to be show over each Unit.
 - The AI doesn't have to be intelligent just needs to show some feedback.
 - These parameters have to be easy to tweak.
 
