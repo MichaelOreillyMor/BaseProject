@@ -37,7 +37,7 @@ to the player.
 
 # 2 The Game
 
-For this example I´m fully focused on creating a flexible architecture that can grow with the project.
+For this prototype I´m fully focused on creating a flexible architecture that can grow with the project.
 Materials, Lights or textures optimizations and game feel are not taken into consideration.
 The minimum requirements that were given to me are:
 
@@ -75,7 +75,7 @@ This is the final version of the relations (using interfaces) between each other
 - A UnitState has an IUnitCosmetic and IStatsState (2.6).
 - A PlayerRPG has N IUnitStates and can have an IAIController.
 - A Board has N ICells (2.5).
-- A GameRPGController has an IBoard and two IPlayerRPG.
+- A GameRPGController has an IBoard and two IPlayerRPG (2.4).
 - A GameSessionManager has a ITurnBasedGameController.
 - A PlayerTurnStates interacts with the GameSessionManager.
 - GameSessionManager decides the state of the game, which can be validated locally or in a server.
@@ -101,8 +101,8 @@ UIPanelUnitStats. Then everything is injected, wired and returned.
 
 ![pawnFactory](/readmeImgs/pawnFactory.png)
 
-The GameController is ready now and it’s given to the SessionManager that starts the
-game session. **After this point of the flow, all the references to these objects 
+The RPGGameController is ready now and it’s given to the SessionManager as ITurnBasedGameController.
+THe game session can start. **After this point of the flow, all the references to these objects 
 are Interfaces (DIP), these Interfaces provide the methods needed in each context.
 e.g: Cell.Setup() is not visible for classes that use ICell.**
 
