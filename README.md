@@ -38,6 +38,17 @@ to the player.
 
 # 2 The Game
 
+Minimum requirements (MVP) defined before starting this example:
+
+- The game has a board composed of N x M cells.
+- It's a turn based game, player VS AI.
+- The player starts the game with 3 units on the board, the AI can have more.
+- A Unit can attack and move, each Unit has some healt and has an attack and move range.
+- The AI doesn't have to be intelligent just show some feedback.
+- These parameters have to be easy to tweak.
+
+![pawnFactory](/readmeImgs/Game.png)
+
 ## 2. 1 The Game Initialization
 
 **LoadSceneGameState**
