@@ -17,8 +17,8 @@ manager folder and complete the decoupling of the managers from each other.
 
 ## 1. 1 GameStates system
 
-The game’s flow is a State pattern. Each state of the game is a ScriptableObject, which
-helps to create as many states as you want easily. Each GameState has this important methods:
+**The game’s flow is a State pattern composed of GameStates**. Each GameStates is a ScriptableObject, 
+which helps to create as many states as you want easily. Each GameState has this important methods:
 
 **Setup():** Entry method where the dependencies of theGameState components are resolved
 (Dependency Injection Composition root), the components can also start to listen to the
@@ -101,7 +101,7 @@ UIPanelUnitStats. Then everything is injected, wired and returned.
 
 ![pawnFactory](/readmeImgs/pawnFactory.png)
 
-The RPGGameController is ready now and it’s given to the SessionManager as ITurnBasedGameController.
+The RPGGameController is ready now and it’s given to the SessionManager as a ITurnBasedGameController.
 THe game session can start. **After this point of the flow, all the references to these objects 
 are Interfaces (DIP), these Interfaces provide the methods needed in each context.
 e.g: Cell.Setup() is not visible for classes that use ICell.**
