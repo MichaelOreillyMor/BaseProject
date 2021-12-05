@@ -12,8 +12,8 @@ All the parts of the framework are going to be decoupled, you don't have to use 
 framework or all the managers. The GameStates are the glue that makes all the systems
 work, but no manager (UIMan ,InputMan, CameraMan...) is going to be required by others.
 
-Right now there are some dependencies between the UIManager and the GameState
-manager. In the next few weeks, I'm going to create an Assembly definition for each
+Right now there are some dependencies between the UIManager and the GameStateManager. 
+In the next few weeks, I'm going to create an Assembly definition for each
 manager folder and complete the decoupling of the managers from each other.
 
 ## 1. 1 GameStates system
