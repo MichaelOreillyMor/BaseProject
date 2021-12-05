@@ -38,6 +38,9 @@ to the player.
 
 # 2 The Game
 
+This game is fully focused on creating great and flexible software and project architecture.
+Materials, Lights or textures optimizations and game feel are not taken into consideration.
+
 Minimum requirements (MVP) defined for this game example:
 
 - It's a turn based game, player VS AI.
@@ -46,7 +49,7 @@ Minimum requirements (MVP) defined for this game example:
 - A Unit can attack an enemy Unit and/or move to another cell.
 - Each Unit has some health, attack and move range.
 - The health amount has to be displayed over each Unit.
-- The AI doesn't have to be intelligent just needs to show some feedback.
+- The AI doesn't have to be intelligent, it just needs to show some feedback.
 - These parameters have to be easy to tweak.
 
 ![pawnFactory](/readmeImgs/Game.png)
@@ -72,7 +75,7 @@ UIPanelUnitStats. Then everything is injected, wired and returned.
 
 ![pawnFactory](/readmeImgs/pawnFactory.png)
 
-the GameController now is ready and it’s given to the SessionManager that starts the
+The GameController now is ready and it’s given to the SessionManager that starts the
 game session. **After this point of the flow, all the references to these objects 
 are Interfaces (DIP), these Interfaces provide the methods needed in each context.
 e.g: Cell.Setup() is not visible for classes that use ICell.**
@@ -82,7 +85,7 @@ e.g: Cell.Setup() is not visible for classes that use ICell.**
 
 **TurnBasedSessionManager**
 
-Acts as connection point between the players and the GameController and provides some
+Acts as a connection point between the players and the GameController and provides some
 utilities like pause the game (similar to Unreal GameMode class).
 
 ![SessionManager](/readmeImgs/SessionManager.png)
@@ -96,7 +99,7 @@ It handles the interactions between the PlayerRPG UnitStates and the Board (simi
 
 ## 2. 3 game Board and Cells
 
-The Board provide utilities to remove and add IUnitState from the Cells.
+The Board provides utilities to remove and add IUnitState from the Cells.
 
 ![Cell](/readmeImgs/Cell.png)
 
@@ -148,11 +151,11 @@ a cost to perform them.
 - A GameRPGController has an IBoard and two IPlayerRPG.
 - A GameSessionManager has a IGameRPGController.
 - A PlayerTurnStates interacts with the GameSessionManager.
-- GameSessionManager decides the state of the game, that can be validated locally or in a server.
+- GameSessionManager decides the state of the game, which can be validated locally or in a server.
 
 RPGGame objects are loaded using theMapLevelData that contains the UnitPositionDatas and Board size. 
 All the Datas are ScriptableObjects or serialize classes inside them. 
-The references to RPGGame objects are Interfaces, eveything is testable and encapsulated.
+The references to RPGGame objects are Interfaces, everything is testable and encapsulated.
 I always apply the Dependency inversion principle in all my projects.
 
 ## 2. 6  GameStates Flow
