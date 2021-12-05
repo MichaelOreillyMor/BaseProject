@@ -1,8 +1,7 @@
 # 1 My Framework
 
-This game is built over GFFramework, my own framework that I have been developing for
-the past few weeks. It works as a layer over Unity to speed up the games development
-process, it's still a work in progress.
+This game is built over my own framework that I have been developing for the past few weeks. 
+It works as a layer over Unity to speed up the games development process, it's still a work in progress.
 
 It's designed to use the GameInitializer to load only the managers needed in a similar way to
 how Unreal modules work. Only the GameStateManager or other implementation of
@@ -38,10 +37,9 @@ to the player.
 
 # 2 The Game
 
-This game is fully focused on creating great and flexible software and project architecture.
+For this example I´m fully focused on creating a flexible architecture that can grow with the project.
 Materials, Lights or textures optimizations and game feel are not taken into consideration.
-
-Minimum requirements (MVP) defined for this game example:
+The minimum requirements that were given to me are:
 
 - It's a turn based game, player VS AI.
 - It has a board composed of N x M cells.
@@ -54,7 +52,35 @@ Minimum requirements (MVP) defined for this game example:
 
 ![pawnFactory](/readmeImgs/Game.png)
 
-## 2. 1 The Game Initialization
+## 2. 1  GameStates Flow
+
+Now that I have the MVP I can start defining the game flow, 
+which is divided in the game initialization and core loop.
+
+![Game flow](/readmeImgs/GameFlow.png)
+
+## 2. 2  Game Dependencies and relations
+
+An easy way of having parameters that are easy to tweak is using ScriptableObjects and 
+serialize classes inside them. Therefore the fisrt decision is to create a MapLevelData 
+that contains the UnitPositionDatas and the board size. 
+
+I decided to apply Dependency Inversion and Dependency Injection in all the classes that 
+are part of the core loop. This way they are fully decoupled and testables.
+This is the final version of the relations (using interfaces) between each other:
+
+- UnitStatStates and UnitActionStates initial values are obtained from serialized datas
+- A StatsState has UnitStatStates (e.g: health) and UnitActionStates (e.g: attack) (2.7).
+- A UnitCosmetic has a 3D model inside its hierarchy and an AnimatorController.
+- A UnitState has an IUnitCosmetic and IStatsState (2.6).
+- A PlayerRPG has N IUnitStates and can have an IAIController.
+- A Board has N ICells (2.5).
+- A GameRPGController has an IBoard and two IPlayerRPG.
+- A GameSessionManager has a ITurnBasedGameController.
+- A PlayerTurnStates interacts with the GameSessionManager.
+- GameSessionManager decides the state of the game, which can be validated locally or in a server.
+
+## 2. 3 The Game Initialization
 
 **LoadSceneGameState**
 
@@ -75,13 +101,12 @@ UIPanelUnitStats. Then everything is injected, wired and returned.
 
 ![pawnFactory](/readmeImgs/pawnFactory.png)
 
-The GameController now is ready and it’s given to the SessionManager that starts the
+The GameController is ready now and it’s given to the SessionManager that starts the
 game session. **After this point of the flow, all the references to these objects 
 are Interfaces (DIP), these Interfaces provide the methods needed in each context.
 e.g: Cell.Setup() is not visible for classes that use ICell.**
 
-
-## 2. 2 The Game Loop
+## 2. 4 The Core Loop
 
 **TurnBasedSessionManager**
 
@@ -97,20 +122,20 @@ It handles the interactions between the PlayerRPG UnitStates and the Board (simi
 
 ![GameController](/readmeImgs/GameController.png)
 
-## 2. 3 game Board and Cells
+## 2. 5 game Board and Cells
 
 The Board provides utilities to remove and add IUnitState from the Cells.
 
 ![Cell](/readmeImgs/Cell.png)
 
-## 2. 3 UnitStates
+## 2. 6 UnitStates
 
 Current state of a Unit (e.g: Soldier, Monster), it acts as a facade (pattern) to connect the
 Cosmetic, Transform and UnitStatsState (life, attack, actionPoints...)
 
 ![UnitState](/readmeImgs/UnitState.png)
 
-## 2. 4 UnitStatStates
+## 2. 7 UnitStatStates
 
 Current state of the Unit stats and actions. Their initial values are loaded from a UnitStatsData.
 
@@ -140,23 +165,3 @@ a cost to perform them.
 ![UnitAttack](/readmeImgs/UnitAttack.png)
 ![UnitMove](/readmeImgs/UnitMove.png)
 
-## 2. 5  Game Dependencies 
-
-- UnitStatStates and UnitActionStates initial values are obtained from serialized datas
-- A StatsState has UnitStatStates and UnitActionStates.
-- A UnitCosmetic has a 3D model inside its hierarchy and an AnimatorController.
-- A UnitState has an IUnitCosmetic and IStatsState.
-- A PlayerRPG has N IUnitStates and can have an IAIController.
-- A Board has N ICells.
-- A GameRPGController has an IBoard and two IPlayerRPG.
-- A GameSessionManager has a IGameRPGController.
-- A PlayerTurnStates interacts with the GameSessionManager.
-- GameSessionManager decides the state of the game, which can be validated locally or in a server.
-
-RPGGame objects are loaded using theMapLevelData that contains the UnitPositionDatas and Board size. 
-All the Datas are ScriptableObjects or serialize classes inside them. 
-The references to RPGGame objects are Interfaces, everything is testable and encapsulated.
-I always apply the Dependency inversion principle in all my projects.
-
-## 2. 6  GameStates Flow
-![Game flow](/readmeImgs/GameFlow.png)
