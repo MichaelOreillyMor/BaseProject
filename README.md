@@ -59,7 +59,7 @@ which is divided in the game initialization and core loop.
 
 ![Game flow](/readmeImgs/GameFlow.png)
 
-## 2. 2  Game Dependencies and relations
+## 2. 2  Core loop classes relations
 
 An easy way of having parameters that are easy to tweak is using ScriptableObjects and 
 serialize classes inside them. Therefore the fisrt decision is to create a MapLevelData 
@@ -96,8 +96,8 @@ Builds the play session/game match. It gets a MapLevelData and creates:
 - The PlayerController that handles the state of a player(e.g: soldiers alive).
 - The GameController that handles the match state and which player wins.
 
-The Factories use the PoolManager to get the cells, UnitStates, UnitConsmetics and
-UIPanelUnitStats. Then everything is injected, wired and returned.
+These factories use the PoolManager (IPoolProvider) to get the cells, UnitStates, 
+UnitConsmetics and UIPanelUnitStats. Then everything is injected, wired and returned.
 
 ![pawnFactory](/readmeImgs/pawnFactory.png)
 
