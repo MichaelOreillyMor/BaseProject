@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GFF.UIsMan
 {
-    public interface IUIProvider
+    public interface IUIManager
     {
         public BaseUIScreen LoadUIScreen(BaseUIScreen screenPref);
         public void UnloadUIScreen();

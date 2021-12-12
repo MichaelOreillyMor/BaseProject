@@ -1,5 +1,5 @@
 
-namespace GFF.RegProviders
+namespace GFF.ServiceLocators
 {
     public interface IGetService
     {

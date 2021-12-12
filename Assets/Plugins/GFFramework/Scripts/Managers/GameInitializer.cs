@@ -1,5 +1,5 @@
 using GFF.GameStatesMan;
-using GFF.RegProviders;
+using GFF.ServiceLocators;
 
 using UnityEngine;
 
@@ -70,8 +70,8 @@ namespace GFF
 
         private void LoadInitGameState()
         {
-            IGameStateProvider gameStateProv = serviceLocator.GetService<IGameStateProvider>();
-            gameStateProv.LoadInitGameState(serviceLocator);
+            IGameStateManager gameStateMan = serviceLocator.GetService<IGameStateManager>();
+            gameStateMan.LoadInitGameState(serviceLocator);
             Debug.Log("OnGameLoaded");
         }
 

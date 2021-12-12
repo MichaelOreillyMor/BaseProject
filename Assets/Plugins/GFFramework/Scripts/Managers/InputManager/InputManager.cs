@@ -1,5 +1,5 @@
 using GFF.InputsMan.InputActions;
-using GFF.RegProviders;
+using GFF.ServiceLocators;
 
 using System;
 using UnityEngine;
@@ -10,7 +10,7 @@ namespace GFF.InputsMan
     /// <summary>
     /// Basic class to encapsulate the inputs maps and control the input listeners
     /// </summary>
-    public class InputManager : BaseGameManager, IInputProvider
+    public class InputManager : BaseGameManager, IInputManager
     {
         [SerializeField]
         private LayerMask selectWorldLayer;
@@ -35,7 +35,7 @@ namespace GFF.InputsMan
 
         protected override void SetService(ISetService serviceLocator)
         {
-            serviceLocator.SetService<IInputProvider>(this);
+            serviceLocator.SetService<IInputManager>(this);
         }
 
         public override void Unsetup()

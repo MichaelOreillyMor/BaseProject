@@ -1,5 +1,5 @@
 using GFF.GameStatesMan.GameStates;
-using GFF.RegProviders;
+using GFF.ServiceLocators;
 using GFF.UIsMan.UIScreens;
 using RPGGame.UIsMan.MainMenu;
 
@@ -12,7 +12,7 @@ namespace RPGGame.GameStatesMan.GameStates
     {
         private UIScreenMainMenu mainMenuScreen;
 
-        protected override void SetUIStateProviders(IGetService reg)
+        protected override void SetUIStateServices(IGetService serviceLocator)
         {
 
         }

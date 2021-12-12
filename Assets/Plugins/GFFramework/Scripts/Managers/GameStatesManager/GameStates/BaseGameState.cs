@@ -1,6 +1,6 @@
 ﻿using GFF.CoroutinesMan;
 using GFF.Enums;
-using GFF.RegProviders;
+using GFF.ServiceLocators;
 
 using System;
 using System.Collections;
@@ -24,8 +24,8 @@ namespace GFF.GameStatesMan.GameStates
         [SerializeField]
         private GameStateKey nextGameState;
 
-        protected IGameStateProvider gameStateProv;
-        private ICoroutinesProvider coroutinesProv;
+        protected IGameStateManager gameStateMan;
+        private ICoroutinesManager coroutinesMan;
 
         #region Setup/Unsetup methods
 
@@ -33,19 +33,19 @@ namespace GFF.GameStatesMan.GameStates
         /// The GameState gets the references to the providers that needs. 
         /// It happens at the beginning of the game so it´s easy to see if someone provider is missing.
         /// </summary>
-        public void SetProviders(IGetService serviceLocator)
+        public void SetServices(IGetService serviceLocator)
         {
             if (serviceLocator != null)
             {
-                gameStateProv = serviceLocator.GetService<IGameStateProvider>();
-                OnSetProviders(serviceLocator);
+                gameStateMan = serviceLocator.GetService<IGameStateManager>();
+                OnSetServices(serviceLocator);
             }
         }
 
         /// <summary>
         /// Here any derived GameState gets the references to the providers that needs.
         /// </summary>
-        protected abstract void OnSetProviders(IGetService reg);
+        protected abstract void OnSetServices(IGetService reg);
 
         /// <summary>
         /// Entry method where the dependencies of the GameState components are resolved (Dependency Injection Composition root)
@@ -67,9 +67,9 @@ namespace GFF.GameStatesMan.GameStates
         {
             OnPreUnsetup();
 
-            if (coroutinesProv != null)
+            if (coroutinesMan != null)
             {
-                coroutinesProv.StopAllGameStateCoroutines();
+                coroutinesMan.StopAllGameStateCoroutines();
             }
         }
 
@@ -84,38 +84,38 @@ namespace GFF.GameStatesMan.GameStates
         {
             if (nextGameState != GameStateKey.None)
             {
-                gameStateProv.LoadGameState(nextGameState);
+                gameStateMan.LoadGameState(nextGameState);
             }
         }
 
         protected void LoadPrevGameState()
         {
-            gameStateProv.LoadPrevGameState();
+            gameStateMan.LoadPrevGameState();
         }
 
         #region Coroutines methods
 
         protected void StartCoroutine(IEnumerator coroutine) 
         {
-            if (coroutinesProv != null)
+            if (coroutinesMan != null)
             {
-                coroutinesProv.StartGameStateCoroutine(coroutine);
+                coroutinesMan.StartGameStateCoroutine(coroutine);
             }
             else 
             {
-                Debug.LogError("CoroutinesProvider not added, please add one");
+                Debug.LogError("CoroutinesManager not added, please add one");
             }
         }
 
         protected void StopCoroutine(IEnumerator coroutine)
         {
-            if (coroutinesProv != null)
+            if (coroutinesMan != null)
             {
-                coroutinesProv.StopGameStateCoroutine(coroutine);
+                coroutinesMan.StopGameStateCoroutine(coroutine);
             }
             else
             {
-                Debug.LogError("CoroutinesProvider not added, please add one");
+                Debug.LogError("CoroutinesManager not added, please add one");
             }
         }
 
@@ -123,13 +123,13 @@ namespace GFF.GameStatesMan.GameStates
         {
             IEnumerator delayCoroutine = null;
 
-            if (coroutinesProv != null)
+            if (coroutinesMan != null)
             {
-                delayCoroutine = coroutinesProv.StartDelayGameStateAction(action, delay);
+                delayCoroutine = coroutinesMan.StartDelayGameStateAction(action, delay);
             }
             else
             {
-                Debug.LogError("CoroutinesProvider not added, please add one");
+                Debug.LogError("CoroutinesManager not added, please add one");
             }
 
             return delayCoroutine;

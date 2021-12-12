@@ -2,7 +2,7 @@ using GFF.CamerasMan;
 using GFF.SessionsMan.TurnBasedSessions;
 using GFF.UIsMan;
 using GFF.GameStatesMan.GameStates;
-using GFF.RegProviders;
+using GFF.ServiceLocators;
 using GFF.PoolsMan;
 
 using RPGGame.BoardCells;
@@ -29,9 +29,9 @@ namespace RPGGame.GameStatesMan.GameStates
     [CreateAssetMenu(menuName = "GameStates/LoadSessionState")]
     public class LoadSessionGameState : BaseGameState
     {
-        private ITurnBasedSessionProvider sessionProv;
-        private IRPGDataProvider dataProv;
-        private IUIProvider UIProv;
+        private ITurnBasedSessionManager sessionMan;
+        private IRPGDataManager dataMan;
+        private IUIManager UIMan;
 
         [SerializeField]
         private UnitsBoardFactory unitsBoardFactory;
@@ -41,22 +41,22 @@ namespace RPGGame.GameStatesMan.GameStates
 
         #region Setup/Unsetup methods
 
-        protected override void OnSetProviders(IGetService serviceLocator)
+        protected override void OnSetServices(IGetService serviceLocator)
         {
-            dataProv = serviceLocator.GetService<IRPGDataProvider>();
-            sessionProv = serviceLocator.GetService<ITurnBasedSessionProvider>();
-            UIProv = serviceLocator.GetService<IUIProvider>();
+            dataMan = serviceLocator.GetService<IRPGDataManager>();
+            sessionMan = serviceLocator.GetService<ITurnBasedSessionManager>();
+            UIMan = serviceLocator.GetService<IUIManager>();
 
-            ICameraProvider camProv = serviceLocator.GetService<ICameraProvider>();
-            IPoolProvider  poolProv = serviceLocator.GetService<IPoolProvider>();
+            ICameraManager camMan = serviceLocator.GetService<ICameraManager>();
+            IPoolManager  poolMan = serviceLocator.GetService<IPoolManager>();
 
-            unitsBoardFactory.Init(poolProv, camProv, UIProv);
-            mapCellsFactory.Init(poolProv);
+            unitsBoardFactory.Init(poolMan, camMan, UIMan);
+            mapCellsFactory.Init(poolMan);
         }
 
         protected override void OnPostSetup()
         {
-            UIProv.ShowLoadPanel();
+            UIMan.ShowLoadPanel();
 
             LoadPlayerVsAI();
             LoadNextGameState();
@@ -64,7 +64,7 @@ namespace RPGGame.GameStatesMan.GameStates
 
         protected override void OnPreUnsetup()
         {
-            UIProv.HideLoadPanel();
+            UIMan.HideLoadPanel();
         }
 
         #endregion
@@ -74,7 +74,7 @@ namespace RPGGame.GameStatesMan.GameStates
         private void LoadPlayerVsAI()
         {
             //We get the current game level that the player is going to play
-            MapLevelData map = dataProv.GetCurrentMapLevel();
+            MapLevelData map = dataMan.GetCurrentMapLevel();
             //Then we create:
 
             //The Board and its Cells
@@ -95,7 +95,7 @@ namespace RPGGame.GameStatesMan.GameStates
             IAController.SetOnSelectCallback(gameController.OnSelectCell);
 
             //The game session can start now
-            sessionProv.InitSession(gameController);
+            sessionMan.InitSession(gameController);
         }
 
         #endregion

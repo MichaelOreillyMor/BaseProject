@@ -1,7 +1,7 @@
 ﻿namespace RPGGame.Units.Stats
 {
     /// <summary>
-    /// Provides to the UnitState just the methods to change the state of the stats
+    /// Manides to the UnitState just the methods to change the state of the stats
     /// </summary>
     public interface IWriteUnitStatsState 
     {

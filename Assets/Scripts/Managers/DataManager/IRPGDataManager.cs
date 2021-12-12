@@ -4,7 +4,7 @@ using RPGGame.DatasMan.GameDatas;
 
 namespace RPGGame.DatasMan
 {
-    public interface IRPGDataProvider : IDataProvider
+    public interface IRPGDataManager : IDataManager
     {
         public MapLevelData GetCurrentMapLevel();
     }

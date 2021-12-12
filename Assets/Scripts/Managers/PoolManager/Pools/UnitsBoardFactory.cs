@@ -23,13 +23,13 @@ namespace RPGGame.PoolsMan.Pools
         [SerializeField]
         private UIPanelUnitStats panelUnitPref;
 
-        private IUIProvider UIProvider;
+        private IUIManager UIMan;
         private Camera mainCamera;
 
-        public void Init(ISpawnProvider poolManager, ICameraProvider cameraProv, IUIProvider uiProvider)
+        public void Init(ISpawnManager poolManager, ICameraManager cameraMan, IUIManager uiMan)
         {
-            mainCamera = cameraProv.GetMainCamera();
-            UIProvider = uiProvider;
+            mainCamera = cameraMan.GetMainCamera();
+            UIMan = uiMan;
 
             SetSpawner(poolManager);
         }
@@ -79,7 +79,7 @@ namespace RPGGame.PoolsMan.Pools
         private void CreateUnitStatsPanel(IReadUnitStatsState statsState, UnitCosmetic unitCosmetic, bool isTeam1)
         {
             UIPanelUnitStats panelUnitStats = Spawn(panelUnitPref, Vector3.zero, Quaternion.identity);
-            UIProvider.AddContent(panelUnitStats.transform);
+            UIMan.AddContent(panelUnitStats.transform);
 
             Transform anchorPoint = unitCosmetic.GetPanelAnchor();
 

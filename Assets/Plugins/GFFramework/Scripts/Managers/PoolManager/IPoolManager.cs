@@ -2,7 +2,7 @@
 
 namespace GFF.PoolsMan
 {
-    public interface IPoolProvider : ISpawnProvider
+    public interface IPoolManager : ISpawnManager
     {
         public void Preload(PoolMember prefab, int qty = 1);
         public void Despawn(PoolMember poolMember);

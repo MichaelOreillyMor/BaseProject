@@ -17,9 +17,9 @@ namespace RPGGame.PoolsMan.Pools
         [SerializeField]
         private float cellDistance;
 
-        public void Init(ISpawnProvider spawnProv)
+        public void Init(ISpawnManager spawnMan)
         {
-            SetSpawner(spawnProv);
+            SetSpawner(spawnMan);
         }
 
         public Board CreateBoard(Vector2Int boardSize)

@@ -1,6 +1,6 @@
 ﻿using GFF.Enums;
 using GFF.GameStatesMan.GameStates;
-using GFF.RegProviders;
+using GFF.ServiceLocators;
 
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ namespace GFF.GameStatesMan
     /// <summary>
     /// Handles the different game´s states, it´s a States pattern controlled by this class
     /// </summary>
-    public class GameStateManager : BaseGameManager, IGameStateProvider
+    public class GameStateManager : BaseGameManager, IGameStateManager
     {
         //WIP: Unity cant serialize a Assets diccionary so I have to do this
         [SerializeField]
@@ -41,7 +41,7 @@ namespace GFF.GameStatesMan
 
         protected override void SetService(ISetService serviceLocator)
         {
-            serviceLocator.SetService<IGameStateProvider>(this);
+            serviceLocator.SetService<IGameStateManager>(this);
         }
 
         public override void Unsetup()
@@ -66,23 +66,23 @@ namespace GFF.GameStatesMan
 
         #region Load GameStates methods
 
-        public void LoadInitGameState(IGetService reg)
+        public void LoadInitGameState(IGetService serviceLocator)
         {
-            SetGameStatesProviders(reg);
+            SetGameStatesServices(serviceLocator);
             LoadGameState(initGameState);
         }
 
         /// <summary>
         /// Resolves the references to the providers needed in every GameState.
         /// </summary>
-        private void SetGameStatesProviders(IGetService serviceProvider)
+        private void SetGameStatesServices(IGetService serviceLocator)
         {
             if (gameStatesToLoad != null)
             {
                 for (int i = 0; i < gameStatesToLoad.Length; i++)
                 {
                     BaseGameState gs = gameStatesToLoad[i];
-                    gs.SetProviders(serviceProvider);
+                    gs.SetServices(serviceLocator);
                 }
             }
         }

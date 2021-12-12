@@ -1,4 +1,4 @@
-using GFF.RegProviders;
+using GFF.ServiceLocators;
 
 using System;
 
@@ -7,7 +7,7 @@ namespace GFF.SessionsMan.TurnBasedSessions
     /// <summary>
     /// Acts as connexion point between the players and the GameController
     /// </summary>
-    public class TurnBasedSessionManager : GameSessionManager, ITurnBasedSessionProvider
+    public class TurnBasedSessionManager : GameSessionManager, ITurnBasedSessionManager
     {
         private ITurnBasedGameController gameController;
 
@@ -15,7 +15,7 @@ namespace GFF.SessionsMan.TurnBasedSessions
 
         protected override void SetService(ISetService serviceLocator)
         {
-            serviceLocator.SetService<ITurnBasedSessionProvider>(this);
+            serviceLocator.SetService<ITurnBasedSessionManager>(this);
         }
 
         public void InitSession(ITurnBasedGameController gameController) 

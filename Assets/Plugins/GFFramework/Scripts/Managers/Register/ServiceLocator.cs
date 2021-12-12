@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace GFF.RegProviders
+namespace GFF.ServiceLocators
 {
     public class ServiceLocator : IGetService, ISetService
     {

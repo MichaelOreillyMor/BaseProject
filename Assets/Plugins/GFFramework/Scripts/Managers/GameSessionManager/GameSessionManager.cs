@@ -1,4 +1,4 @@
-﻿using GFF.RegProviders;
+﻿using GFF.ServiceLocators;
 
 using System;
 using UnityEngine;
@@ -8,7 +8,7 @@ namespace GFF.SessionsMan
     /// <summary>
     ///Handles the current play session
     /// </summary>
-    public abstract class GameSessionManager : BaseGameManager, IGameSessionProvider
+    public abstract class GameSessionManager : BaseGameManager, IGameSessionManager
     {
         protected bool SessionStarted { get; private set; }
         protected bool GamePaused { get; private set; }

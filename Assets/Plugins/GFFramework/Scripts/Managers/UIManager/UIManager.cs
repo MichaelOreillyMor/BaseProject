@@ -1,5 +1,5 @@
 using GFF.Enums;
-using GFF.RegProviders;
+using GFF.ServiceLocators;
 using GFF.UIsMan.Panels;
 using GFF.UIsMan.UIScreens;
 
@@ -16,7 +16,7 @@ namespace GFF.UIsMan
     /// If you want a persistent UIScreen during the life time of a scene: add it to SceneInfo prefab
     /// If you want a UIScreen loaded in run-time that will be destroyed: just add the reference to the GameState
     /// </summary>
-    public class UIManager : BaseGameManager, IUIProvider
+    public class UIManager : BaseGameManager, IUIManager
     {
         [SerializeField]
         private UIMainPanel mainPanel;
@@ -39,7 +39,7 @@ namespace GFF.UIsMan
 
         protected override void SetService(ISetService serviceLocator)
         {
-            serviceLocator.SetService<IUIProvider>(this);
+            serviceLocator.SetService<IUIManager>(this);
         }
 
         public override void Unsetup()

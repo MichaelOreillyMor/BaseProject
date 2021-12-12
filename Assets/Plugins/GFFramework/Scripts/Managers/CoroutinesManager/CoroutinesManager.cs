@@ -1,4 +1,4 @@
-﻿using GFF.RegProviders;
+﻿using GFF.ServiceLocators;
 
 using System;
 using System.Collections;
@@ -10,7 +10,7 @@ namespace GFF.CoroutinesMan
     /// WIP Handles the current GameState coroutines, it´s safely to StopAllCoroutines() in Unsetup()
     /// I have to check if StopAllCoroutines() generates garbaje or cosumes CPU resources if we don´t have any coroutine running.
     /// </summary>
-    public class CoroutinesManager : BaseGameManager, ICoroutinesProvider
+    public class CoroutinesManager : BaseGameManager, ICoroutinesManager
     {
         #region Setup/Unsetup methods
 
@@ -24,7 +24,7 @@ namespace GFF.CoroutinesMan
 
         protected override void SetService(ISetService serviceLocator)
         {
-            serviceLocator.SetService<ICoroutinesProvider>(this);
+            serviceLocator.SetService<ICoroutinesManager>(this);
         }
 
         public override void Unsetup()

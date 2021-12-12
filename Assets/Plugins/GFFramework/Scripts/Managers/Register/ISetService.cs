@@ -1,6 +1,6 @@
 using System;
 
-namespace GFF.RegProviders
+namespace GFF.ServiceLocators
 {
     public interface ISetService
     {

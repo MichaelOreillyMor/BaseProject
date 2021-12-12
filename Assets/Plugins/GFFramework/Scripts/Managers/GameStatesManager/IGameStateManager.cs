@@ -1,9 +1,9 @@
 ﻿using GFF.Enums;
-using GFF.RegProviders;
+using GFF.ServiceLocators;
 
 namespace GFF.GameStatesMan
 {
-    public interface IGameStateProvider
+    public interface IGameStateManager
     {
         public void LoadInitGameState(IGetService reg);
         public void LoadGameState(GameStateKey gameStateKey);

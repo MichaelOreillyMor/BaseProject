@@ -1,6 +1,6 @@
 namespace GFF.SessionsMan
 {
-    public interface IGameSessionProvider
+    public interface IGameSessionManager
     {
         public void ResumeGame();
         public void StopGame();

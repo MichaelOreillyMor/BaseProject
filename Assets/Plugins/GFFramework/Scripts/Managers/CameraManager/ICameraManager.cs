@@ -2,7 +2,7 @@
 
 namespace GFF.CamerasMan
 {
-    public interface ICameraProvider
+    public interface ICameraManager
     {
         public Camera GetMainCamera();
     }

@@ -1,6 +1,6 @@
 using GFF.InputsMan;
 using GFF.InputsMan.InputActions;
-using GFF.RegProviders;
+using GFF.ServiceLocators;
 using GFF.UIsMan;
 using GFF.UIsMan.UIScreens;
 
@@ -10,7 +10,7 @@ using UnityEngine.InputSystem;
 namespace GFF.GameStatesMan.GameStates
 {
     /// <summary>
-    /// Base class that gets a UIScreen from the IUIProvider and shows it to the player. 
+    /// Base class that gets a UIScreen from the IUIManager and shows it to the player. 
     /// </summary>
     public abstract class BaseUIGameState : BaseGameState, GameControls.IUIScreenActions
     {
@@ -22,31 +22,31 @@ namespace GFF.GameStatesMan.GameStates
         [SerializeField]
         protected bool canReturnPrevState;
 
-        protected IUIProvider uiProv;
-        private IInputProvider inputProv;
+        protected IUIManager uiMan;
+        private IInputManager inputMan;
 
         #region Setup/Unsetup methods
 
-        protected sealed override void OnSetProviders(IGetService serviceLocator)
+        protected sealed override void OnSetServices(IGetService serviceLocator)
         {
-            uiProv = serviceLocator.GetService<IUIProvider>();
-            inputProv = serviceLocator.GetService<IInputProvider>();
+            uiMan = serviceLocator.GetService<IUIManager>();
+            inputMan = serviceLocator.GetService<IInputManager>();
 
-            SetUIStateProviders(serviceLocator);
+            SetUIStateServices(serviceLocator);
         }
 
         /// <summary>
         /// Here any derived UIGameState gets the references to the providers that needs.
         /// </summary>
         /// 
-        protected abstract void SetUIStateProviders(IGetService reg);
+        protected abstract void SetUIStateServices(IGetService serviceLocator);
 
         protected sealed override void OnPostSetup()
         {
             if (uiScreenPref)
             {
-                uiScreen = uiProv.LoadUIScreen(uiScreenPref);
-                inputProv.SetUICallbacks(this);
+                uiScreen = uiMan.LoadUIScreen(uiScreenPref);
+                inputMan.SetUICallbacks(this);
                 OnPostUILoaded(uiScreen);
             }
             else 
@@ -63,9 +63,9 @@ namespace GFF.GameStatesMan.GameStates
             {
                 Debug.Log(uiScreen.name + " Unsetup");
 
-                inputProv.RemoveUICallbacks();
+                inputMan.RemoveUICallbacks();
                 uiScreen.Unsetup();
-                uiProv.UnloadUIScreen();
+                uiMan.UnloadUIScreen();
             }
         }
 

@@ -1,4 +1,4 @@
-﻿using GFF.RegProviders;
+﻿using GFF.ServiceLocators;
 
 using System;
 using UnityEngine;
@@ -8,7 +8,7 @@ namespace GFF.CamerasMan
     /// <summary>
     ///WIP, this will controll Cinemachine and the MainCamera
     /// </summary>
-    public class CameraManager : BaseGameManager, ICameraProvider
+    public class CameraManager : BaseGameManager, ICameraManager
     {
         [SerializeField]
         private Camera gameCamera;
@@ -24,7 +24,7 @@ namespace GFF.CamerasMan
 
         protected override void SetService(ISetService serviceLocator)
         {
-            serviceLocator.SetService<ICameraProvider>(this);
+            serviceLocator.SetService<ICameraManager>(this);
         }
 
         public override void Unsetup()

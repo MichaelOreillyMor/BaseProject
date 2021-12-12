@@ -1,4 +1,4 @@
-﻿using GFF.RegProviders;
+﻿using GFF.ServiceLocators;
 
 using System;
 using UnityEngine;

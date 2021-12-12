@@ -1,5 +1,5 @@
 using GFF.GameStatesMan.GameStates;
-using GFF.RegProviders;
+using GFF.ServiceLocators;
 using GFF.UIsMan.UIScreens;
 using GFF.Enums;
 
@@ -15,7 +15,7 @@ namespace RPGGame.GameStatesMan.GameStates
     {
         private UIScreenGameEnd endGameScreen;
 
-        protected override void SetUIStateProviders(IGetService reg)
+        protected override void SetUIStateServices(IGetService serviceLocator)
         {
 
         }
@@ -45,7 +45,7 @@ namespace RPGGame.GameStatesMan.GameStates
 
         private void OnPlayAgain()
         {
-            gameStateProv.LoadGameState(GameStateKey.LoadGameScene);
+            gameStateMan.LoadGameState(GameStateKey.LoadGameScene);
         }
     }
 }

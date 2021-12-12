@@ -1,10 +1,8 @@
 ﻿using GFF.InputsMan.InputActions;
-using System;
-using UnityEngine;
 
 namespace GFF.InputsMan
 {
-    public interface IInputProvider
+    public interface IInputManager
     {
         public void SetUICallbacks(GameControls.IUIScreenActions uiStateActions);
         public void RemoveUICallbacks();

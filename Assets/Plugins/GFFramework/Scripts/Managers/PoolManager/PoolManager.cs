@@ -1,5 +1,5 @@
 ﻿using GFF.PoolsMan.Pools;
-using GFF.RegProviders;
+using GFF.ServiceLocators;
 
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ namespace GFF.PoolsMan
     /// <summary>
     /// Handles the instantiation of objects in-game
     /// </summary>
-    public class PoolManager : BaseGameManager, IPoolProvider
+    public class PoolManager : BaseGameManager, IPoolManager
     {
         // You can avoid resizing of the Stack's internal data by
         // setting this to a number equal to or greater to what you
@@ -35,7 +35,7 @@ namespace GFF.PoolsMan
 
         protected override void SetService(ISetService serviceLocator)
         {
-            serviceLocator.SetService<IPoolProvider>(this);
+            serviceLocator.SetService<IPoolManager>(this);
         }
 
         public override void Unsetup()

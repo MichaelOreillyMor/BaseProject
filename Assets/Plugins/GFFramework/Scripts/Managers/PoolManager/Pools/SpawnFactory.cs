@@ -5,16 +5,16 @@ namespace GFF.PoolsMan.Pools
     [System.Serializable]
     public class SpawnFactory
     {
-        private ISpawnProvider spawnProv;
+        private ISpawnManager spawnMan;
 
-        protected void SetSpawner(ISpawnProvider spawnProv)
+        protected void SetSpawner(ISpawnManager spawnMan)
         {
-            this.spawnProv = spawnProv;
+            this.spawnMan = spawnMan;
         }
 
         public T Spawn<T>(T prefab, Vector3 pos, Quaternion rot) where T : PoolMember
         {
-            return spawnProv.Spawn(prefab, pos, rot);
+            return spawnMan.Spawn(prefab, pos, rot);
         }
     }
 }

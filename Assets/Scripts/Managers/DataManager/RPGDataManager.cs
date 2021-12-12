@@ -1,19 +1,19 @@
 using GFF.DatasMan;
 using GFF.DatasMan.GameDatas;
-using GFF.RegProviders;
+using GFF.ServiceLocators;
 
 using RPGGame.DatasMan;
 using RPGGame.DatasMan.GameDatas;
 
 namespace RPGGame.GameDatasMan
 {
-    public class RPGDataManager : DataManager, IRPGDataProvider
+    public class RPGDataManager : DataManager, IRPGDataManager
     {
         private GameData gameData;
 
         protected override void SetService(ISetService serviceLocator)
         {
-            serviceLocator.SetService<IRPGDataProvider>(this);
+            serviceLocator.SetService<IRPGDataManager>(this);
         }
 
         protected override void OnGameDataLoaded(BaseGameData baseGameData)

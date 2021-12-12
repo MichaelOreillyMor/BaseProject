@@ -1,7 +1,7 @@
 using GFF.Enums;
 using GFF.GameStatesMan.GameStates;
 using GFF.PoolsMan;
-using GFF.RegProviders;
+using GFF.ServiceLocators;
 using GFF.ScenesMan;
 using GFF.ScenesMan.Utils;
 using GFF.UIsMan;
@@ -22,30 +22,30 @@ namespace GameStates.GameStates.BaseGS
         [SerializeField]
         private bool cleanObjectsPool = true;
 
-        private ISceneProvider SceneProv;
-        private IPoolProvider poolProv;
-        private IUIProvider UIProv;
+        private ISceneManager SceneMan;
+        private IPoolManager poolMan;
+        private IUIManager UIMan;
 
         #region Setup/Unsetup methods
 
-        protected override void OnSetProviders(IGetService serviceLocator)
+        protected override void OnSetServices(IGetService serviceLocator)
         {
-            SceneProv = serviceLocator.GetService<ISceneProvider>();
-            poolProv = serviceLocator.GetService<IPoolProvider>();
-            UIProv = serviceLocator.GetService<IUIProvider>();
+            SceneMan = serviceLocator.GetService<ISceneManager>();
+            poolMan = serviceLocator.GetService<IPoolManager>();
+            UIMan = serviceLocator.GetService<IUIManager>();
         }
 
         protected override void OnPostSetup()
         {
-            UIProv.ShowLoadPanel();
+            UIMan.ShowLoadPanel();
 
             CleanSceneRefs();
-            SceneProv.LoadScene(scene, OnSceneLoaded);
+            SceneMan.LoadScene(scene, OnSceneLoaded);
         }
 
         protected override void OnPreUnsetup()
         {
-            UIProv.HideLoadPanel();
+            UIMan.HideLoadPanel();
         }
 
         #endregion
@@ -59,15 +59,15 @@ namespace GameStates.GameStates.BaseGS
 
         private void CleanSceneRefs()
         {
-            UIProv.CleanSceneScreens();
+            UIMan.CleanSceneScreens();
             CleanObjectsPool();
         }
 
         private void CleanObjectsPool()
         {
-            if (cleanObjectsPool && poolProv != null)
+            if (cleanObjectsPool && poolMan != null)
             {
-                poolProv.DestroyPoolsMembers();
+                poolMan.DestroyPoolsMembers();
             }
         }
 
@@ -83,7 +83,7 @@ namespace GameStates.GameStates.BaseGS
         {
             if (sceneUIScreens)
             {
-                UIProv.RegisterSceneScreens(sceneUIScreens.UIScreens);
+                UIMan.RegisterSceneScreens(sceneUIScreens.UIScreens);
             }
         }
 

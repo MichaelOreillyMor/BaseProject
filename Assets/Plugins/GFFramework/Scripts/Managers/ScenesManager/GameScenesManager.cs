@@ -1,5 +1,5 @@
 ﻿using GFF.Enums;
-using GFF.RegProviders;
+using GFF.ServiceLocators;
 
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 namespace GFF.ScenesMan
 {
-    public class GameScenesManager : BaseGameManager, ISceneProvider
+    public class GameScenesManager : BaseGameManager, ISceneManager
     {
         [Serializable]
         private struct SceneInfo
@@ -39,7 +39,7 @@ namespace GFF.ScenesMan
 
         protected override void SetService(ISetService serviceLocator)
         {
-            serviceLocator.SetService<ISceneProvider>(this);
+            serviceLocator.SetService<ISceneManager>(this);
         }
 
         private void LoadSGamecenes()

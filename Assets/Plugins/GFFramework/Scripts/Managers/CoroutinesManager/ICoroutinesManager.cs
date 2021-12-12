@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace GFF.CoroutinesMan
 {
-    public interface ICoroutinesProvider
+    public interface ICoroutinesManager
     {
         public void StartGameStateCoroutine(IEnumerator coroutine);
         public IEnumerator StartDelayGameStateAction(Action actionCallback, int delay);

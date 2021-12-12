@@ -2,9 +2,8 @@ using GFF.Enums;
 using GFF.SessionsMan.TurnBasedSessions;
 using GFF.GameStatesMan.GameStates;
 using GFF.InputsMan;
-using GFF.RegProviders;
+using GFF.ServiceLocators;
 using GFF.UIsMan.UIScreens;
-using GFF.SessionsMan;
 
 using RPGGame.UIsMan.HUD;
 
@@ -21,15 +20,15 @@ namespace RPGGame.GameStatesMan.GameStates
     {
         private UIScreenHUD HUDScreen;
 
-        private IInputProvider inputProv;
-        private ITurnBasedSessionProvider sessionProv;
+        private IInputManager inputMan;
+        private ITurnBasedSessionManager sessionMan;
 
         #region Setup/Unsetup methods
 
-        protected override void SetUIStateProviders(IGetService serviceLocator)
+        protected override void SetUIStateServices(IGetService serviceLocator)
         {
-            inputProv = serviceLocator.GetService<IInputProvider>();
-            sessionProv = serviceLocator.GetService<ITurnBasedSessionProvider>();
+            inputMan = serviceLocator.GetService<IInputManager>();
+            sessionMan = serviceLocator.GetService<ITurnBasedSessionManager>();
         }
 
         protected override void OnPostUILoaded(BaseUIScreen uiScreen)
@@ -38,9 +37,9 @@ namespace RPGGame.GameStatesMan.GameStates
             {
                 HUDScreen = screen;
                 HUDScreen.Setup(OnEndTurn, OnSurrender);
-                inputProv.EnableSelection();
+                inputMan.EnableSelection();
 
-                sessionProv.StartTurn(true, OnWinGame);
+                sessionMan.StartTurn(true, OnWinGame);
             }
             else
             {
@@ -50,7 +49,7 @@ namespace RPGGame.GameStatesMan.GameStates
 
         protected override void OnPreUIUnsetup()
         {
-            inputProv.DisableSelection();
+            inputMan.DisableSelection();
         }
 
         #endregion
@@ -59,7 +58,7 @@ namespace RPGGame.GameStatesMan.GameStates
 
         private void OnEndTurn()
         {
-            if (sessionProv.EndTurn(true))
+            if (sessionMan.EndTurn(true))
             {
                 LoadNextGameState();
             }
@@ -82,8 +81,8 @@ namespace RPGGame.GameStatesMan.GameStates
 
         private void EndGame(GameStateKey nextGameState)
         {
-            sessionProv.EndSession();
-            gameStateProv.LoadGameState(nextGameState);
+            sessionMan.EndSession();
+            gameStateMan.LoadGameState(nextGameState);
         }
 
         #endregion

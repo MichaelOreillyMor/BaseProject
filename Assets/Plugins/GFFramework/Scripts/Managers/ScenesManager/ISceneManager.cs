@@ -4,7 +4,7 @@ using System;
 
 namespace GFF.ScenesMan
 {
-    public interface ISceneProvider
+    public interface ISceneManager
     {
         public void LoadScene(SceneKey sceneKey, Action onSceneLoadCallback, bool canReloadSameScene = false);
     }

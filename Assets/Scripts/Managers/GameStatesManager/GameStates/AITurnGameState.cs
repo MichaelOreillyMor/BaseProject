@@ -1,7 +1,7 @@
 using GFF.GameStatesMan.GameStates;
 using GFF.Enums;
 using GFF.SessionsMan.TurnBasedSessions;
-using GFF.RegProviders;
+using GFF.ServiceLocators;
 using GFF.SessionsMan;
 
 using UnityEngine;
@@ -14,14 +14,14 @@ namespace RPGGame.GameStatesMan.GameStates
     [CreateAssetMenu(menuName = "GameStates/AITurnGameState")]
     public class AITurnGameState : BaseGameState
     {
-        private ITurnBasedSessionProvider sessionProv;
+        private ITurnBasedSessionManager sessionMan;
         private bool hasWin;
 
         #region Setup/Unsetup methods
 
-        protected override void OnSetProviders(IGetService serviceLocator)
+        protected override void OnSetServices(IGetService serviceLocator)
         {
-            sessionProv = serviceLocator.GetService<ITurnBasedSessionProvider>();
+            sessionMan = serviceLocator.GetService<ITurnBasedSessionManager>();
         }
 
         protected override void OnPostSetup()
@@ -41,11 +41,11 @@ namespace RPGGame.GameStatesMan.GameStates
         private void PlayTurn()
         {
             hasWin = false;
-            sessionProv.StartTurn(false, OnWinGame);
+            sessionMan.StartTurn(false, OnWinGame);
 
             if (!hasWin)
             {
-                if (sessionProv.EndTurn(false))
+                if (sessionMan.EndTurn(false))
                 {
                     LoadNextGameState();
                 }
@@ -64,8 +64,8 @@ namespace RPGGame.GameStatesMan.GameStates
 
         private void EndGame(GameStateKey nextGameState)
         {
-            sessionProv.EndSession();
-            gameStateProv.LoadGameState(nextGameState);
+            sessionMan.EndSession();
+            gameStateMan.LoadGameState(nextGameState);
         }
 
         #endregion 

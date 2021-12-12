@@ -2,7 +2,7 @@
 
 namespace GFF.DatasMan
 {
-    public interface IDataProvider
+    public interface IDataManager
     {
         public BaseGameData GetBaseGameData();
     }
