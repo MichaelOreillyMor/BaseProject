@@ -26,15 +26,20 @@ namespace GFF.UIsMan
 
         #region Setup/Unsetup methods
 
-        public override void Setup(ISetProvidersRegister reg, Action onNextSetupCallback)
+        public override void Setup(ISetService serviceLocator, Action onNextSetupCallback)
         {
-            reg.UIProv = this;
+            SetService(serviceLocator);
 
             sceneScreens = new Dictionary<GameStateKey, BaseUIScreen>();
             ShowLoadPanel();
 
             Debug.Log("Setup UIManager");
             onNextSetupCallback?.Invoke();
+        }
+
+        protected override void SetService(ISetService serviceLocator)
+        {
+            serviceLocator.SetService<IUIProvider>(this);
         }
 
         public override void Unsetup()

@@ -27,14 +27,19 @@ namespace GFF.ScenesMan
 
         #region Setup/Unsetup methods
 
-        public override void Setup(ISetProvidersRegister reg, Action onNextSetupCallback)
+        public override void Setup(ISetService serviceLocator, Action onNextSetupCallback)
         {
-            reg.SceneProv = this;
+            SetService(serviceLocator);
 
             LoadSGamecenes();
 
             Debug.Log("Setup SceneManager");
             onNextSetupCallback?.Invoke();
+        }
+
+        protected override void SetService(ISetService serviceLocator)
+        {
+            serviceLocator.SetService<ISceneProvider>(this);
         }
 
         private void LoadSGamecenes()

@@ -15,12 +15,16 @@ namespace GFF.CamerasMan
 
         #region Setup/Unsetup methods
 
-        public override void Setup(ISetProvidersRegister reg, Action onNextSetup)
+        public override void Setup(ISetService serviceLocator, Action onNextSetup)
         {
-            reg.CameraProv = this;
-
+            SetService(serviceLocator);
             Debug.Log("Setup CameraManager");
             onNextSetup?.Invoke();
+        }
+
+        protected override void SetService(ISetService serviceLocator)
+        {
+            serviceLocator.SetService<ICameraProvider>(this);
         }
 
         public override void Unsetup()

@@ -1,3 +1,5 @@
+using GFF.RegProviders;
+
 using System;
 
 namespace GFF.SessionsMan.TurnBasedSessions
@@ -10,6 +12,11 @@ namespace GFF.SessionsMan.TurnBasedSessions
         private ITurnBasedGameController gameController;
 
         #region Setup / Unsetup methods
+
+        protected override void SetService(ISetService serviceLocator)
+        {
+            serviceLocator.SetService<ITurnBasedSessionProvider>(this);
+        }
 
         public void InitSession(ITurnBasedGameController gameController) 
         {

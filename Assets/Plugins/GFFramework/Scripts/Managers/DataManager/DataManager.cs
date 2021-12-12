@@ -16,9 +16,9 @@ namespace GFF.DatasMan
 
         #region Setup/Unsetup methods
 
-        public override void Setup(ISetProvidersRegister reg, Action onNextSetup)
+        public override void Setup(ISetService serviceLocator, Action onNextSetup)
         {
-            reg.DataProv = this;
+            SetService(serviceLocator);
 
             OnGameDataLoaded(baseGameData);
 

@@ -22,15 +22,20 @@ namespace GFF.InputsMan
 
         #region Setup/Unsetup methods
 
-        public override void Setup(ISetProvidersRegister reg, Action onNextSetupCallback)
+        public override void Setup(ISetService serviceLocator, Action onNextSetupCallback)
         {
-            reg.InputProv = this;
+            SetService(serviceLocator);
 
             gameControls = new GameControls();
             gameControls.Enable();
 
             Debug.Log("Setup InputManager");
             onNextSetupCallback?.Invoke();
+        }
+
+        protected override void SetService(ISetService serviceLocator)
+        {
+            serviceLocator.SetService<IInputProvider>(this);
         }
 
         public override void Unsetup()

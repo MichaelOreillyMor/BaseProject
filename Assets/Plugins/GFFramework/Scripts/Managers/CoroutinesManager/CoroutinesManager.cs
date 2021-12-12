@@ -14,12 +14,17 @@ namespace GFF.CoroutinesMan
     {
         #region Setup/Unsetup methods
 
-        public override void Setup(ISetProvidersRegister reg, Action onNextSetup)
+        public override void Setup(ISetService serviceLocator, Action onNextSetup)
         {
-            reg.CoroutinesProv = this;
+            SetService(serviceLocator);
 
             Debug.Log("Setup CoroutinesManager");
             onNextSetup?.Invoke();
+        }
+
+        protected override void SetService(ISetService serviceLocator)
+        {
+            serviceLocator.SetService<ICoroutinesProvider>(this);
         }
 
         public override void Unsetup()

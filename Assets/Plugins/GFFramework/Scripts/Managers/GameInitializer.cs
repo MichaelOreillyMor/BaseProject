@@ -15,7 +15,7 @@ namespace GFF
         [SerializeField]
         private BaseGameManager[] gameManagers;
 
-        private ProvidersRegister reg;
+        private ServiceLocator serviceLocator;
         private int indexLoaded;
 
         private void Awake() => CheckSingleInstance();
@@ -40,12 +40,12 @@ namespace GFF
         private void Setup()
         {
             DontDestroyOnLoad(gameObject);
-            reg = new ProvidersRegister();
+            serviceLocator = new ServiceLocator();
             indexLoaded = 0;
 
             if (gameManagers != null && gameManagers.Length > 0)
             {
-                gameManagers[indexLoaded].Setup(reg, OnSetupComplete);
+                gameManagers[indexLoaded].Setup(serviceLocator, OnSetupComplete);
             }
         }
 
@@ -55,7 +55,7 @@ namespace GFF
 
             if (indexLoaded < gameManagers.Length)
             {
-                gameManagers[indexLoaded].Setup(reg, OnSetupComplete);
+                gameManagers[indexLoaded].Setup(serviceLocator, OnSetupComplete);
             }
             else
             {
@@ -70,8 +70,8 @@ namespace GFF
 
         private void LoadInitGameState()
         {
-            IGameStateProvider gameStateProv = reg.GameStateProv;
-            gameStateProv.LoadInitGameState(reg);
+            IGameStateProvider gameStateProv = serviceLocator.GetService<IGameStateProvider>();
+            gameStateProv.LoadInitGameState(serviceLocator);
             Debug.Log("OnGameLoaded");
         }
 

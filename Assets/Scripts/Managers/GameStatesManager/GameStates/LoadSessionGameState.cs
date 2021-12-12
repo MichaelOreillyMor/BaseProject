@@ -12,10 +12,14 @@ using RPGGame.Units;
 using RPGGame.DatasMan.GameDatas;
 using RPGGame.PoolsMan.Pools;
 using RPGGame.SessionsMan.Players;
+using GFF.DatasMan;
+using GFF.SessionsMan;
+
+using RPGGame.SessionsMan.Players.AIs;
 
 using System.Collections.Generic;
 using UnityEngine;
-using RPGGame.SessionsMan.Players.AIs;
+
 
 namespace RPGGame.GameStatesMan.GameStates
 {
@@ -37,14 +41,14 @@ namespace RPGGame.GameStatesMan.GameStates
 
         #region Setup/Unsetup methods
 
-        protected override void OnSetProviders(IGetProvidersRegister reg)
+        protected override void OnSetProviders(IGetService serviceLocator)
         {
-            dataProv = (IRPGDataProvider)reg.DataProv;
-            sessionProv = (ITurnBasedSessionProvider)reg.GameSessionProv;
-            UIProv = reg.UIProv;
+            dataProv = serviceLocator.GetService<IRPGDataProvider>();
+            sessionProv = serviceLocator.GetService<ITurnBasedSessionProvider>();
+            UIProv = serviceLocator.GetService<IUIProvider>();
 
-            ICameraProvider camProv = reg.CameraProv;
-            IPoolProvider  poolProv = reg.PoolProv;
+            ICameraProvider camProv = serviceLocator.GetService<ICameraProvider>();
+            IPoolProvider  poolProv = serviceLocator.GetService<IPoolProvider>();
 
             unitsBoardFactory.Init(poolProv, camProv, UIProv);
             mapCellsFactory.Init(poolProv);

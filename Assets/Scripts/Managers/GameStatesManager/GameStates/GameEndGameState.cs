@@ -15,7 +15,7 @@ namespace RPGGame.GameStatesMan.GameStates
     {
         private UIScreenGameEnd endGameScreen;
 
-        protected override void SetUIStateProviders(IGetProvidersRegister reg)
+        protected override void SetUIStateProviders(IGetService reg)
         {
 
         }

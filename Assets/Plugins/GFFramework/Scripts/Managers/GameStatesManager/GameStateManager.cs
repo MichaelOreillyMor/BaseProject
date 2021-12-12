@@ -29,13 +29,19 @@ namespace GFF.GameStatesMan
 
         #region Setup/Unsetup methods
 
-        public override void Setup(ISetProvidersRegister reg, Action onNextSetupCallback)
+        public override void Setup(ISetService serviceLocator, Action onNextSetupCallback)
         {
-            reg.GameStateProv = this;
+            SetService(serviceLocator);
+
             LoadGameStates();
 
             Debug.Log("Setup GameStateManager");
             onNextSetupCallback?.Invoke();
+        }
+
+        protected override void SetService(ISetService serviceLocator)
+        {
+            serviceLocator.SetService<IGameStateProvider>(this);
         }
 
         public override void Unsetup()
@@ -60,7 +66,7 @@ namespace GFF.GameStatesMan
 
         #region Load GameStates methods
 
-        public void LoadInitGameState(IGetProvidersRegister reg)
+        public void LoadInitGameState(IGetService reg)
         {
             SetGameStatesProviders(reg);
             LoadGameState(initGameState);
@@ -69,14 +75,14 @@ namespace GFF.GameStatesMan
         /// <summary>
         /// Resolves the references to the providers needed in every GameState.
         /// </summary>
-        private void SetGameStatesProviders(IGetProvidersRegister reg)
+        private void SetGameStatesProviders(IGetService serviceProvider)
         {
             if (gameStatesToLoad != null)
             {
                 for (int i = 0; i < gameStatesToLoad.Length; i++)
                 {
                     BaseGameState gs = gameStatesToLoad[i];
-                    gs.SetProviders(reg);
+                    gs.SetProviders(serviceProvider);
                 }
             }
         }

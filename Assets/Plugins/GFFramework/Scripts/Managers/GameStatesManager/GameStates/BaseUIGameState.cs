@@ -27,19 +27,19 @@ namespace GFF.GameStatesMan.GameStates
 
         #region Setup/Unsetup methods
 
-        protected sealed override void OnSetProviders(IGetProvidersRegister reg)
+        protected sealed override void OnSetProviders(IGetService serviceLocator)
         {
-            uiProv = reg.UIProv;
-            inputProv = reg.InputProv;
+            uiProv = serviceLocator.GetService<IUIProvider>();
+            inputProv = serviceLocator.GetService<IInputProvider>();
 
-            SetUIStateProviders(reg);
+            SetUIStateProviders(serviceLocator);
         }
 
         /// <summary>
         /// Here any derived UIGameState gets the references to the providers that needs.
         /// </summary>
         /// 
-        protected abstract void SetUIStateProviders(IGetProvidersRegister reg);
+        protected abstract void SetUIStateProviders(IGetService reg);
 
         protected sealed override void OnPostSetup()
         {

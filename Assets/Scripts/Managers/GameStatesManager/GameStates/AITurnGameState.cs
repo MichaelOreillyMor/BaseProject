@@ -2,6 +2,7 @@ using GFF.GameStatesMan.GameStates;
 using GFF.Enums;
 using GFF.SessionsMan.TurnBasedSessions;
 using GFF.RegProviders;
+using GFF.SessionsMan;
 
 using UnityEngine;
 
@@ -18,9 +19,9 @@ namespace RPGGame.GameStatesMan.GameStates
 
         #region Setup/Unsetup methods
 
-        protected override void OnSetProviders(IGetProvidersRegister reg)
+        protected override void OnSetProviders(IGetService serviceLocator)
         {
-            sessionProv = (ITurnBasedSessionProvider)reg.GameSessionProv;
+            sessionProv = serviceLocator.GetService<ITurnBasedSessionProvider>();
         }
 
         protected override void OnPostSetup()

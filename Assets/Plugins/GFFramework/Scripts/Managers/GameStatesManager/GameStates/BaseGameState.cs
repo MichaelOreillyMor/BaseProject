@@ -33,19 +33,19 @@ namespace GFF.GameStatesMan.GameStates
         /// The GameState gets the references to the providers that needs. 
         /// It happens at the beginning of the game so it´s easy to see if someone provider is missing.
         /// </summary>
-        public void SetProviders(IGetProvidersRegister reg)
+        public void SetProviders(IGetService serviceLocator)
         {
-            if (reg != null)
+            if (serviceLocator != null)
             {
-                gameStateProv = reg.GameStateProv;
-                OnSetProviders(reg);
+                gameStateProv = serviceLocator.GetService<IGameStateProvider>();
+                OnSetProviders(serviceLocator);
             }
         }
 
         /// <summary>
         /// Here any derived GameState gets the references to the providers that needs.
         /// </summary>
-        protected abstract void OnSetProviders(IGetProvidersRegister reg);
+        protected abstract void OnSetProviders(IGetService reg);
 
         /// <summary>
         /// Entry method where the dependencies of the GameState components are resolved (Dependency Injection Composition root)

@@ -4,10 +4,12 @@ using GFF.GameStatesMan.GameStates;
 using GFF.InputsMan;
 using GFF.RegProviders;
 using GFF.UIsMan.UIScreens;
+using GFF.SessionsMan;
 
 using RPGGame.UIsMan.HUD;
 
 using UnityEngine;
+
 
 namespace RPGGame.GameStatesMan.GameStates
 {
@@ -24,11 +26,10 @@ namespace RPGGame.GameStatesMan.GameStates
 
         #region Setup/Unsetup methods
 
-        protected override void SetUIStateProviders(IGetProvidersRegister reg)
+        protected override void SetUIStateProviders(IGetService serviceLocator)
         {
-            uiProv = reg.UIProv;
-            inputProv = reg.InputProv;
-            sessionProv = (ITurnBasedSessionProvider)reg.GameSessionProv;
+            inputProv = serviceLocator.GetService<IInputProvider>();
+            sessionProv = serviceLocator.GetService<ITurnBasedSessionProvider>();
         }
 
         protected override void OnPostUILoaded(BaseUIScreen uiScreen)

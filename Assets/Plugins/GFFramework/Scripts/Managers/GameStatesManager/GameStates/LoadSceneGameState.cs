@@ -28,11 +28,11 @@ namespace GameStates.GameStates.BaseGS
 
         #region Setup/Unsetup methods
 
-        protected override void OnSetProviders(IGetProvidersRegister reg)
+        protected override void OnSetProviders(IGetService serviceLocator)
         {
-            SceneProv = reg.SceneProv;
-            poolProv = reg.PoolProv;
-            UIProv = reg.UIProv;
+            SceneProv = serviceLocator.GetService<ISceneProvider>();
+            poolProv = serviceLocator.GetService<IPoolProvider>();
+            UIProv = serviceLocator.GetService<IUIProvider>();
         }
 
         protected override void OnPostSetup()

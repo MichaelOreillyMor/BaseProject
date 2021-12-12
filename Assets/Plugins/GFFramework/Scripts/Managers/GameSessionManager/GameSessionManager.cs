@@ -15,9 +15,9 @@ namespace GFF.SessionsMan
 
         #region Setup/Unsetup methods
 
-        public override void Setup(ISetProvidersRegister reg, Action onNextSetupCallback)
+        public override void Setup(ISetService serviceLocator, Action onNextSetupCallback)
         {
-            reg.GameSessionProv = this;
+            SetService(serviceLocator);
 
             Debug.Log("Setup GameSessionManager");
             onNextSetupCallback?.Invoke();

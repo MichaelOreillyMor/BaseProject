@@ -25,12 +25,17 @@ namespace GFF.PoolsMan
 
         #region Setup/Unsetup methods
 
-        public override void Setup(ISetProvidersRegister reg, Action onNextSetuCallbackp)
+        public override void Setup(ISetService serviceLocator, Action onNextSetuCallbackp)
         {
-            reg.PoolProv = this;
+            SetService(serviceLocator);
 
             Debug.Log("Setup PoolManager");
             onNextSetuCallbackp?.Invoke();
+        }
+
+        protected override void SetService(ISetService serviceLocator)
+        {
+            serviceLocator.SetService<IPoolProvider>(this);
         }
 
         public override void Unsetup()
