@@ -51,5 +51,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b17a50128b759e747b179e75460d6d8a, type: 2}
   - {fileID: 11400000, guid: bac1f1c490c980a48bd5bc360e47d39a, type: 2}
   - {fileID: 11400000, guid: ef8e6b0b28333c049aadcbefc73a4be8, type: 2}
-  - {fileID: 11400000, guid: 708476b7042c97446925c1def3c927ff, type: 2}
+  - {fileID: 11400000, guid: bac1f1c490c980a48bd5bc360e47d39a, type: 2}
+  - {fileID: 11400000, guid: ee758952b9aadd440927100ae3e3d2c9, type: 2}
+  - {fileID: 11400000, guid: b17a50128b759e747b179e75460d6d8a, type: 2}
+  - {fileID: 11400000, guid: ed1df89b4d84bdd478313a9bb4134954, type: 2}
   initGameState: 3

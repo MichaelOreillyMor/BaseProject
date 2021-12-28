@@ -3,20 +3,26 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using UnityEditor;
-using UnityEngine;
 
-//usar SceneAsset
-//Crear folder generated
+using UnityEditor;
+
+//TO-DO: Crear folders de folderPath si no existen
 namespace GFF.Editor
 {
-    public abstract class EnumProccessor
+    public abstract class BaseAssetsEnumGenerator
     {
         private const int MAX_NUM_NULL = 0;
 
-        protected string folderPath;
-        protected string assetExtension;
-        protected Type assetType;
+        private readonly string folderPath;
+        private readonly string assetExtension;
+        private readonly Type assetType;
+
+        public BaseAssetsEnumGenerator(string folderPath, string assetExtension, Type assetType)
+        {
+            this.folderPath = folderPath;
+            this.assetExtension = assetExtension;
+            this.assetType = assetType;
+        }
 
         protected abstract List<UnityEngine.Object> GetSaveAssets();
 
@@ -96,32 +102,6 @@ namespace GFF.Editor
 
             return enumNames;
         }
-
-        private List<string> GetAssetsPaths()
-        {
-            string[] files = System.IO.Directory.GetFiles(folderPath, "*" + assetExtension);
-            return files.ToList();
-        }
-
-        private List<T> GetFolderAssets<T>() where T : UnityEngine.Object
-        {
-            string[] assetsPaths = Directory.GetFiles(folderPath, "*" + assetExtension);
-            List<T> assets = new List<T>(assetsPaths.Length);
-
-            for (int i = 0; i < assetsPaths.Length; i++)
-            {
-                string path = assetsPaths[i];
-                T asset = (T)AssetDatabase.LoadAssetAtPath(path, typeof(T));
-
-                if (asset != null) 
-                {
-                    assets.Add(asset);
-                }
-            }
-
-            return assets;
-        }
-
         private bool IsValidPath(string assetPath)
         {
             return assetPath.StartsWith(folderPath) && assetPath.EndsWith(assetExtension);
@@ -131,6 +111,8 @@ namespace GFF.Editor
         {
             return Regex.Replace(assset.name, "[^a-zA-Z0-9]", string.Empty);
         }
+
+        #region Files methods
 
         public void OnPostFileCreated(string assetPath)
         {
@@ -166,5 +148,7 @@ namespace GFF.Editor
                 OnCreated(destinationPath);
             }
         }
+
+        #endregion
     }
 }

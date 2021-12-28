@@ -1,27 +1,25 @@
 ﻿using GFF.GameStatesMan;
 using GFF.GameStatesMan.GameStates;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
-using UnityEngine;
 
 namespace GFF.Editor
 {
-    public class GameStatesEnumProccessor : EnumProccessor
+    public class GameStatesEnumGenerator : BaseAssetsEnumGenerator
     {
-        private const string managerPath = "Assets/Plugins/GFFramework/Prefabs/Managers/GameStateManager.prefab";
+        private readonly string prefabPath;
 
-        public GameStatesEnumProccessor()
+        public GameStatesEnumGenerator() : base("Assets/Datas/GameStates/", ".asset", typeof(BaseGameState))
         {
-            folderPath = "Assets/Datas/GameStates/";
-            assetExtension = ".asset";
-            assetType = typeof(BaseGameState);
+            prefabPath = "Assets/Plugins/GFFramework/Prefabs/Managers/GameStateManager.prefab";
         }
 
         protected override List<UnityEngine.Object> GetSaveAssets()
         {
-            GameStateManager gameStateManager = (GameStateManager)AssetDatabase.LoadAssetAtPath(managerPath, typeof(GameStateManager));
+            GameStateManager gameStateManager = (GameStateManager)AssetDatabase.LoadAssetAtPath(prefabPath, typeof(GameStateManager));
          
             if (gameStateManager) 
             {
@@ -33,7 +31,7 @@ namespace GFF.Editor
 
         protected override void SetSaveAssets(List<UnityEngine.Object> assets)
         {
-            GameStateManager gameStateManager = (GameStateManager)AssetDatabase.LoadAssetAtPath(managerPath, typeof(GameStateManager));
+            GameStateManager gameStateManager = (GameStateManager)AssetDatabase.LoadAssetAtPath(prefabPath, typeof(GameStateManager));
 
             if (gameStateManager)
             {        

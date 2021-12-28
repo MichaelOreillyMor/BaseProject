@@ -2,7 +2,8 @@
     "name": "GFFramework",
     "rootNamespace": "",
     "references": [
-        "GUID:75469ad4d38634e559750d17036d5f7c"
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:f51fb49d53b9ea648b563f12cb6b4ff3"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

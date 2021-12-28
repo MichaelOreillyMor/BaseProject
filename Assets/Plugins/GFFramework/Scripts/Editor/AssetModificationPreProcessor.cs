@@ -6,7 +6,7 @@ namespace GFF.Editor
     {
         public static AssetDeleteResult OnWillDeleteAsset(string assetPath, RemoveAssetOptions rao)
         {
-            GameStatesEnumProccessor gameStatesEnumProccessor = new GameStatesEnumProccessor();
+            GameStatesEnumGenerator gameStatesEnumProccessor = new GameStatesEnumGenerator();
             gameStatesEnumProccessor.OnPreFileDeleted(assetPath);
             return AssetDeleteResult.DidNotDelete;
         }

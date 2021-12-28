@@ -9,7 +9,7 @@ namespace GFF.Editor
     {
         static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
         {
-            GameStatesEnumProccessor gameStatesEnumProccessor = new GameStatesEnumProccessor();
+            GameStatesEnumGenerator gameStatesEnumProccessor = new GameStatesEnumGenerator();
 
             foreach (string assetPath in importedAssets)
             {
