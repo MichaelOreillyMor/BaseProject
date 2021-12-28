@@ -1,6 +1,6 @@
-//using UnityEngine;
+using UnityEngine;
 
-//namespace GFF.Utils
-//{
-//    public class ReadOnlyAttribute : PropertyAttribute { }
-//}
+namespace GFF.Utils
+{
+    public class ReadOnlyAttribute : PropertyAttribute { }
+}

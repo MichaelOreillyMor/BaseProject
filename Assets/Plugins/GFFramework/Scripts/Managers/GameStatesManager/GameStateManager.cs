@@ -1,6 +1,7 @@
 ﻿using GFF.Enums;
 using GFF.GameStatesMan.GameStates;
 using GFF.ServiceLocators;
+using GFF.Utils;
 
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace GFF.GameStatesMan
     public class GameStateManager : BaseGameManager, IGameStateManager
     {
         //WIP: Unity cant serialize a Assets diccionary so I have to do this
-        [SerializeField]
+        [SerializeField, ReadOnly]
         private BaseGameState[] gameStatesToLoad;
 
         //In C# since Enums do not implement IEquatable, they'll be casted to object (boxing) in order to compare the keys Object.Equals()
@@ -57,7 +58,11 @@ namespace GFF.GameStatesMan
                 for (int i = 0; i < gameStatesToLoad.Length; i++)
                 {
                     BaseGameState gs = gameStatesToLoad[i];
-                    gameStates.Add(gs.Key, gs);
+
+                    if (gs)
+                    {
+                        gameStates.Add(gs.Key, gs);
+                    }
                 }
             }
         }
@@ -82,7 +87,11 @@ namespace GFF.GameStatesMan
                 for (int i = 0; i < gameStatesToLoad.Length; i++)
                 {
                     BaseGameState gs = gameStatesToLoad[i];
-                    gs.SetServices(serviceLocator);
+
+                    if (gs)
+                    {
+                        gs.SetServices(serviceLocator);
+                    }
                 }
             }
         }
@@ -141,6 +150,28 @@ namespace GFF.GameStatesMan
             {
                 currentGameState.Update();
             }
+        }
+
+        public void SetGameStatesEditor(BaseGameState[] gameStates) 
+        {
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+            {
+                gameStatesToLoad = gameStates;
+            }
+#endif
+        }
+
+        public BaseGameState[] GetGameStatesEditor()
+        {
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+            {
+                return gameStatesToLoad;
+            }
+#endif
+
+            return null;
         }
     }
 }

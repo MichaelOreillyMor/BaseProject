@@ -43,3 +43,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3c30dd5d7dabd4da66b27be3614eaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameStatesToLoad:
+  - {fileID: 11400000, guid: 7798f0d4ab0a1f44997f3465e569518f, type: 2}
+  - {fileID: 11400000, guid: ee758952b9aadd440927100ae3e3d2c9, type: 2}
+  - {fileID: 11400000, guid: ed1df89b4d84bdd478313a9bb4134954, type: 2}
+  - {fileID: 11400000, guid: 90d70700c1e272f4e90e28539d2e7490, type: 2}
+  - {fileID: 11400000, guid: b17a50128b759e747b179e75460d6d8a, type: 2}
+  - {fileID: 11400000, guid: bac1f1c490c980a48bd5bc360e47d39a, type: 2}
+  - {fileID: 11400000, guid: ef8e6b0b28333c049aadcbefc73a4be8, type: 2}
+  - {fileID: 11400000, guid: 708476b7042c97446925c1def3c927ff, type: 2}
+  initGameState: 3
