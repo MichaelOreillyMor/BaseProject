@@ -1,3 +1,4 @@
+using GFF.Enums;
 using GFF.GameStatesMan;
 using GFF.ServiceLocators;
 
@@ -11,6 +12,9 @@ namespace GFF
     public class GameInitializer : MonoBehaviour
     {
         private static GameInitializer instance;
+
+        [SerializeField]
+        private GameStateKey initGameState;
 
         [SerializeField]
         private BaseGameManager[] gameManagers;
@@ -71,7 +75,7 @@ namespace GFF
         private void LoadInitGameState()
         {
             IGameStateManager gameStateMan = serviceLocator.GetService<IGameStateManager>();
-            gameStateMan.LoadInitGameState(serviceLocator);
+            gameStateMan.InitGameStates(initGameState, serviceLocator);
             Debug.Log("OnGameLoaded");
         }
 

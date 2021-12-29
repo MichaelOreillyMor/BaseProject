@@ -15,13 +15,23 @@ namespace GFF.Editor
 
         private readonly string folderPath;
         private readonly string assetExtension;
+        private readonly string enumTitle;
+        private readonly string namespaceTitle;
+
         private readonly Type assetType;
 
-        public BaseAssetsEnumGenerator(string folderPath, string assetExtension, Type assetType)
+        private EnumGenerator enumGenerator;
+
+        public BaseAssetsEnumGenerator(string folderPath, string assetExtension, 
+            string enumTitle, string namespaceTitle, Type assetType)
         {
             this.folderPath = folderPath;
             this.assetExtension = assetExtension;
             this.assetType = assetType;
+            this.enumTitle = enumTitle;
+            this.namespaceTitle = namespaceTitle;
+
+            enumGenerator = new EnumGenerator();
         }
 
         protected abstract List<UnityEngine.Object> GetSaveAssets();
@@ -63,7 +73,13 @@ namespace GFF.Editor
             if (asset)
             {
                 List<UnityEngine.Object> asssets = GetSaveAssets();
-                GenerateAssetsEnum(asssets);
+                int deletedIndex = asssets.IndexOf(asset);
+
+                if (deletedIndex != -1)
+                {
+                    asssets[deletedIndex] = null;
+                    GenerateAssetsEnum(asssets);
+                }
             }
         }
 
@@ -76,7 +92,7 @@ namespace GFF.Editor
         private void GenerateAssetsEnum(List<UnityEngine.Object> asssets)
         {
             List<string> enumNames = GetEnumNames(asssets);
-
+            enumGenerator.CreateEnum(enumTitle, namespaceTitle, enumNames);
         }
 
         private List<string> GetEnumNames(List<UnityEngine.Object> asssets)

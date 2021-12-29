@@ -5,7 +5,7 @@ namespace GFF.GameStatesMan
 {
     public interface IGameStateManager
     {
-        public void LoadInitGameState(IGetService reg);
+        public void InitGameStates(GameStateKey initGameState, IGetService serviceLocator);
         public void LoadGameState(GameStateKey gameStateKey);
         public void LoadPrevGameState();
     }

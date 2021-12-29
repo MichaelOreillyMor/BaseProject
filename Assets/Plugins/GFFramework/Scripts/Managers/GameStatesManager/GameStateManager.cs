@@ -22,9 +22,6 @@ namespace GFF.GameStatesMan
         //Thanks to il2cpp this is not happening 
         private Dictionary<GameStateKey, BaseGameState> gameStates;
 
-        [SerializeField]
-        private GameStateKey initGameState;
-
         private BaseGameState currentGameState;
         private BaseGameState prevGameState;
 
@@ -71,7 +68,7 @@ namespace GFF.GameStatesMan
 
         #region Load GameStates methods
 
-        public void LoadInitGameState(IGetService serviceLocator)
+        public void InitGameStates(GameStateKey initGameState, IGetService serviceLocator)
         {
             SetGameStatesServices(serviceLocator);
             LoadGameState(initGameState);

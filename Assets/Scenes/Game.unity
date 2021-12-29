@@ -338,9 +338,45 @@ PrefabInstance:
       propertyPath: selectWorldLayer.m_Bits
       value: 128
       objectReference: {fileID: 0}
+    - target: {fileID: 1600063969582400025, guid: 2016f94dea487f84ead1e42465b036c8, type: 3}
+      propertyPath: gameStatesToLoad.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1600063969582400025, guid: 2016f94dea487f84ead1e42465b036c8, type: 3}
+      propertyPath: gameStatesToLoad.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1600063969582400025, guid: 2016f94dea487f84ead1e42465b036c8, type: 3}
+      propertyPath: gameStatesToLoad.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1600063969582400025, guid: 2016f94dea487f84ead1e42465b036c8, type: 3}
+      propertyPath: gameStatesToLoad.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1600063969582400025, guid: 2016f94dea487f84ead1e42465b036c8, type: 3}
+      propertyPath: gameStatesToLoad.Array.data[3]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1600063969582400025, guid: 2016f94dea487f84ead1e42465b036c8, type: 3}
+      propertyPath: gameStatesToLoad.Array.data[4]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1600063969582400025, guid: 2016f94dea487f84ead1e42465b036c8, type: 3}
+      propertyPath: gameStatesToLoad.Array.data[5]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1600063969582400025, guid: 2016f94dea487f84ead1e42465b036c8, type: 3}
+      propertyPath: gameStatesToLoad.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: 90d70700c1e272f4e90e28539d2e7490, type: 2}
     - target: {fileID: 2434213530046828232, guid: 2016f94dea487f84ead1e42465b036c8, type: 3}
       propertyPath: m_Name
       value: RPGGameInitializer
+      objectReference: {fileID: 0}
+    - target: {fileID: 6861967522483395735, guid: 2016f94dea487f84ead1e42465b036c8, type: 3}
+      propertyPath: initGameState
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7535504583238944468, guid: 2016f94dea487f84ead1e42465b036c8, type: 3}
       propertyPath: m_RootOrder
