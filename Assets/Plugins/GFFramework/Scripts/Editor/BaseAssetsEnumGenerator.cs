@@ -45,14 +45,14 @@ namespace GFF.Editor
 
             if (asset)
             {
-                Debug.Log(enumTitle + " Enum created...");
+                Debug.Log(enumTitle + " Enum creating...");
 
                 List<UnityEngine.Object> assets = GetSaveAssets();
                 int numNull = assets.FindAll(a => a == null).Count;
 
                 if (!assets.Contains(asset))
                 {
-                    if (HasAssetsEnumName(assets, asset))
+                    if (!HasAssetsEnumName(assets, asset))
                     {
                         if (numNull > MAX_NUM_NULL)
                         {
@@ -89,7 +89,7 @@ namespace GFF.Editor
 
             if (asset)
             {
-                Debug.Log(enumTitle + " Enum deleted...");
+                Debug.Log(enumTitle + " Enum deleting...");
 
                 List<UnityEngine.Object> asssets = GetSaveAssets();
                 int deletedIndex = asssets.IndexOf(asset);
@@ -108,7 +108,7 @@ namespace GFF.Editor
 
         private void OnNameChange()
         {
-            Debug.Log(enumTitle + " Enum file name change...");
+            Debug.Log(enumTitle + " Enum file name changing...");
 
             List<UnityEngine.Object> asssets = GetSaveAssets();
             GenerateAssetsEnum(asssets);
@@ -123,11 +123,6 @@ namespace GFF.Editor
         private bool HasAssetsEnumName(List<UnityEngine.Object> assets, UnityEngine.Object asset)
         {
             string enumName = GetAssetEnumName(asset);
-            return HasAssetsEnumName(assets, enumName);
-        }
-
-        private bool HasAssetsEnumName(List<UnityEngine.Object> assets, string enumName)
-        {
             List<string> enumNames = GetEnumNames(assets);
             return enumNames.Contains(enumName);
         }

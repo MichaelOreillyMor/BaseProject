@@ -125,17 +125,19 @@ namespace GFF.GameStatesMan
             }
         }
 
-        public void SetGameStatesEditor(BaseGameState[] gameStates) 
+        #region Editor methods
+
+        public void SetGameStates_Editor(BaseGameState[] gameStates) 
         {
 #if UNITY_EDITOR
             if (!Application.isPlaying)
             {
-                gameStates = gameStates;
+                this.gameStates = gameStates;
             }
 #endif
         }
 
-        public BaseGameState[] GetGameStatesEditor()
+        public BaseGameState[] GetGameStates_Editor()
         {
 #if UNITY_EDITOR
             if (!Application.isPlaying)
@@ -146,5 +148,7 @@ namespace GFF.GameStatesMan
 
             return null;
         }
+
+        #endregion
     }
 }

@@ -1,9 +1,8 @@
 ﻿using GFF.CoroutinesMan;
 using GFF.GameStatesMan.Keys;
 using GFF.ServiceLocators;
+using GFF.Utils;
 
-using System;
-using System.Collections;
 using UnityEngine;
 
 namespace GFF.GameStatesMan.GameStates
@@ -18,7 +17,7 @@ namespace GFF.GameStatesMan.GameStates
         /// </summary>
         public GameStateKey Key => key;
 
-        [SerializeField]
+        [SerializeField, ReadOnly]
         private GameStateKey key;
 
         [SerializeField]
@@ -93,46 +92,16 @@ namespace GFF.GameStatesMan.GameStates
             gameStateMan.LoadPrevGameState();
         }
 
-        #region Coroutines methods
+        #region Editor methods
 
-        protected void StartCoroutine(IEnumerator coroutine) 
+        public void SetKey_Editor(GameStateKey key)
         {
-            if (coroutinesMan != null)
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
             {
-                coroutinesMan.StartGameStateCoroutine(coroutine);
+                this.key = key;
             }
-            else 
-            {
-                Debug.LogError("CoroutinesManager not added, please add one");
-            }
-        }
-
-        protected void StopCoroutine(IEnumerator coroutine)
-        {
-            if (coroutinesMan != null)
-            {
-                coroutinesMan.StopGameStateCoroutine(coroutine);
-            }
-            else
-            {
-                Debug.LogError("CoroutinesManager not added, please add one");
-            }
-        }
-
-        protected IEnumerator DelayAction(Action action, int delay)
-        {
-            IEnumerator delayCoroutine = null;
-
-            if (coroutinesMan != null)
-            {
-                delayCoroutine = coroutinesMan.StartDelayGameStateAction(action, delay);
-            }
-            else
-            {
-                Debug.LogError("CoroutinesManager not added, please add one");
-            }
-
-            return delayCoroutine;
+#endif
         }
 
         #endregion

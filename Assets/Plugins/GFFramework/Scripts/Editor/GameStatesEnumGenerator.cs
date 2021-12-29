@@ -1,5 +1,6 @@
 ﻿using GFF.GameStatesMan;
 using GFF.GameStatesMan.GameStates;
+using GFF.GameStatesMan.Keys;
 
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace GFF.Editor
          
             if (gameStateManager) 
             {
-                return gameStateManager.GetGameStatesEditor().ToList<UnityEngine.Object>();
+                return gameStateManager.GetGameStates_Editor().ToList<UnityEngine.Object>();
             }
 
             return null;
@@ -37,7 +38,22 @@ namespace GFF.Editor
             if (gameStateManager)
             {        
                 BaseGameState[] gameStates = Array.ConvertAll(assets.ToArray(), a => (BaseGameState)a);
-                gameStateManager.SetGameStatesEditor(gameStates);
+                gameStateManager.SetGameStates_Editor(gameStates);
+
+                for (int i = 0; i < assets.Count; i++)
+                {
+                    UnityEngine.Object asset = assets[i];
+
+                    if (asset != null)
+                    {
+                        if (asset is BaseGameState gameState)
+                        {
+                            gameState.SetKey_Editor((GameStateKey)(i + 1)); 
+                            EditorUtility.SetDirty(gameState);
+                        }
+                    }
+              
+                }
 
                 EditorUtility.SetDirty(gameStateManager);
                 AssetDatabase.SaveAssets();
