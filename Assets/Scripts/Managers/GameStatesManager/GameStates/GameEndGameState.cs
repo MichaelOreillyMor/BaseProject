@@ -1,7 +1,7 @@
 using GFF.GameStatesMan.GameStates;
+using GFF.GameStatesMan.Keys;
 using GFF.ServiceLocators;
 using GFF.UIsMan.UIScreens;
-using GFF.Enums;
 
 using RPGGame.UIsMan.GameEnds;
 
@@ -45,7 +45,7 @@ namespace RPGGame.GameStatesMan.GameStates
 
         private void OnPlayAgain()
         {
-            gameStateMan.LoadGameState(GameStateKey.LoadGameScene);
+            gameStateMan.LoadGameState(GameStateKey.LoadSceneGame);
         }
     }
 }

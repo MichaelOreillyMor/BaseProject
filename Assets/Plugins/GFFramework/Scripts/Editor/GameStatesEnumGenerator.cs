@@ -12,8 +12,8 @@ namespace GFF.Editor
     {
         private readonly string prefabPath;
 
-        public GameStatesEnumGenerator() : base("Assets/Datas/GameStates/", ".asset", 
-            "GameStates", "GFF.GameStatesMan", typeof(BaseGameState))
+        public GameStatesEnumGenerator() : base("Assets/Datas/GameStates/", ".asset",
+            "GameStateKey", "GFF.GameStatesMan.Keys", typeof(BaseGameState))
         {
             prefabPath = "Assets/Plugins/GFFramework/Prefabs/Managers/GameStateManager.prefab";
         }

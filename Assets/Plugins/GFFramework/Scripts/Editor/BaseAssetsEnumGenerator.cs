@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 
 using UnityEditor;
+using UnityEngine;
 
 //TO-DO: Crear folders de folderPath si no existen
 namespace GFF.Editor
@@ -44,25 +45,41 @@ namespace GFF.Editor
 
             if (asset)
             {
-                List<UnityEngine.Object> asssets = GetSaveAssets();
-                int numNull = asssets.FindAll(a => a == null).Count;
+                Debug.Log(enumTitle + " Enum created...");
 
-                if (numNull > MAX_NUM_NULL)
+                List<UnityEngine.Object> assets = GetSaveAssets();
+                int numNull = assets.FindAll(a => a == null).Count;
+
+                if (!assets.Contains(asset))
                 {
-                    int firstNull = asssets.FindIndex(a => a == null);
-
-                    if (firstNull != -1)
+                    if (HasAssetsEnumName(assets, asset))
                     {
-                        asssets[firstNull] = asset;
+                        if (numNull > MAX_NUM_NULL)
+                        {
+                            int firstNull = assets.FindIndex(a => a == null);
+
+                            if (firstNull != -1)
+                            {
+                                assets[firstNull] = asset;
+                            }
+                        }
+                        else
+                        {
+                            assets.Add(asset);
+                        }
+
+                        GenerateAssetsEnum(assets);
+                        SetSaveAssets(assets);
+                    }
+                    else
+                    {
+                        Debug.LogError(enumTitle + " Enum not generated, already contains name: " + asset.name);
                     }
                 }
-                else 
+                else
                 {
-                    asssets.Add(asset);
+                    Debug.LogError(enumTitle + " Enum not generated, already contains: " + asset.name);
                 }
-
-                GenerateAssetsEnum(asssets);
-                SetSaveAssets(asssets);
             }
         }
 
@@ -72,6 +89,8 @@ namespace GFF.Editor
 
             if (asset)
             {
+                Debug.Log(enumTitle + " Enum deleted...");
+
                 List<UnityEngine.Object> asssets = GetSaveAssets();
                 int deletedIndex = asssets.IndexOf(asset);
 
@@ -80,11 +99,17 @@ namespace GFF.Editor
                     asssets[deletedIndex] = null;
                     GenerateAssetsEnum(asssets);
                 }
+                else
+                {
+                    Debug.LogError(enumTitle + " Enum not generated, cant find deleted asset: " + asset.name);
+                }
             }
         }
 
         private void OnNameChange()
         {
+            Debug.Log(enumTitle + " Enum file name change...");
+
             List<UnityEngine.Object> asssets = GetSaveAssets();
             GenerateAssetsEnum(asssets);
         }
@@ -93,6 +118,25 @@ namespace GFF.Editor
         {
             List<string> enumNames = GetEnumNames(asssets);
             enumGenerator.CreateEnum(enumTitle, namespaceTitle, enumNames);
+        }
+
+        private bool HasAssetsEnumName(List<UnityEngine.Object> assets, UnityEngine.Object asset)
+        {
+            string enumName = GetAssetEnumName(asset);
+            return HasAssetsEnumName(assets, enumName);
+        }
+
+        private bool HasAssetsEnumName(List<UnityEngine.Object> assets, string enumName)
+        {
+            List<string> enumNames = GetEnumNames(assets);
+            return enumNames.Contains(enumName);
+        }
+
+        private bool HasAssetsEnumName(string enumName)
+        {
+            List<UnityEngine.Object> assets = GetSaveAssets();
+            List<string> enumNames = GetEnumNames(assets);
+            return enumNames.Contains(enumName);
         }
 
         private List<string> GetEnumNames(List<UnityEngine.Object> asssets)
@@ -105,7 +149,7 @@ namespace GFF.Editor
             {
                 if (asset)
                 {
-                    enumName = GetEnumName(asset);
+                    enumName = GetAssetEnumName(asset);
                 } 
                 else
                 {
@@ -123,9 +167,19 @@ namespace GFF.Editor
             return assetPath.StartsWith(folderPath) && assetPath.EndsWith(assetExtension);
         }
 
-        private string GetEnumName(UnityEngine.Object assset)
+        private string GetAssetEnumName(UnityEngine.Object assset)
         {
             return Regex.Replace(assset.name, "[^a-zA-Z0-9]", string.Empty);
+        }
+
+        private string GetAssetEnumName(string assset)
+        {
+            return Regex.Replace(assset, "[^a-zA-Z0-9]", string.Empty);
+        }
+
+        private string GetPathEnumName(string asssetPath)
+        {
+            return GetAssetEnumName(Path.GetFileNameWithoutExtension(asssetPath));
         }
 
         #region Files methods
@@ -150,16 +204,17 @@ namespace GFF.Editor
         {
             bool sourceValid = IsValidPath(sourcePath);
             bool destinationValid = IsValidPath(destinationPath);
+            bool hasEnumName = HasAssetsEnumName(GetPathEnumName(sourcePath));
 
-            if (sourceValid && destinationValid)
+            if (sourceValid && destinationValid && hasEnumName)
             {
                 OnNameChange();
             }
-            else if (sourceValid)
+            else if (sourceValid && hasEnumName)
             {
                 OnDeleted(sourcePath);
             }
-            else if (destinationValid)
+            else if (destinationValid && !hasEnumName)
             {
                 OnCreated(destinationPath);
             }

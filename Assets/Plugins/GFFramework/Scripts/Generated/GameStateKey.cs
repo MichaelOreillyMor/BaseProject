@@ -1,7 +1,8 @@
-namespace GFF.GameStatesMan
+namespace GFF.GameStatesMan.Keys
 {
-	 public enum GameStates
+	 public enum GameStateKey
 	 {
+	 	 None,
 	 	 EnemyTurn,
 	 	 LoadGameSession,
 	 	 LoadSceneGame,
@@ -10,6 +11,5 @@ namespace GFF.GameStatesMan
 	 	 MainMenu,
 	 	 PlayerTurn,
 	 	 WinGameState,
-	 	 NULL_1,
 	 }
 }

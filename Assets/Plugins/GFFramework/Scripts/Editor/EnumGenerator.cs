@@ -11,7 +11,6 @@ namespace GFF.Editor
         public void CreateEnum(string enumTitle, string namespaceTitle, List<string> enumNames)
         {
             string path = Application.dataPath + "/Plugins/GFFramework/Scripts/Generated/" + enumTitle + ".cs";
-            Debug.Log(path);
 
             if (!File.Exists(path))
             {
@@ -27,6 +26,7 @@ namespace GFF.Editor
             writer.WriteLine("{");
             writer.WriteLine("\t public enum " + enumTitle);
             writer.WriteLine("\t {");
+            writer.WriteLine("\t \t None,");
 
             foreach (string enumName in enumNames)
             {
@@ -38,6 +38,7 @@ namespace GFF.Editor
             writer.Close();
 
             AssetDatabase.Refresh();
+            Debug.Log(enumTitle + " Enum generated!");
         }
     }
 }

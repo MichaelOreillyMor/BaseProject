@@ -1,6 +1,6 @@
-using GFF.Enums;
 using GFF.SessionsMan.TurnBasedSessions;
 using GFF.GameStatesMan.GameStates;
+using GFF.GameStatesMan.Keys;
 using GFF.InputsMan;
 using GFF.ServiceLocators;
 using GFF.UIsMan.UIScreens;
@@ -66,17 +66,17 @@ namespace RPGGame.GameStatesMan.GameStates
 
         private void OnWinGame()
         {
-            EndGame(GameStateKey.WinMenu);
+            EndGame(GameStateKey.WinGameState);
         }
 
         private void OnSurrender()
         {
-            EndGame(GameStateKey.LoseMenu);
+            EndGame(GameStateKey.LoseGameState);
         }
 
         private void OnReturnMainMenu()
         {
-            EndGame(GameStateKey.LoadMainMenuScene);
+            EndGame(GameStateKey.LoadSceneMainMenu);
         }
 
         private void EndGame(GameStateKey nextGameState)

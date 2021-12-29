@@ -1,8 +1,7 @@
 using GFF.GameStatesMan.GameStates;
-using GFF.Enums;
+using GFF.GameStatesMan.Keys;
 using GFF.SessionsMan.TurnBasedSessions;
 using GFF.ServiceLocators;
-using GFF.SessionsMan;
 
 using UnityEngine;
 
@@ -59,7 +58,7 @@ namespace RPGGame.GameStatesMan.GameStates
         private void OnWinGame()
         {
             hasWin = true;
-            EndGame(GameStateKey.LoseMenu);
+            EndGame(GameStateKey.LoseGameState);
         }
 
         private void EndGame(GameStateKey nextGameState)

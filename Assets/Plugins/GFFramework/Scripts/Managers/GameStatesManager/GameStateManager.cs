@@ -1,4 +1,4 @@
-﻿using GFF.Enums;
+﻿using GFF.GameStatesMan.Keys;
 using GFF.GameStatesMan.GameStates;
 using GFF.ServiceLocators;
 using GFF.Utils;
@@ -14,13 +14,8 @@ namespace GFF.GameStatesMan
     /// </summary>
     public class GameStateManager : BaseGameManager, IGameStateManager
     {
-        //WIP: Unity cant serialize a Assets diccionary so I have to do this
         [SerializeField, ReadOnly]
-        private BaseGameState[] gameStatesToLoad;
-
-        //In C# since Enums do not implement IEquatable, they'll be casted to object (boxing) in order to compare the keys Object.Equals()
-        //Thanks to il2cpp this is not happening 
-        private Dictionary<GameStateKey, BaseGameState> gameStates;
+        private BaseGameState[] gameStates;
 
         private BaseGameState currentGameState;
         private BaseGameState prevGameState;
@@ -30,8 +25,6 @@ namespace GFF.GameStatesMan
         public override void Setup(ISetService serviceLocator, Action onNextSetupCallback)
         {
             SetService(serviceLocator);
-
-            LoadGameStates();
 
             Debug.Log("Setup GameStateManager");
             onNextSetupCallback?.Invoke();
@@ -45,23 +38,6 @@ namespace GFF.GameStatesMan
         public override void Unsetup()
         {
             Debug.Log("Unsetup GameStateManager");
-        }
-
-        private void LoadGameStates()
-        {
-            if (gameStatesToLoad != null)
-            {
-                gameStates = new Dictionary<GameStateKey, BaseGameState>();
-                for (int i = 0; i < gameStatesToLoad.Length; i++)
-                {
-                    BaseGameState gs = gameStatesToLoad[i];
-
-                    if (gs)
-                    {
-                        gameStates.Add(gs.Key, gs);
-                    }
-                }
-            }
         }
 
         #endregion
@@ -79,11 +55,11 @@ namespace GFF.GameStatesMan
         /// </summary>
         private void SetGameStatesServices(IGetService serviceLocator)
         {
-            if (gameStatesToLoad != null)
+            if (gameStates != null)
             {
-                for (int i = 0; i < gameStatesToLoad.Length; i++)
+                for (int i = 0; i < gameStates.Length; i++)
                 {
-                    BaseGameState gs = gameStatesToLoad[i];
+                    BaseGameState gs = gameStates[i];
 
                     if (gs)
                     {
@@ -128,15 +104,15 @@ namespace GFF.GameStatesMan
 
         private BaseGameState GetGameState(GameStateKey gameStateKey)
         {
-            BaseGameState gameState;
-            gameStates.TryGetValue(gameStateKey, out gameState);
+            int indexGameState = (int)gameStateKey;
 
-            if (gameState == null)
+            if (gameStates != null && indexGameState < gameStates.Length)
             {
-                Debug.Log(gameStateKey.ToString() + " not found");
+                return gameStates[indexGameState];
             }
 
-            return gameState;
+            Debug.Log(gameStateKey.ToString() + " not found");
+            return null;
         }
 
         #endregion
@@ -154,7 +130,7 @@ namespace GFF.GameStatesMan
 #if UNITY_EDITOR
             if (!Application.isPlaying)
             {
-                gameStatesToLoad = gameStates;
+                gameStates = gameStates;
             }
 #endif
         }
@@ -164,7 +140,7 @@ namespace GFF.GameStatesMan
 #if UNITY_EDITOR
             if (!Application.isPlaying)
             {
-                return gameStatesToLoad;
+                return gameStates;
             }
 #endif
 

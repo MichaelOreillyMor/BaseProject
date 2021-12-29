@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3c30dd5d7dabd4da66b27be3614eaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameStatesToLoad:
+  gameStates:
   - {fileID: 11400000, guid: 7798f0d4ab0a1f44997f3465e569518f, type: 2}
   - {fileID: 11400000, guid: ee758952b9aadd440927100ae3e3d2c9, type: 2}
   - {fileID: 11400000, guid: 0e172062e69e0ca4cb448416519d352b, type: 2}
@@ -52,4 +52,3 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b17a50128b759e747b179e75460d6d8a, type: 2}
   - {fileID: 11400000, guid: bac1f1c490c980a48bd5bc360e47d39a, type: 2}
   - {fileID: 11400000, guid: ef8e6b0b28333c049aadcbefc73a4be8, type: 2}
-  - {fileID: 11400000, guid: 01241bc56e1fbac45918b5be8102d44f, type: 2}

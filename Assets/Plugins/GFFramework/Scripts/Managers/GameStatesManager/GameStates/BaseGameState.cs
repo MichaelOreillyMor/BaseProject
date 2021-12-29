@@ -1,5 +1,5 @@
 ﻿using GFF.CoroutinesMan;
-using GFF.Enums;
+using GFF.GameStatesMan.Keys;
 using GFF.ServiceLocators;
 
 using System;

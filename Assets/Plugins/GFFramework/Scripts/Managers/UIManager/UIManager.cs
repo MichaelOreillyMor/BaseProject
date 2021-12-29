@@ -1,4 +1,4 @@
-using GFF.Enums;
+using GFF.GameStatesMan.Keys;
 using GFF.ServiceLocators;
 using GFF.UIsMan.Panels;
 using GFF.UIsMan.UIScreens;
