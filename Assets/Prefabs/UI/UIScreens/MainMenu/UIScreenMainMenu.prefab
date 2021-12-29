@@ -267,7 +267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 930e9c719625d7b44be3814639d753dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: 1
+  owner: 6
   startGameButton: {fileID: 4008233200037087248}
 --- !u!1 &5936449430603731914
 GameObject:

@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e84413ea67375974d95b1ed961a1ab2a, type: 3}
   m_Name: MainMenu
   m_EditorClassIdentifier: 
-  key: 1
+  key: 6
   nextGameState: 3
   uiScreenPref: {fileID: -50013124923245455, guid: 1f26ce496a19fd84c99a2d65881b249e, type: 3}
-  isMenuInputListener: 1
   canReturnPrevState: 1

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a951dbf3e3b4f644986671ccf49df00a, type: 3}
   m_Name: LoadGameSession
   m_EditorClassIdentifier: 
-  key: 5
-  nextGameState: 2
+  key: 2
+  nextGameState: 7
   unitsBoardFactory:
     unitStatePref: {fileID: 7855087951469780927, guid: 1c7f8ef50cc171c4aaef056bbbbc60c6, type: 3}
     panelUnitPref: {fileID: 3915179103123525334, guid: 4a1bae085ff075946af5fff7a40821b8, type: 3}

@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 244470aabe6c3a8429f720a56a3f210e, type: 3}
   m_Name: PlayerTurn
   m_EditorClassIdentifier: 
-  key: 2
-  nextGameState: 6
+  key: 7
+  nextGameState: 1
   uiScreenPref: {fileID: 5322689829067601021, guid: 644df990f4ae4164fa48eaaa439316c5, type: 3}
   canReturnPrevState: 0
-  surrerderGameState: 8

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27b72ac7e9939b74c843409bb33c4f5d, type: 3}
   m_Name: EnemyTurn
   m_EditorClassIdentifier: 
-  key: 6
-  nextGameState: 2
+  key: 1
+  nextGameState: 7

@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: LoadSceneMainMenu
   m_EditorClassIdentifier: 
   key: 4
-  nextGameState: 1
+  nextGameState: 6
   scene: 1
+  cleanObjectsPool: 1

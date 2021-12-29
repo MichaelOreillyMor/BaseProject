@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ee588f61ea47ff498ea5af96e3b54e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: 2
+  owner: 7
   onEndTurnBttn: {fileID: 7390055849521457495}
   onSurrenderBttn: {fileID: 6134944820717340846}
 --- !u!1 &4413273466137074778

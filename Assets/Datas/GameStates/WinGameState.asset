@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f68dea3dff4bb941a8e4f3b44692583, type: 3}
   m_Name: WinGameState
   m_EditorClassIdentifier: 
-  key: 7
-  nextGameState: 4
+  key: 8
+  nextGameState: 3
   uiScreenPref: {fileID: 2145434977998644723, guid: 01d44202be417f241a0c05745e783965, type: 3}
   canReturnPrevState: 0
