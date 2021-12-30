@@ -18,8 +18,6 @@ namespace GFF.SessionsMan
         public override void Setup(ISetService serviceLocator, Action onNextSetupCallback)
         {
             SetService(serviceLocator);
-
-            Debug.Log("Setup GameSessionManager");
             onNextSetupCallback?.Invoke();
         }
 

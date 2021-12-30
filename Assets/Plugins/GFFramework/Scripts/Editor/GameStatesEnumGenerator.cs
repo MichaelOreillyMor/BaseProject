@@ -6,12 +6,32 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
+using UnityEngine;
 
 namespace GFF.Editor
 {
     public class GameStatesEnumGenerator : BaseAssetsEnumGenerator
     {
         private readonly string prefabPath;
+
+        #region Singleton
+
+        public static GameStatesEnumGenerator EditorInstance
+        {
+            get
+            {
+                if (editorInstance == null)
+                {
+                    editorInstance = new GameStatesEnumGenerator();
+                }
+
+                return editorInstance;
+            }
+        }
+
+        private static GameStatesEnumGenerator editorInstance;
+
+        #endregion
 
         public GameStatesEnumGenerator() : base("Assets/Datas/GameStates/", ".asset",
             "GameStateKey", "GFF.GameStatesMan.Keys", typeof(BaseGameState))
@@ -33,6 +53,8 @@ namespace GFF.Editor
 
         protected override void SetSaveAssets(List<UnityEngine.Object> assets)
         {
+            LockFileEvents();
+
             GameStateManager gameStateManager = (GameStateManager)AssetDatabase.LoadAssetAtPath(prefabPath, typeof(GameStateManager));
 
             if (gameStateManager)
@@ -58,6 +80,21 @@ namespace GFF.Editor
                 EditorUtility.SetDirty(gameStateManager);
                 AssetDatabase.SaveAssets();
                 AssetDatabase.Refresh();
+            }
+
+            EditorApplication.update += WaitUnlockFileEvents;
+        }
+
+        private void WaitUnlockFileEvents()
+        {
+            if (!EditorApplication.isCompiling)
+            {
+                UnlockFileEvents();
+                EditorApplication.update -= WaitUnlockFileEvents;
+            }
+            else 
+            { 
+                Debug.Log("Waiting to UnlockFileEvents..."); 
             }
         }
     }

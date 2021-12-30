@@ -12,6 +12,8 @@ namespace GFF.Editor
 {
     public abstract class BaseAssetsEnumGenerator
     {
+        private static bool FileEventsLocked;
+
         private const int MAX_NUM_NULL = 0;
 
         private readonly string folderPath;
@@ -38,6 +40,18 @@ namespace GFF.Editor
         protected abstract List<UnityEngine.Object> GetSaveAssets();
 
         protected abstract void SetSaveAssets(List<UnityEngine.Object> assets);
+
+        protected void LockFileEvents()
+        {
+            Debug.Log("FileEvents Locked");
+            FileEventsLocked = true;
+        }
+
+        protected void UnlockFileEvents()
+        {
+            FileEventsLocked = false;
+            Debug.Log("FileEvents Unlocked");
+        }
 
         private void OnCreated(string path) 
         {
@@ -157,6 +171,7 @@ namespace GFF.Editor
 
             return enumNames;
         }
+
         private bool IsValidPath(string assetPath)
         {
             return assetPath.StartsWith(folderPath) && assetPath.EndsWith(assetExtension);
@@ -181,7 +196,7 @@ namespace GFF.Editor
 
         public void OnPostFileCreated(string assetPath)
         {
-            if (IsValidPath(assetPath))
+            if (!FileEventsLocked && IsValidPath(assetPath))
             {
                 OnCreated(assetPath);
             }
@@ -189,7 +204,7 @@ namespace GFF.Editor
 
         public void OnPreFileDeleted(string assetPath)
         {
-            if (IsValidPath(assetPath))
+            if (!FileEventsLocked && IsValidPath(assetPath))
             {
                 OnDeleted(assetPath);
             }
@@ -197,21 +212,24 @@ namespace GFF.Editor
 
         public void OnPostFileMoved(string sourcePath, string destinationPath)
         {
-            bool sourceValid = IsValidPath(sourcePath);
-            bool destinationValid = IsValidPath(destinationPath);
-            bool hasEnumName = HasAssetsEnumName(GetPathEnumName(sourcePath));
+            if (!FileEventsLocked)
+            {
+                bool sourceValid = IsValidPath(sourcePath);
+                bool destinationValid = IsValidPath(destinationPath);
+                bool hasEnumName = HasAssetsEnumName(GetPathEnumName(sourcePath));
 
-            if (sourceValid && destinationValid && hasEnumName)
-            {
-                OnNameChange();
-            }
-            else if (sourceValid && hasEnumName)
-            {
-                OnDeleted(sourcePath);
-            }
-            else if (destinationValid && !hasEnumName)
-            {
-                OnCreated(destinationPath);
+                if (sourceValid && destinationValid && hasEnumName)
+                {
+                    OnNameChange();
+                }
+                else if (sourceValid && hasEnumName)
+                {
+                    OnDeleted(sourcePath);
+                }
+                else if (destinationValid && !hasEnumName)
+                {
+                    OnCreated(destinationPath);
+                }
             }
         }
 

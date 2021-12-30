@@ -20,10 +20,7 @@ namespace GFF.DatasMan
         {
             SetService(serviceLocator);
 
-            OnGameDataLoaded(baseGameData);
-
-            Debug.Log("Setup DataManager");
-            onNextSetup?.Invoke();
+            OnGameDataLoaded(baseGameData, onNextSetup);
         }
 
         public override void Unsetup()
@@ -38,10 +35,6 @@ namespace GFF.DatasMan
             return baseGameData;
         }
 
-    /// <summary>
-    /// Again just an example
-    /// </summary>
-    protected abstract void OnGameDataLoaded(BaseGameData baseGameData);
-
+    protected abstract void OnGameDataLoaded(BaseGameData baseGameData, Action onDataLoaded);
     }
 }

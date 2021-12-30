@@ -18,7 +18,6 @@ namespace GFF.CamerasMan
         public override void Setup(ISetService serviceLocator, Action onNextSetup)
         {
             SetService(serviceLocator);
-            Debug.Log("Setup CameraManager");
             onNextSetup?.Invoke();
         }
 

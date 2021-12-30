@@ -29,7 +29,6 @@ namespace GFF.InputsMan
             gameControls = new GameControls();
             gameControls.Enable();
 
-            Debug.Log("Setup InputManager");
             onNextSetupCallback?.Invoke();
         }
 

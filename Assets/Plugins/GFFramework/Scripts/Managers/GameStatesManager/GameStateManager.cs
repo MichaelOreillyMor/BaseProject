@@ -26,7 +26,6 @@ namespace GFF.GameStatesMan
         {
             SetService(serviceLocator);
 
-            Debug.Log("Setup GameStateManager");
             onNextSetupCallback?.Invoke();
         }
 
@@ -47,6 +46,8 @@ namespace GFF.GameStatesMan
         public void InitGameStates(GameStateKey initGameState, IGetService serviceLocator)
         {
             SetGameStatesServices(serviceLocator);
+
+            Debug.Log("Init GameState: " + initGameState);
             LoadGameState(initGameState);
         }
 
@@ -71,28 +72,35 @@ namespace GFF.GameStatesMan
 
         public void LoadGameState(GameStateKey gameStateKey)
         {
-            BaseGameState nextGameState = GetGameState(gameStateKey);
-
-            if (nextGameState)
+            if (gameStateKey != GameStateKey.None)
             {
-                if (currentGameState)
+                BaseGameState nextGameState = GetGameState(gameStateKey);
+
+                if (nextGameState)
                 {
-                    prevGameState = currentGameState;
+                    if (currentGameState)
+                    {
+                        prevGameState = currentGameState;
 
-                    Debug.Log("Out GameState: " + prevGameState.name);
-                    prevGameState.Unsetup();
+                        Debug.Log("Out GameState: " + prevGameState.name);
+                        prevGameState.Unsetup();
+                    }
+
+                    currentGameState = nextGameState;
+
+                    Debug.Log("In GameState: " + currentGameState.name);
+                    currentGameState.Setup();
                 }
-
-                currentGameState = nextGameState;
-
-                Debug.Log("In GameState: " + currentGameState.name);
-                currentGameState.Setup();
+                else
+                {
+                    Debug.LogError("In GameState: " + gameStateKey.ToString() + " Not found");
+                }
             }
-            else 
+            else
             {
-                Debug.LogError("GameState: " + gameStateKey.ToString() + " Not found");
+                Debug.LogError("InGameState is GameStateKey.None");
             }
-         }
+        }
 
         public void LoadPrevGameState()
         {
@@ -104,7 +112,7 @@ namespace GFF.GameStatesMan
 
         private BaseGameState GetGameState(GameStateKey gameStateKey)
         {
-            int indexGameState = (int)gameStateKey;
+            int indexGameState = ((int)gameStateKey) - 1;
 
             if (gameStates != null && indexGameState < gameStates.Length)
             {

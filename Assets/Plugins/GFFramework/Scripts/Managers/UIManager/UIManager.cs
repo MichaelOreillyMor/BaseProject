@@ -33,7 +33,6 @@ namespace GFF.UIsMan
             sceneScreens = new Dictionary<GameStateKey, BaseUIScreen>();
             ShowLoadPanel();
 
-            Debug.Log("Setup UIManager");
             onNextSetupCallback?.Invoke();
         }
 
@@ -84,7 +83,7 @@ namespace GFF.UIsMan
 
         private BaseUIScreen CreateScreenInstance(BaseUIScreen screenPref)
         {
-            Debug.LogError("You are creating a UIScreen (" + screenPref.Owner + ") instance on run-time, consider the creation of one instance inside the Ref SceneScreens");
+            Debug.LogError("You are creating a UIScreen:  " + screenPref.name + "(" + screenPref.Owner + ") instance on run-time, consider the creation of one instance inside the Ref SceneScreens");
             BaseUIScreen screenInstance = Instantiate(screenPref);
             return screenInstance;
         }

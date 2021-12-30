@@ -11,6 +11,6 @@ namespace GFF.GameStatesMan.Keys
 	 	 MainMenu,
 	 	 PlayerTurn,
 	 	 WinGameState,
-	 	 NULL_1,
+	 	 NewMainMenuGameState,
 	 }
 }

@@ -30,10 +30,8 @@ namespace GFF.ScenesMan
         public override void Setup(ISetService serviceLocator, Action onNextSetupCallback)
         {
             SetService(serviceLocator);
-
             LoadSGamecenes();
 
-            Debug.Log("Setup SceneManager");
             onNextSetupCallback?.Invoke();
         }
 

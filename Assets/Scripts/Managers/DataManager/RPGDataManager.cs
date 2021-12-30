@@ -4,6 +4,7 @@ using GFF.ServiceLocators;
 
 using RPGGame.DatasMan;
 using RPGGame.DatasMan.GameDatas;
+using System;
 
 namespace RPGGame.GameDatasMan
 {
@@ -16,9 +17,10 @@ namespace RPGGame.GameDatasMan
             serviceLocator.SetService<IRPGDataManager>(this);
         }
 
-        protected override void OnGameDataLoaded(BaseGameData baseGameData)
+        protected override void OnGameDataLoaded(BaseGameData baseGameData, Action onDataLoaded)
         {
             gameData = (GameData)baseGameData;
+            onDataLoaded?.Invoke();
         }
 
         public MapLevelData GetCurrentMapLevel()

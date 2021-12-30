@@ -1,0 +1,17 @@
+{
+    "name": "GFFEditor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:8bc2bbd3bf9c97744974adc6f6c97a07",
+        "GUID:f51fb49d53b9ea648b563f12cb6b4ff3"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

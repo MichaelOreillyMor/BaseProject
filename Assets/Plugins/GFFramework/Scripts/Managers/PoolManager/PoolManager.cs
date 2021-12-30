@@ -28,8 +28,6 @@ namespace GFF.PoolsMan
         public override void Setup(ISetService serviceLocator, Action onNextSetuCallbackp)
         {
             SetService(serviceLocator);
-
-            Debug.Log("Setup PoolManager");
             onNextSetuCallbackp?.Invoke();
         }
 
