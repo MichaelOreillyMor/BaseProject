@@ -1,7 +1,6 @@
 ﻿using GFF.CoroutinesMan;
 using GFF.GameStatesMan.Keys;
 using GFF.ServiceLocators;
-using GFF.Utils;
 
 using UnityEngine;
 
@@ -17,7 +16,7 @@ namespace GFF.GameStatesMan.GameStates
         /// </summary>
         public GameStateKey Key => key;
 
-        [SerializeField, ReadOnly]
+        [SerializeField, Disable]
         private GameStateKey key;
 
         [SerializeField]

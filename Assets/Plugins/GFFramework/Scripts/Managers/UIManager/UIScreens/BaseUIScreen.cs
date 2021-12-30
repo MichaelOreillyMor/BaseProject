@@ -14,7 +14,7 @@ namespace GFF.UIsMan.UIScreens
         /// </summary>
         public GameStateKey Owner => owner;
 
-        [SerializeField]
+        [SerializeField, Disable]
         private GameStateKey owner;
    
 

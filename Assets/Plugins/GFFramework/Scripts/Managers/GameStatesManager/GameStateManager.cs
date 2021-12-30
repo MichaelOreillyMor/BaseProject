@@ -1,10 +1,8 @@
 ﻿using GFF.GameStatesMan.Keys;
 using GFF.GameStatesMan.GameStates;
 using GFF.ServiceLocators;
-using GFF.Utils;
 
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace GFF.GameStatesMan
@@ -14,7 +12,7 @@ namespace GFF.GameStatesMan
     /// </summary>
     public class GameStateManager : BaseGameManager, IGameStateManager
     {
-        [SerializeField, ReadOnly]
+        [SerializeField, Disable]
         private BaseGameState[] gameStates;
 
         private BaseGameState currentGameState;
