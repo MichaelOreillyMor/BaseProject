@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GFF.Generated;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,7 +8,6 @@ using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 
-//TO-DO: Crear folders de folderPath si no existen
 namespace GFF.Editor
 {
     public abstract class BaseAssetsEnumGenerator
@@ -17,18 +17,19 @@ namespace GFF.Editor
         private const int MAX_NUM_NULL = 0;
 
         private readonly string folderPath;
+        private readonly string prefabEnumPath;
         private readonly string assetExtension;
         private readonly string enumTitle;
         private readonly string namespaceTitle;
 
         private readonly Type assetType;
-
         private EnumGenerator enumGenerator;
 
-        public BaseAssetsEnumGenerator(string folderPath, string assetExtension, 
+        public BaseAssetsEnumGenerator(string folderPath, string prefabEnumPath, string assetExtension, 
             string enumTitle, string namespaceTitle, Type assetType)
         {
             this.folderPath = folderPath;
+            this.prefabEnumPath = prefabEnumPath;
             this.assetExtension = assetExtension;
             this.assetType = assetType;
             this.enumTitle = enumTitle;
@@ -37,9 +38,55 @@ namespace GFF.Editor
             enumGenerator = new EnumGenerator();
         }
 
-        protected abstract List<UnityEngine.Object> GetSaveAssets();
+        #region Get/Set EnumAssets methods
 
-        protected abstract void SetSaveAssets(List<UnityEngine.Object> assets);
+        protected abstract void PreSetSavedEnumAssets(List<UnityEngine.Object> assets);
+
+        private void SetSavedEnumAssets(List<UnityEngine.Object> assets)
+        {
+            LockFileEvents();
+            PreSetSavedEnumAssets(assets);
+            IGenAssetsEnum gameStateManager = (IGenAssetsEnum)AssetDatabase.LoadAssetAtPath(prefabEnumPath, typeof(IGenAssetsEnum));
+
+            if (gameStateManager != null)
+            {
+                gameStateManager.SetAssetsEnum_Editor(assets);
+
+            }
+            EditorUtility.SetDirty(gameStateManager.GetAssetObject_Editor());
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            EditorApplication.update += WaitUnlockFileEvents;
+        }
+
+        private List<UnityEngine.Object> GetSavedEnumAssets()
+        {
+            IGenAssetsEnum gameStateManager = (IGenAssetsEnum)AssetDatabase.LoadAssetAtPath(prefabEnumPath, typeof(IGenAssetsEnum));
+
+            if (gameStateManager != null)
+            {
+                return gameStateManager.GetAssetsEnum_Editor();
+            }
+
+            return null;
+        }
+
+        #endregion
+
+        #region Lock Files mehtods
+
+        private void WaitUnlockFileEvents()
+        {
+            if (!EditorApplication.isCompiling)
+            {
+                UnlockFileEvents();
+                EditorApplication.update -= WaitUnlockFileEvents;
+            }
+            else
+            {
+                Debug.Log("Waiting to UnlockFileEvents...");
+            }
+        }
 
         protected void LockFileEvents()
         {
@@ -53,6 +100,8 @@ namespace GFF.Editor
             Debug.Log("FileEvents Unlocked");
         }
 
+    #endregion
+
         private void OnCreated(string path) 
         {
             UnityEngine.Object asset = AssetDatabase.LoadAssetAtPath(path, assetType);
@@ -61,7 +110,7 @@ namespace GFF.Editor
             {
                 Debug.Log(enumTitle + " Enum creating...");
 
-                List<UnityEngine.Object> assets = GetSaveAssets();
+                List<UnityEngine.Object> assets = GetSavedEnumAssets();
                 int numNull = assets.FindAll(a => a == null).Count;
 
                 if (!assets.Contains(asset))
@@ -83,7 +132,7 @@ namespace GFF.Editor
                         }
 
                         GenerateAssetsEnum(assets);
-                        SetSaveAssets(assets);
+                        SetSavedEnumAssets(assets);
                     }
                     else
                     {
@@ -105,7 +154,7 @@ namespace GFF.Editor
             {
                 Debug.Log(enumTitle + " Enum deleting...");
 
-                List<UnityEngine.Object> asssets = GetSaveAssets();
+                List<UnityEngine.Object> asssets = GetSavedEnumAssets();
                 int deletedIndex = asssets.IndexOf(asset);
 
                 if (deletedIndex != -1)
@@ -124,7 +173,7 @@ namespace GFF.Editor
         {
             Debug.Log(enumTitle + " Enum file name changing...");
 
-            List<UnityEngine.Object> asssets = GetSaveAssets();
+            List<UnityEngine.Object> asssets = GetSavedEnumAssets();
             GenerateAssetsEnum(asssets);
         }
 
@@ -143,18 +192,18 @@ namespace GFF.Editor
 
         private bool HasAssetsEnumName(string enumName)
         {
-            List<UnityEngine.Object> assets = GetSaveAssets();
+            List<UnityEngine.Object> assets = GetSavedEnumAssets();
             List<string> enumNames = GetEnumNames(assets);
             return enumNames.Contains(enumName);
         }
 
-        private List<string> GetEnumNames(List<UnityEngine.Object> asssets)
+        private List<string> GetEnumNames(List<UnityEngine.Object> assets)
         {
             string enumName;
             int countNull = 1;
-            List<string> enumNames = new List<string>(asssets.Count);
+            List<string> enumNames = new List<string>(assets.Count);
 
-            foreach (UnityEngine.Object asset in asssets)
+            foreach (UnityEngine.Object asset in assets)
             {
                 if (asset)
                 {

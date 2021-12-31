@@ -374,6 +374,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: RPGGameInitializer
       objectReference: {fileID: 0}
+    - target: {fileID: 3341425267761441382, guid: 2016f94dea487f84ead1e42465b036c8, type: 3}
+      propertyPath: oldScene
+      value: 
+      objectReference: {fileID: 102900000, guid: 9fc0d4010bbf28b4594072e72b8655ab, type: 3}
+    - target: {fileID: 3341425267761441382, guid: 2016f94dea487f84ead1e42465b036c8, type: 3}
+      propertyPath: sceness.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3341425267761441382, guid: 2016f94dea487f84ead1e42465b036c8, type: 3}
+      propertyPath: sceness.Array.data[0]
+      value: Game
+      objectReference: {fileID: 0}
+    - target: {fileID: 3341425267761441382, guid: 2016f94dea487f84ead1e42465b036c8, type: 3}
+      propertyPath: sceness.Array.data[1]
+      value: MainMenu
+      objectReference: {fileID: 0}
     - target: {fileID: 6861967522483395735, guid: 2016f94dea487f84ead1e42465b036c8, type: 3}
       propertyPath: initGameState
       value: 3

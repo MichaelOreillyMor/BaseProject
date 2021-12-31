@@ -1,16 +1,20 @@
 ﻿using GFF.GameStatesMan.Keys;
 using GFF.GameStatesMan.GameStates;
 using GFF.ServiceLocators;
+using GFF.Generated;
 
 using System;
 using UnityEngine;
+using System.Linq;
+using System.Collections.Generic;
+
 
 namespace GFF.GameStatesMan
 {
     /// <summary>
     /// Handles the different game´s states, it´s a States pattern controlled by this class
     /// </summary>
-    public class GameStateManager : BaseGameManager, IGameStateManager
+    public class GameStateManager : BaseGameManager, IGameStateManager, IGenAssetsEnum
     {
         [SerializeField, Disable]
         private BaseGameState[] gameStates;
@@ -133,22 +137,38 @@ namespace GFF.GameStatesMan
 
         #region Editor methods
 
-        public void SetGameStates_Editor(BaseGameState[] gameStates) 
+        public void SetAssetsEnum_Editor(List<UnityEngine.Object> assetsEnum)
         {
 #if UNITY_EDITOR
             if (!Application.isPlaying)
             {
-                this.gameStates = gameStates;
+                BaseGameState[] gameStates = Array.ConvertAll(assetsEnum.ToArray(), a => (BaseGameState)a);
+                if (gameStates != null)
+                {
+                    this.gameStates = gameStates;
+                }
             }
 #endif
         }
 
-        public BaseGameState[] GetGameStates_Editor()
+        public List<UnityEngine.Object> GetAssetsEnum_Editor()
         {
 #if UNITY_EDITOR
             if (!Application.isPlaying)
             {
-                return gameStates;
+                return gameStates.ToList<UnityEngine.Object>();
+            }
+#endif
+
+            return null;
+        }
+
+        public UnityEngine.Object GetAssetObject_Editor()
+        {
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+            {
+                return this;
             }
 #endif
 

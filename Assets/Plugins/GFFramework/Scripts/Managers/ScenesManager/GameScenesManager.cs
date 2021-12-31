@@ -1,4 +1,5 @@
-﻿using GFF.ScenesMan.Keys;
+﻿using GFF.Generated;
+using GFF.ScenesMan.Keys;
 using GFF.ServiceLocators;
 
 using System;
@@ -9,19 +10,10 @@ using UnityEngine.SceneManagement;
 
 namespace GFF.ScenesMan
 {
-    public class GameScenesManager : BaseGameManager, ISceneManager
+    public class GameScenesManager : BaseGameManager, ISceneManager, IGenAssetsEnum
     {
-        [Serializable]
-        private struct SceneInfo
-        {
-            public SceneKey key;
-            public string name;
-        }
-
-        //This can be done automatically generating the enums from the Scenes folder on Editor-time
-        [SerializeField]
-        private SceneInfo[] scenesToLoad;
-        private Dictionary<SceneKey, string> scenes;
+        [SerializeField, SceneName]
+        private string[] scenes;
 
         private Action onSceneLoadCallback;
 
@@ -30,28 +22,12 @@ namespace GFF.ScenesMan
         public override void Setup(ISetService serviceLocator, Action onNextSetupCallback)
         {
             SetService(serviceLocator);
-            LoadSGamecenes();
-
             onNextSetupCallback?.Invoke();
         }
 
         protected override void SetService(ISetService serviceLocator)
         {
             serviceLocator.SetService<ISceneManager>(this);
-        }
-
-        private void LoadSGamecenes()
-        {
-            if (scenesToLoad != null)
-            {
-                scenes = new Dictionary<SceneKey, string>();
-
-                for (int i = 0; i < scenesToLoad.Length; i++)
-                {
-                    SceneInfo si = scenesToLoad[i];
-                    scenes.Add(si.key, si.name);
-                }
-            }
         }
 
         public override void Unsetup()
@@ -63,15 +39,15 @@ namespace GFF.ScenesMan
 
         private string GetScene(SceneKey sceneKey)
         {
-            string sceneName;
-            scenes.TryGetValue(sceneKey, out sceneName);
+            int indexScene = ((int)sceneKey) - 1;
 
-            if (sceneName == null)
+            if (scenes != null && indexScene < scenes.Length)
             {
-                Debug.Log(sceneKey.ToString() + " not found, please add the scene to the build settings");
+                return scenes[indexScene];
             }
 
-            return sceneName;
+            Debug.Log(sceneKey.ToString() + " not found");
+            return null;
         }
 
         #region Load scene methods
@@ -104,5 +80,60 @@ namespace GFF.ScenesMan
         }
 
         #endregion
+
+        #region Editor methods
+
+        public void SetAssetsEnum_Editor(List<UnityEngine.Object> assetsEnum)
+        {
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+            {
+                string[] scenes = Array.ConvertAll(assetsEnum.ToArray(), a => a.name);
+                if (scenes != null)
+                {
+                    this.scenes = scenes;
+                }
+            }
+#endif
+        }
+
+        public List<UnityEngine.Object> GetAssetsEnum_Editor()
+        { 
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+            {
+                List<UnityEngine.Object> sceneAssets = new List<UnityEngine.Object>();
+                foreach (string sceneName in scenes)
+                {
+                    Scene scene = SceneManager.GetSceneByName(sceneName);
+                    UnityEditor.SceneAsset sceneAsset = UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEditor.SceneAsset>(scene.path);
+
+                    if (sceneAsset) 
+                    {
+                        sceneAssets.Add(sceneAsset);
+                    }
+                }
+
+                return sceneAssets;
+            }
+#endif
+
+            return null;
+        }
+
+        public UnityEngine.Object GetAssetObject_Editor()
+        {
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+            {
+                return this;
+            }
+#endif
+
+            return null;
+        }
+
+        #endregion
+
     }
 }

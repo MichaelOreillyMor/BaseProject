@@ -58,7 +58,7 @@ namespace RPGGame.GameStatesMan.GameStates
         private void OnWinGame()
         {
             hasWin = true;
-            EndGame(GameStateKey.LoseGameState);
+            EndGame(GameStateKey.LoseMenu);
         }
 
         private void EndGame(GameStateKey nextGameState)

@@ -66,12 +66,12 @@ namespace RPGGame.GameStatesMan.GameStates
 
         private void OnWinGame()
         {
-            EndGame(GameStateKey.WinGameState);
+            EndGame(GameStateKey.WinMenu);
         }
 
         private void OnSurrender()
         {
-            EndGame(GameStateKey.LoseGameState);
+            EndGame(GameStateKey.LoseMenu);
         }
 
         private void OnReturnMainMenu()

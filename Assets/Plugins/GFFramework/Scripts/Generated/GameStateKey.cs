@@ -7,10 +7,10 @@ namespace GFF.GameStatesMan.Keys
 	 	 LoadGameSession,
 	 	 LoadSceneGame,
 	 	 LoadSceneMainMenu,
-	 	 LoseGameState,
+	 	 LoseMenu,
 	 	 MainMenu,
 	 	 PlayerTurn,
-	 	 WinGameState,
+	 	 WinMenu,
 	 	 NULL_1,
 	 }
 }
