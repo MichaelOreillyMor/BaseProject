@@ -1,9 +1,9 @@
 namespace GFF.ScenesMan.Keys
 {
-    public enum SceneKey
-    {
-        None,
-        MainMenu,
-        Game
-    }
+	 public enum SceneKey
+	 {
+	 	 None,
+	 	 Game,
+	 	 MainMenu,
+	 }
 }

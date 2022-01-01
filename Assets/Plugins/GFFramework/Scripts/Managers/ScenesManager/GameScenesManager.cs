@@ -12,7 +12,7 @@ namespace GFF.ScenesMan
 {
     public class GameScenesManager : BaseGameManager, ISceneManager, IGenAssetsEnum
     {
-        [SerializeField, SceneName]
+        [SerializeField, SceneName, Disable]
         private string[] scenes;
 
         private Action onSceneLoadCallback;
@@ -47,7 +47,7 @@ namespace GFF.ScenesMan
             }
 
             Debug.Log(sceneKey.ToString() + " not found");
-            return null;
+            return string.Empty;
         }
 
         #region Load scene methods
@@ -55,10 +55,10 @@ namespace GFF.ScenesMan
         public void LoadScene(SceneKey sceneKey, Action onSceneLoadCallback, bool canReloadSameScene = false)
         {
             string sceneToLoad = GetScene(sceneKey);
-            Scene currentScene = SceneManager.GetActiveScene();
 
-            if (sceneToLoad != null)
+            if (sceneToLoad != string.Empty)
             {
+                Scene currentScene = SceneManager.GetActiveScene();
                 this.onSceneLoadCallback = onSceneLoadCallback;
 
                 if (canReloadSameScene || (sceneToLoad != currentScene.name))
@@ -88,7 +88,7 @@ namespace GFF.ScenesMan
 #if UNITY_EDITOR
             if (!Application.isPlaying)
             {
-                string[] scenes = Array.ConvertAll(assetsEnum.ToArray(), a => a.name);
+                string[] scenes = Array.ConvertAll(assetsEnum.ToArray(), a => (a != null) ? a.name : string.Empty);
                 if (scenes != null)
                 {
                     this.scenes = scenes;
@@ -106,7 +106,7 @@ namespace GFF.ScenesMan
                 foreach (string sceneName in scenes)
                 {
                     Scene scene = SceneManager.GetSceneByName(sceneName);
-                    UnityEditor.SceneAsset sceneAsset = UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEditor.SceneAsset>(scene.path);
+                    UnityEditor.SceneAsset sceneAsset = UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEditor.SceneAsset>("Assets/Scenes/" + sceneName + ".unity");
 
                     if (sceneAsset) 
                     {

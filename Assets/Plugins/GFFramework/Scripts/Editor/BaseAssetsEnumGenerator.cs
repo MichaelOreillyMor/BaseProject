@@ -154,13 +154,14 @@ namespace GFF.Editor
             {
                 Debug.Log(enumTitle + " Enum deleting...");
 
-                List<UnityEngine.Object> asssets = GetSavedEnumAssets();
-                int deletedIndex = asssets.IndexOf(asset);
+                List<UnityEngine.Object> assets = GetSavedEnumAssets();
+                int deletedIndex = assets.IndexOf(asset);
 
                 if (deletedIndex != -1)
                 {
-                    asssets[deletedIndex] = null;
-                    GenerateAssetsEnum(asssets);
+                    assets[deletedIndex] = null;
+                    GenerateAssetsEnum(assets);
+                    SetSavedEnumAssets(assets);
                 }
                 else
                 {
