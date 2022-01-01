@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: 3
   nextGameState: 2
-  scene: 2
+  scene: 1
   cleanObjectsPool: 0
