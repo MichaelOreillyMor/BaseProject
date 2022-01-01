@@ -1,16 +1,13 @@
-﻿using GFF.Generated;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
-
 using UnityEditor;
 using UnityEngine;
 
-namespace GFF.Editor
+namespace GFF.Generated.Editor
 {
-    public abstract class BaseAssetsEnumGenerator
+    public abstract class BaseAssetKeysGenerator
     {
         private static bool FileEventsLocked;
 
@@ -25,7 +22,7 @@ namespace GFF.Editor
         private readonly Type assetType;
         private EnumGenerator enumGenerator;
 
-        public BaseAssetsEnumGenerator(string folderPath, string prefabEnumPath, string assetExtension, 
+        public BaseAssetKeysGenerator(string folderPath, string prefabEnumPath, string assetExtension, 
             string enumTitle, string namespaceTitle, Type assetType)
         {
             this.folderPath = folderPath;

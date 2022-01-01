@@ -1,14 +1,13 @@
 ﻿using GFF.GameStatesMan.GameStates;
 using GFF.GameStatesMan.Keys;
-using GFF.Generated;
 
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace GFF.Editor
+namespace GFF.Generated.Editor
 {
-    public class GameStateKeysGenerator : BaseAssetsEnumGenerator
+    public class GameStateKeysGenerator : BaseAssetKeysGenerator
     {
         #region Singleton
 

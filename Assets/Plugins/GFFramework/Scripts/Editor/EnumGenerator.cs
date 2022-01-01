@@ -4,13 +4,13 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace GFF.Editor
+namespace GFF.Generated.Editor
 {
     public class EnumGenerator
     {
         public void CreateEnum(string enumTitle, string namespaceTitle, List<string> enumNames)
         {
-            string path = Application.dataPath + "/Plugins/GFFramework/Scripts/Generated/" + enumTitle + ".cs";
+            string path = Application.dataPath + "/Plugins/GFFramework/Scripts/Generated/AssetKeys/" + enumTitle + ".cs";
 
             if (!File.Exists(path))
             {

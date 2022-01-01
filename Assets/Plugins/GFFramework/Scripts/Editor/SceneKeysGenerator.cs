@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace GFF.Editor
+namespace GFF.Generated.Editor
 {
-    public class SceneKeysGenerator : BaseAssetsEnumGenerator
+    public class SceneKeysGenerator : BaseAssetKeysGenerator
     {
         #region Singleton
 
