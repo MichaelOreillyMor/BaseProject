@@ -1,4 +1,5 @@
 using GFF.GameStatesMan.Keys;
+using GFF.ScenesMan.Utils;
 using GFF.ServiceLocators;
 using GFF.UIsMan.Panels;
 using GFF.UIsMan.UIScreens;
@@ -21,7 +22,7 @@ namespace GFF.UIsMan
         [SerializeField]
         private UIMainPanel mainPanel;
 
-        private Dictionary<GameStateKey, BaseUIScreen> sceneScreens;
+        private Dictionary<int, BaseUIScreen> sceneScreens;
         private BaseUIScreen currentScreen;
 
         #region Setup/Unsetup methods
@@ -30,7 +31,7 @@ namespace GFF.UIsMan
         {
             SetService(serviceLocator);
 
-            sceneScreens = new Dictionary<GameStateKey, BaseUIScreen>();
+            sceneScreens = new Dictionary<int, BaseUIScreen>();
             ShowLoadPanel();
 
             onNextSetupCallback?.Invoke();
@@ -63,7 +64,7 @@ namespace GFF.UIsMan
 
             if (screenPref)
             {
-                BaseUIScreen screenInstance = GetScreenInstance(screenPref.Owner);
+                BaseUIScreen screenInstance = GetScreenInstance(screenPref);
 
                 if (screenInstance != null)
                 {
@@ -83,15 +84,15 @@ namespace GFF.UIsMan
 
         private BaseUIScreen CreateScreenInstance(BaseUIScreen screenPref)
         {
-            Debug.LogError("You are creating a UIScreen:  " + screenPref.name + "(" + screenPref.Owner + ") instance on run-time, consider the creation of one instance inside the Ref SceneScreens");
+            Debug.LogError("You are creating a UIScreen:  " + screenPref.name + " instance on run-time, consider the creation of one instance inside the Ref SceneScreens");
             BaseUIScreen screenInstance = Instantiate(screenPref);
             return screenInstance;
         }
 
-        public BaseUIScreen GetScreenInstance(GameStateKey owner)
+        public BaseUIScreen GetScreenInstance(BaseUIScreen prefUIScreen)
         {
             BaseUIScreen screenInstance;
-            sceneScreens.TryGetValue(owner, out screenInstance);
+            sceneScreens.TryGetValue(prefUIScreen.GetInstanceID(), out screenInstance);
 
             return screenInstance;
         }
@@ -102,7 +103,7 @@ namespace GFF.UIsMan
             {
                 currentScreen.Unsetup();
 
-                if (HasScreenInstance(currentScreen.Owner))
+                if (HasScreenInstance(currentScreen))
                 {
                     currentScreen.Show(false);
                 }
@@ -136,12 +137,12 @@ namespace GFF.UIsMan
 
         #endregion
 
-        public bool HasScreenInstance(GameStateKey owner)
+        private bool HasScreenInstance(BaseUIScreen UIScreen)
         {
-            return sceneScreens.ContainsKey(owner);
+            return sceneScreens.ContainsValue(UIScreen);
         }
 
-        public void RegisterSceneScreens(BaseUIScreen[] UIScreens)
+        public void RegisterSceneScreens(UIScreenInstace[] UIScreens)
         {
             CleanSceneScreens();
 
@@ -149,21 +150,11 @@ namespace GFF.UIsMan
             {
                 for (int i = 0; i < UIScreens.Length; i++)
                 {
-                    BaseUIScreen UIScreen = UIScreens[i];
-                    GameStateKey owner;
+                    UIScreenInstace instance = UIScreens[i];
 
-                    if (UIScreen != null)
+                    if (instance.UIScreen != null)
                     {
-                        owner = UIScreen.Owner;
-
-                        if (owner != GameStateKey.None)
-                        {
-                            sceneScreens.Add(owner, UIScreen);
-                        }
-                        else
-                        {
-                            Debug.LogError(UIScreen.name + " doesn't have a Gamestate owner", UIScreen);
-                        }
+                        sceneScreens.Add(instance.PrefID, instance.UIScreen);
                     }
                 }
             }

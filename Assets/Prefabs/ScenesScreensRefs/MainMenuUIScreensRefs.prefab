@@ -180,9 +180,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 983221710697167662, guid: 754897bc8c8e51643a8142456ece3f4e, type: 3}
+      propertyPath: uiScreens.Array.data[0].PrefID
+      value: 16302
+      objectReference: {fileID: 0}
+    - target: {fileID: 983221710697167662, guid: 754897bc8c8e51643a8142456ece3f4e, type: 3}
       propertyPath: refsUIScreens.screens.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 983221710697167662, guid: 754897bc8c8e51643a8142456ece3f4e, type: 3}
+      propertyPath: uiScreens.Array.data[0].UIScreen
+      value: 
+      objectReference: {fileID: 6149500203317771252}
     - target: {fileID: 983221710697167662, guid: 754897bc8c8e51643a8142456ece3f4e, type: 3}
       propertyPath: refsUIScreens.screens.Array.data[0]
       value: 

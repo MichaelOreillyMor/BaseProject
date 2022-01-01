@@ -102,40 +102,5 @@ namespace GFF.GameStatesMan.GameStates
         }
 
         #endregion
-
-        #region editor methods
-
-        private void OnValidate()
-        {
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
-            {
-                SetKeyToUIScreen_Editor();
-            }
-#endif
-        }
-
-        /// <summary>
-        /// Adds its key to the UIScreen as a link between them
-        /// </summary>
-        private void SetKeyToUIScreen_Editor()
-        {
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
-            {
-                if (uiScreenPref)
-                {
-                    uiScreenPref.SetOwner_Editor(Key);
-                }
-            }
-#endif
-        }
-
-        public void OnSelect(InputAction.CallbackContext context)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        #endregion
     }
 }

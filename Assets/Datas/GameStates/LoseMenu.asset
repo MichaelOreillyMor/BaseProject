@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: LoseMenu
   m_EditorClassIdentifier: 
   key: 5
-  nextGameState: 2
+  nextGameState: 4
   uiScreenPref: {fileID: 2145434977998644723, guid: 34d63509319f2d542b81a962344a3db5, type: 3}
   canReturnPrevState: 0
